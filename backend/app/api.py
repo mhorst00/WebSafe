@@ -10,7 +10,6 @@ import app.auth as auth
 import app.user as user
 
 Database.initalise()
-
 app = FastAPI()
 
 origins = [
@@ -95,3 +94,4 @@ async def post_safe():
 
 @app.post("/safe/delete", tags=["safe"])
 async def del_safe():
+    pass
