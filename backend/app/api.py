@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.model import PostSchema
+from app.db import Database
 
+Database.initalise()
 app = FastAPI()
 
 origins = [
