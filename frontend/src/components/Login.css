@@ -1,0 +1,62 @@
+.Login-Container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Login-Field {
+    width: 400px;
+    min-height: 450px;
+    background-color: #edf2fb;
+    border-radius: 12px;
+    color: #282c34;
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: center;
+    align-self: center;
+}
+
+.Login-Input {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.Login-Button {
+    margin-top: 60px;
+    border-radius: 7px;
+    padding: 10px 12px;
+    border: none;
+    background-color: coral;
+    color: #912f0b;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.Login-Password {
+    margin-top: 20px;
+}
+
+.Login-Info-Text {
+    text-align: center;
+    font-size: 14px;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.Login-Info-Text a {
+    color: blue;
+}
+
+input {
+    border-radius: 7px;
+    padding: 10px 12px;
+    border: none;
+    font-size: 18px;
+    box-shadow: 1px 1px 2px #282c3469;
+}
+
