@@ -6,3 +6,21 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.App-Logo-Login {
+  height: 585px;
+  width: 1170px;
+  position: absolute;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.App-Logo-Dashboard {
+  top: 25%;
+  left: 30%;
+  height: 685px;
+  width: 1270px;
+  position: absolute;
+  opacity: 0.5;
+  z-index: 0;
+}

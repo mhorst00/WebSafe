@@ -9,8 +9,17 @@ function App() {
 
   return (
     <div className='App'>
-      {!authState ? <Login/> : <Dashboard/>}
-     
+      {!authState ? (
+        <>
+         <Login/>
+         <img src={'./private-cloud-closed.svg'} className="App-Logo-Login" alt="logo" />
+        </>
+     ) : (
+      <>
+        <Dashboard/>
+        <img src={'./private-cloud-open.svg'} className="App-Logo-Dashboard" alt="logo" />
+      </>
+      )}
     </div>
   );
 }
