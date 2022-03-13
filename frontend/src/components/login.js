@@ -40,7 +40,7 @@ function Login() {
   }
 
   const onSubmit = () => {
-    if(!validateInput()) return;
+    //if(!validateInput()) return;
 
     if(register) {
         console.log('API-CALL {' + email + password + passwordConfirm + '}');

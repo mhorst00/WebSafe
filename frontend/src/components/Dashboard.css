@@ -1,4 +1,108 @@
 .Dashboard {
     height: 100%;
     width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.Dashboard-TopLane {
+    margin-left: 40px;
+    margin-right: 40px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.Dashboard-Topic-Container {
+    flex: 1;
+}
+
+.Dashboard-Topic {
+    flex: 1;
+}
+
+.Dashboard-Settings-Container {
+    padding-right: 20px;
+    padding-top: 9px;
+}
+
+.Dashboard-Settings {
+    height: 53px;
+    width: 53px;
+    cursor: pointer;
+}
+
+.Dashboard-Logout-Container {
+    justify-self: end;
+    padding-top: 8px;
+}
+
+.Dashboard-Logout {
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+.Dashboard-Password {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Dashboard-Password-Entry {
+    height: 70px;
+    width: 90%;
+    align-items: center;
+    background-color: #636770;
+    border-radius: 12px;
+    box-sizing: border-box;
+    flex-direction: row;
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.Dashboard-Entry-Garbage-Container {
+    padding-left: 10px;
+}
+
+.Dashboard-Entry-Garbage {
+    padding-top: 6px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+.Dashboard-Password-Entry-Link {
+    padding-left: 40px;
+    flex: 30%;
+    position: relative;
+}
+
+.Dashboard-Password-Entry-Email {
+    flex: 40%;
+}
+
+.Dashboard-Password-Entry-Password {
+    flex: 30%;
+}
+
+.Dashboard-Entry-Copy-Container {
+    padding-right: 10px;
+}
+
+.Dashboard-Password-Entry-Copy {
+    padding-top: 7px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+p {
+    font-size: auto;
+}
+
+a {
+    color: #333333;
 }
