@@ -1,7 +1,7 @@
 import pymongo
 from decouple import config
 from pydantic import validate_arguments
-from app.model import UserLoginSchema, UserFullSchema
+from app.model import User, UserInDB
 
 DB_URL = config("DB_URL", default="localhost")
 DB_PORT = config("DB_PORT", default=27017, cast=int)
@@ -17,7 +17,7 @@ class Database():
 
     @staticmethod
     @validate_arguments
-    def add_user(user: UserFullSchema):
+    def add_user(user: UserInDB):
         x = None
         if Database.find_user(user) == None:
             x = Database.DATABASE["users"].insert_one(user.dict())
@@ -25,12 +25,17 @@ class Database():
 
     @staticmethod
     @validate_arguments
-    def find_user(user: UserFullSchema | UserLoginSchema) -> dict:
+    def find_user(user: User | UserInDB) -> dict:
         x = Database.DATABASE["users"].find_one(user.dict())
         return x
 
     @staticmethod
     @validate_arguments
-    def delete_user(user: UserFullSchema):
+    def delete_user(user: UserInDB):
         x = Database.DATABASE["users"].delete_one(user.dict())
+        return x
+
+    @staticmethod
+    def clear_col():
+        x: bool = Database.DATABASE["users"].drop()
         return x
