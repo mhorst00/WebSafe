@@ -1,4 +1,5 @@
 from datetime import timedelta
+from http.client import HTTPResponse
 
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,8 +9,12 @@ from app.model import Message, UserInDB, Token, UserNew
 from app.db import Database
 import app.auth as auth
 import app.user as user
+from app.files import Filehandler
 
 Database.initalise()
+if not Filehandler.preCheck():
+    quit()
+
 app = FastAPI()
 
 origins = [
@@ -85,13 +90,28 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.get("/safe", tags=["safe"])
-async def get_safe():
-    pass
+async def get_safe(current_user: UserInDB = Depends(auth.get_current_user)):
+    x = Filehandler.readFile(current_user.safe_id)
+    if x is None:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Could not read Safe",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return {"safePayload": x}
 
 @app.post("/safe", tags=["safe"])
 async def post_safe():
     pass
 
 @app.post("/safe/delete", tags=["safe"])
-async def del_safe():
-    pass
+async def del_safe(current_user: UserInDB = Depends(auth.get_current_user)):
+    x = Filehandler.deleteFile(current_user.safe_id)
+    if x:
+        return{"message:", "Successfully deleted Safe"}
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Could not delete Safe",
+            headers={"WWW-Authenticate": "Bearer"},
+        )  
