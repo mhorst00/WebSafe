@@ -25,11 +25,11 @@ class Database():
 
     @staticmethod
     @validate_arguments
-    def find_user(user: User | UserInDB) -> dict:
+    def find_user(user: User | UserInDB):
         x = Database.DATABASE["users"].find_one(user.dict())
         if x:
             return UserInDB(**x)
-        else: return x
+        else: return None
 
     @staticmethod
     @validate_arguments

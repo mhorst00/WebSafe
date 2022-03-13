@@ -26,10 +26,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.get("/user/logout", tags=["user"])
-async def logout():
-    pass
-
 @app.get("/user/delete", response_model=Message, tags=["user"])
 async def del_user(current_user: UserInDB = Depends(auth.get_current_user)):
     x = user.delete_user(current_user)
@@ -37,8 +33,8 @@ async def del_user(current_user: UserInDB = Depends(auth.get_current_user)):
         return {"message": "User has been deleted"}
     if not x:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Something went wrong. User could not be found.",
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User could not be found",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
