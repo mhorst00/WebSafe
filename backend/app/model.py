@@ -1,29 +1,56 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, EmailStr
 
-class UserFullSchema(BaseModel):
-    username: str = Field(...)
-    email: EmailStr = Field(...)
-    password: str = Field(...)
-    safe: str = username
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: str | None = None
+
+class User(BaseModel):
+    username: EmailStr
 
     class Config:
         schema_extra = {
             "example": {
-                "username": "BoatyMcBoatface",
-                "email": "boaty@mcboatface.com",
-                "password": "boatyisabadpassword",
-                "safe": "BoatyMcBoatface"
+                "username": "boaty@mcboatface.com"
             }
         }
 
-class UserLoginSchema(BaseModel):
-    email: EmailStr = Field(...)
-    password: str = Field(...)
+class UserInDB(User):
+    full_name: str
+    hashed_password: str
+    safe_id: str
 
     class Config:
         schema_extra = {
             "example": {
-                "email": "boaty@mcboatface.com",
-                "password": "boatyisabadpassword"
+                "full_name": "BoatyMcBoatface",
+                "username": "boaty@mcboatface.com",
+                "hashed_password": "hashedpassword",
+                "safe_id": "BoatyMcBoatface"
+            }
+        }
+
+class UserNew(User):
+    full_name: str
+    password: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "username": "boaty@mcboatface.com",
+                "full_name": "Boaty McBoatface",
+                "password": "password"
+            }
+        }
+
+class Message(BaseModel):
+    message: str
+
+    class Config:
+        scheme_extra = {
+            "example": {
+                "message": "status message on API call"
             }
         }
