@@ -1,6 +1,7 @@
 import pymongo
 from decouple import config
 from pydantic import validate_arguments
+
 from app.model import User, UserInDB
 
 DB_URL = config("DB_URL", default="localhost")
