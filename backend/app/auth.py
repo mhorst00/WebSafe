@@ -27,7 +27,7 @@ def get_user(username: str):
     query = User(username=username)
     user_dict = Database.find_user(query)
     if user_dict:
-        return UserInDB(**user_dict)
+        return user_dict
 
 def authenticate_user(username: str, password: str):
     user = get_user(username)

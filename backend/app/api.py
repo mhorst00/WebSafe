@@ -43,8 +43,14 @@ async def del_user(current_user: UserInDB = Depends(auth.get_current_user)):
         )
 
 @app.post("/user/change", tags=["user"])
-async def change_user():
-    pass
+async def change_user(change_user: UserNew, current_user: UserInDB = Depends(auth.get_current_user)):
+    x = user.edit_user(change_user, current_user)
+    if x: return {"message": "Successfully edited user."}
+    if not x: raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Edited user could not be saved",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
 @app.post("/user/new", response_model=Message, tags=["user"])
 async def new_user(new_user: UserNew):

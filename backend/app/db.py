@@ -27,7 +27,9 @@ class Database():
     @validate_arguments
     def find_user(user: User | UserInDB) -> dict:
         x = Database.DATABASE["users"].find_one(user.dict())
-        return x
+        if x:
+            return UserInDB(**x)
+        else: return x
 
     @staticmethod
     @validate_arguments

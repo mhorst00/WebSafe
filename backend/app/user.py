@@ -28,4 +28,12 @@ def edit_user(data: UserNew, user: UserInDB):
     """Saves received data in given user in DB"""
     x = Database.find_user(user)
     if not x:
+        return False # add logging for failures on if's
+    d = Database.delete_user(user)
+    if not d:
         return False
+    hashed_password = get_password_hash(data.password)
+    user_dict = UserInDB(username=data.username, full_name=data.full_name, hashed_password=hashed_password, safe_id=x.safe_id)
+    Database.add_user(user_dict)
+    if Database.find_user(user_dict) is not None:
+        return True
