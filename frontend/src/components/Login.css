@@ -18,6 +18,11 @@
     align-self: center;
 }
 
+.Login-Failed-Text {
+    color: red;
+    font-size: 15px;
+}
+
 .Login-Input {
     text-align: left;
     display: flex;

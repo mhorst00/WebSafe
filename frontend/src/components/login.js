@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
  
 function Login() {
   const [register, setRegister] = useState(false);
+  const [failed, setFailed] = useState(undefined);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -33,29 +34,40 @@ function Login() {
   }
 
   const validateInput = () => {
-      if(!register) {
-        return email.length > 3 && password.length > 0;
-      }
-      return email.length > 3 && password.length > 0 && password === passwordConfirm;
+    let matchEmail = /\S+@\S+\.\S+/;
+    if(!register) {
+      return matchEmail.test(email) && password.length > 6;
+    }
+    return matchEmail.test(email) && password.length > 6 && password === passwordConfirm;
   }
 
   const onSubmit = () => {
-    //if(!validateInput()) return;
+    /*
+    if(!validateInput()) {
+      setFailed('There was a problem with your E-Mail!');
+      return;
+    }
+    */ 
 
-    if(register) {
+    try {
+      if(register) {
         console.log('API-CALL {' + email + password + passwordConfirm + '}');
-        
-
-    } else {
+      } else {
         console.log('API-CALL {' + email + password + '}');
         login();
+      }
+    } catch (err) {
+      setFailed('Wrong Password or E-Mail!');
     }
+    setEmail('');
+    setPassword('');
   }
 
   return (
-      <div className='Login-Container'>
-        <div className="Login-Field">
+    <div className='Login-Container'> 
+      <div className="Login-Field"> 
         <h2>WebSafe</h2>
+        {failed ? (<p className='Login-Failed-Text'>{failed}</p>) : (<p></p>)}
         <div className='Login-Input'>
             <label>E-Mail</label>
             <input type='email' placeholder='example@example.com' onChange={onChangeEmail}/>
@@ -75,7 +87,7 @@ function Login() {
                 <p className='Login-Info-Text'>You don't have an Account? <a href='' onClick={onClickRegister}>Register</a></p>
             )}
         </div>
-        </div>
+      </div>
     </div>
   );
 }

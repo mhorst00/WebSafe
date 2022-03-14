@@ -11,12 +11,12 @@ function App() {
     <div className='App'>
       {!authState ? (
         <>
-         <Login/>
-         <img src={'./private-cloud-closed.svg'} className="App-Logo-Login" alt="logo" />
+          <img src={'./private-cloud-closed.svg'} className="App-Logo-Login" alt="logo" />
+          <Login/>
         </>
      ) : (
       <>
-        <Dashboard/>
+        <Dashboard/> 
         <img src={'./private-cloud-open.svg'} className="App-Logo-Dashboard" alt="logo" />
       </>
       )}
