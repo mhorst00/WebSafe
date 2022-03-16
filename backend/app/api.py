@@ -95,3 +95,4 @@ async def post_safe():
 
 @app.post("/safe/delete", tags=["safe"])
 async def del_safe():
+    pass
