@@ -1,3 +1,5 @@
+import hashlib
+
 from pydantic import validate_arguments
 
 from app.model import User, UserInDB, UserNew
@@ -13,8 +15,8 @@ def add_user(user: UserNew):
     if Database.find_user(query):
         return False
     hashed_password = get_password_hash(user.password)
-    safe_id = hash(user.username)#user.username # TODO: use hash of username
-    print("safeid" , safe_id)
+    safe_id = hashlib.sha1(user.username.encode()).hexdigest()#hash(user.username)#user.username # TODO: use hash of username
+    print(safe_id)
     user_dict = UserInDB(username=user.username, full_name=user.full_name, hashed_password=hashed_password, safe_id=safe_id)
     Database.add_user(user_dict)
     Filehandler.writeFile(safe_id,"")

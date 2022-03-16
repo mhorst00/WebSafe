@@ -46,7 +46,15 @@ class UserNew(User):
                 "password": "password"
             }
         }
+class SafePayloadNew(BaseModel):
+    safePayload: str
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "safePayload": "The dark side of the Force is a pathway to many abilities; some consider to be unnatural",
+            }
+        }
 class Message(BaseModel):
     message: str
 

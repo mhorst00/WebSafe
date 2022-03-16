@@ -5,7 +5,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.model import Message, UserInDB, Token, UserNew
+from app.model import Message, UserInDB, Token, UserNew, SafePayloadNew
 from app.db import Database
 import app.auth as auth
 import app.user as user
@@ -101,9 +101,16 @@ async def get_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     return {"safePayload": x}
 
 @app.post("/safe", tags=["safe"])
-async def post_safe():
-    pass
-
+async def post_safe(safePayload : SafePayloadNew, current_user: UserInDB = Depends(auth.get_current_user)):
+    x = Filehandler.writeFile(current_user.safe_id, safePayload.safePayload)
+    if x:
+        return {"message:", "Successfully updated Safe"}
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Payload is larger than size limit, will not be saved",
+            headers={"WWW-Authenticate": "Bearer"},
+        )  
 @app.post("/safe/delete", tags=["safe"])
 async def del_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     x = Filehandler.deleteFile(current_user.safe_id)
