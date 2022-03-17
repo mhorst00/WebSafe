@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 
+
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -21,10 +22,10 @@ class UserInDB(User):
     full_name: str
     hashed_password: str
     safe_id: str
-
     class Config:
         schema_extra = {
             "example": {
+
                 "full_name": "BoatyMcBoatface",
                 "username": "boaty@mcboatface.com",
                 "hashed_password": "hashedpassword",
@@ -36,6 +37,7 @@ class UserNew(User):
     full_name: str
     password: str
 
+
     class Config:
         schema_extra = {
             "example": {
@@ -44,7 +46,15 @@ class UserNew(User):
                 "password": "password"
             }
         }
+class SafePayloadNew(BaseModel):
+    safePayload: str
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "safePayload": "The dark side of the Force is a pathway to many abilities; some consider to be unnatural",
+            }
+        }
 class Message(BaseModel):
     message: str
 
