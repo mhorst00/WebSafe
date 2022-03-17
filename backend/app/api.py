@@ -111,6 +111,7 @@ async def post_safe(safePayload : SafePayloadNew, current_user: UserInDB = Depen
             detail="Payload is larger than size limit, will not be saved",
             headers={"WWW-Authenticate": "Bearer"},
         )  
+        
 @app.post("/safe/delete", tags=["safe"])
 async def del_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     x = Filehandler.deleteFile(current_user.safe_id)
