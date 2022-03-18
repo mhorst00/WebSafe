@@ -8,17 +8,17 @@
 }
 
 .App-Logo-Login {
-  height: 585px;
-  width: 1170px;
+  height: 60%;
+  width: 59.3%;
   position: absolute;
   opacity: 0.5;
 }
 
 .App-Logo-Dashboard {
-  top: 25%;
+  top: 30%;
   left: 30%;
-  height: 685px;
-  width: 1270px;
+  height: 65%;
+  width: 70%;
   position: absolute;
   opacity: 0.5;
   z-index: 1;

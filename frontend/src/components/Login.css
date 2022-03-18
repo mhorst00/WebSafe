@@ -7,8 +7,8 @@
 }
 
 .Login-Field {
-    width: 400px;
-    min-height: 450px;
+    width: 21%;
+    min-height: 30%;
     background-color: #edf2fb;
     border-radius: 12px;
     color: #282c34;
@@ -37,7 +37,7 @@
     background-color: coral;
     color: #912f0b;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 0.55em;
 }
 
 .Login-Password {

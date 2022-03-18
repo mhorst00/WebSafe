@@ -188,8 +188,8 @@
 }
 
 .Dashboard-Settings-Dialog {
-    height: 550px;
-    width: 700px;
+    height: 52%;
+    width: 37.7%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
