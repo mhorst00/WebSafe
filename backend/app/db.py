@@ -1,4 +1,6 @@
+import logging
 import pymongo
+from pymongo.errors import ConnectionFailure
 from decouple import config
 from pydantic import validate_arguments
 
@@ -14,8 +16,10 @@ class Database():
     @staticmethod
     def initalise():
         client = pymongo.MongoClient(Database.URI)
-        if client.server_info() is None:
-            raise Exception("Could not connect to MongoDB database. Are the provided variables correct?")
+        try:
+            client.admin.command('ping')
+        except ConnectionFailure:
+            logging.exception("MongoDB server not available. Check you environment variables")
         Database.DATABASE = client["dbname"]
 
     @staticmethod
@@ -53,4 +57,5 @@ class Database():
     @staticmethod
     def clear_col():
         x: bool = Database.DATABASE["users"].drop()
+        logging.info("Dropped collection 'users' from MongoDB")
         return x

@@ -1,7 +1,8 @@
 import random
 import string
 import hashlib
-
+import random
+import string
 from pydantic import validate_arguments
 
 from app.model import User, UserInDB, UserInDBDel,UserNew
@@ -17,12 +18,11 @@ def add_user(user: UserNew):
     if Database.find_user(query):
         return False
     hashed_password = get_password_hash(user.password)
-    safe_id = hashlib.sha1(user.username.encode()).hexdigest()#hash(user.username)#user.username # TODO: use hash of username
-    print(safe_id)
+    safe_id = hashlib.sha1(user.username.encode()).hexdigest()
     user_dict = UserInDB(username=user.username, full_name=user.full_name, hashed_password=hashed_password, safe_id=safe_id)
     Database.add_user(user_dict)
     Filehandler.writeFile(safe_id,"")
-    if Database.find_user(user_dict) is not None and Filehandler.readFile is not None:
+    if Database.find_user(user_dict) and Filehandler.checkFile(safe_id):
         return True
 
 @validate_arguments
@@ -46,10 +46,9 @@ def edit_user(data: UserNew, user: UserInDB):
     if not d:
         return False
     hashed_password = get_password_hash(data.password)
-    # TODO: use hash of username as safe_id
     user_dict = UserInDB(username=data.username, full_name=data.full_name, hashed_password=hashed_password, safe_id=user.safe_id)
     Database.add_user(user_dict)
-    if Database.find_user(user_dict) is not None:
+    if Database.find_user(user_dict):
         return True
 
 @validate_arguments
@@ -65,7 +64,7 @@ def add_deletion_string(user: UserInDB):
     )
     Database.delete_user(user)
     x = Database.add_user(user_dict)
-    if x is not None:
+    if x:
         return del_string
 
 @validate_arguments

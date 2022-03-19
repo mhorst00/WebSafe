@@ -1,4 +1,4 @@
-import glob
+import logging
 import os
 import sys
 
@@ -6,33 +6,23 @@ from fastapi import HTTPException, status
 from pydantic import validate_arguments
 from decouple import config
 
-FILE_BASE_DIR = config("FILE_BASE_DIR", default="safe/")  # "safe/"
-FILE_SIZE_LIMIT_KB = config("FILE_SIZE_LIMIT_KB", default=50)  # 50
-# TODO: Replace prints with proper logging
+FILE_BASE_DIR = config("FILE_BASE_DIR", default="safe/")
+FILE_SIZE_LIMIT_KB = config("FILE_SIZE_LIMIT_KB", default=50)
 
 
 class Filehandler():
 
     def preCheck():
         if os.path.exists(FILE_BASE_DIR) and os.path.isfile(FILE_BASE_DIR):
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Warning - File dir is not a directory",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
+            logging.exception("File dir is not a directory")
         if not os.path.exists(FILE_BASE_DIR):
-            print("Info - File dir is does not exist - creating dir")
+            logging.info("File dir is does not exist - creating dir")
             try:
                 os.mkdir(FILE_BASE_DIR)
             except:
-                m = "Warning - Could not create directory: " + sys.exc_info()[0]
-                raise HTTPException(
-                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                    detail=m,
-                    headers={"WWW-Authenticate": "Bearer"},
-                )
+                logging.exception(f"Could not create directory: {sys.exc_info()[0]}")
         if os.path.exists(FILE_BASE_DIR) and os.path.isdir(FILE_BASE_DIR):
-            print("Info - File dir exists")
+            logging.info("File dir exists")
 
     @staticmethod
     @validate_arguments
@@ -43,7 +33,16 @@ class Filehandler():
                 f.close()
                 return content
         except:
-            print("Warning - Could not read Safe: " + str(sys.exc_info()[0]))
+            logging.error("Could not read safe: " + str(sys.exc_info()[0]))
+
+    @staticmethod
+    @validate_arguments
+    def checkFile(name: str):
+        try:
+            if os.path.exists(FILE_BASE_DIR + name):
+                return True
+        except:
+            logging.error("Safe does not exist " + str(sys.exc_info()[0]))
 
     @staticmethod
     @validate_arguments
@@ -54,7 +53,7 @@ class Filehandler():
                 f.close()
                 return True
         else:
-            print("Warning - Payload is larger than size limit, will not be saved")
+            logging.error("Payload is larger than size limit, will not be saved")
             return False
 
     @staticmethod
@@ -67,5 +66,5 @@ class Filehandler():
             else:
                 return False
         else:
-            print("Could not delete Save " + name + " - No such Safe")
+            logging.error("Could not delete safe " + name + " - No such safe")
             return False
