@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app.model import Message, User, UserInDB, Token, UserNew, SafePayloadNew
+
 from app.db import Database
 from app.mail import MailSend
 import app.auth as auth
@@ -15,8 +16,8 @@ from app.files import Filehandler
 logging.basicConfig(filename="app.log", level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s', filemode="w")
 
 Database.initalise()
-Filehandler.preCheck()
 MailSend.initialise()
+Filehandler.preCheck()
 
 app = FastAPI()
 
