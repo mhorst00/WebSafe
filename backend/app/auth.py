@@ -4,7 +4,7 @@ from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
-from app.model import User, UserInDB, TokenData
+from app.model import User, TokenData
 from app.db import Database
 
 # to get a string like this run:

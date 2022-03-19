@@ -1,3 +1,4 @@
+import logging
 import smtplib
 
 from decouple import config
@@ -32,7 +33,10 @@ class MailSend():
         msg.set_content(f"""Hello {user.full_name}, \n
         you have requested to delete your account. This may be because you have forgotten your password. \n
         Click this link to confirm your account deletion: https://{URI}/api/v1/user/delete/verify/{del_string}""")
-        MailSend.CLIENT.send_message(msg)
+        try:
+            MailSend.CLIENT.send_message(msg)
+        except Exception as e:
+            logging.error(e)
 
     @staticmethod
     def send_user_greeting(user: UserInDB):
@@ -43,4 +47,7 @@ class MailSend():
         msg.set_content(f"""Hello {user.full_name}, \n
         your account creation has been successful. \n
         Click this link to login to your new account: https://{URI}/login""")
-        MailSend.CLIENT.send_message(msg)
+        try:
+            MailSend.CLIENT.send_message(msg)
+        except Exception as e:
+            logging.error(e)
