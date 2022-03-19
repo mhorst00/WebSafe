@@ -1,6 +1,13 @@
 name: flake8 Lint
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - "backend/**"
+  pull_request:
+    types: [opened]
+    paths:
+      - "backend/**"
 
 jobs:
   flake8-lint:
