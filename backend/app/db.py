@@ -2,7 +2,7 @@ import pymongo
 from decouple import config
 from pydantic import validate_arguments
 
-from app.model import User, UserInDB
+from app.model import User, UserInDB, UserInDBDel
 
 DB_URL = config("DB_URL", default="localhost")
 DB_PORT = config("DB_PORT", default=27017, cast=int)
@@ -29,8 +29,18 @@ class Database():
     def find_user(user: User | UserInDB):
         x = Database.DATABASE["users"].find_one(user.dict())
         if x:
+            if "del_string" in x:
+                return UserInDBDel(**x)
+            else: return UserInDB(**x)
+
+    @staticmethod
+    @validate_arguments
+    def find_by_value(key: str, value: str):
+        x = Database.DATABASE["users"].find_one({key:value})
+        if x:
+            if "del_string" in x:
+                return UserInDBDel(**x)
             return UserInDB(**x)
-        else: return None
 
     @staticmethod
     @validate_arguments
