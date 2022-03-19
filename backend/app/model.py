@@ -17,13 +17,13 @@ class User(BaseModel):
         schema_extra = {"example": {"username": "boaty@mcboatface.com"}}
 
 
-class UserNew(User):
-    full_name: str
-    password: str
+class UserInDBDel(UserInDB):
+    del_string: str
 
     class Config:
         schema_extra = {
             "example": {
+                "full_name": "BoatyMcBoatface",
                 "username": "boaty@mcboatface.com",
                 "full_name": "Boaty McBoatface",
                 "password": "password",
