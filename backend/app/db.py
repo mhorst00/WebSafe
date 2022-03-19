@@ -42,6 +42,7 @@ class Database:
                 return UserInDBDel(**x)
             else:
                 return UserInDB(**x)
+
     @staticmethod
     @validate_arguments
     def find_by_value(key: str, value: str):
