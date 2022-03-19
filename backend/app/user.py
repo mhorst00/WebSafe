@@ -1,8 +1,6 @@
 import random
 import string
 import hashlib
-import random
-import string
 from pydantic import validate_arguments
 
 from app.model import User, UserInDB, UserInDBDel, UserNew
