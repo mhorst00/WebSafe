@@ -75,8 +75,6 @@ async def del_user_no_pass(current_user: User):
             detail="User could not be found or mail could not be sent",
         )
 
-
-
 @app.post("/user/change", tags=["user"])
 async def change_user(change_user: UserNew, current_user: UserInDB = Depends(auth.get_current_user)):
     x = user.edit_user(change_user, current_user)
@@ -97,6 +95,8 @@ async def new_user(new_user: UserNew):
             headers={"WWW-Authenticate": "Bearer"},
         )
     elif x:
+        user_db = user.get_user(User(username=new_user.username))
+        MailSend.send_user_greeting(user_db)
         return {"message": "User has been created"}
     elif x is False:
         raise HTTPException(
