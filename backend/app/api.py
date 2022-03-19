@@ -12,7 +12,6 @@ import app.auth as auth
 import app.user as user
 from app.files import Filehandler
 
-
 logging.basicConfig(
     filename="app.log",
     level=logging.INFO,
