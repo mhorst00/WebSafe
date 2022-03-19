@@ -1,5 +1,4 @@
 from datetime import timedelta
-from http.client import HTTPResponse
 
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,8 +14,7 @@ from app.files import Filehandler
 
 Database.initalise()
 MailSend.initialise()
-if not Filehandler.preCheck():
-    quit()
+Filehandler.preCheck()
 
 app = FastAPI()
 
