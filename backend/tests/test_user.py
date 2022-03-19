@@ -13,7 +13,9 @@ class TestUser(unittest.TestCase):
         full_name="testuser", username="test@mail.com", password="testpassword"
     )
     u_change = UserNew(
-        full_name="testuser", username="test@mail.com", password="someotherpass"
+        full_name="testuser",
+        username="test@mail.com",
+        password="someotherpass",
     )
 
     def test_add_user(self):
