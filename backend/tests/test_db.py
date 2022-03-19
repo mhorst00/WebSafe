@@ -36,5 +36,17 @@ class TestDb(unittest.TestCase):
         Database.clear_col()
         self.assertIsNone(Database.find_user(self.u))
 
+    def test_delete_user(self):
+        u = {
+            "username":"testuser",
+            "email":"test@mail.com",
+            "password":"testpassword",
+            "safe":"testuser"
+        }
+        Database.add_user(u)
+        self.assertIsNotNone(Database.find_user(u))
+        Database.delete_user(u)
+        self.assertIsNone(Database.find_user(u))
+
 if __name__ == '__main__':
     unittest.main()

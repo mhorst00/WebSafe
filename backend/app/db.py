@@ -14,6 +14,8 @@ class Database():
     @staticmethod
     def initalise():
         client = pymongo.MongoClient(Database.URI)
+        if client.server_info() is None:
+            raise Exception("Could not connect to MongoDB database. Are the provided variables correct?")
         Database.DATABASE = client["dbname"]
 
     @staticmethod
