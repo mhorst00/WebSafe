@@ -126,7 +126,7 @@ async def new_user(new_user: UserNew):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-@app.get("/user/me", response_model=UserInDB, tags=["user"])
+@app.get("/user/me", response_model=User, tags=["user"])
 async def read_user_me(current_user: UserInDB = Depends(auth.get_current_user)):
     return current_user
 
@@ -161,7 +161,7 @@ async def get_safe(current_user: UserInDB = Depends(auth.get_current_user)):
 async def post_safe(safePayload : SafePayloadNew, current_user: UserInDB = Depends(auth.get_current_user)):
     x = Filehandler.writeFile(current_user.safe_id, safePayload.safePayload)
     if x:
-        return {"message:", "Successfully updated Safe"}
+        return {"message:": "Successfully updated Safe"}
     else:
         logging.error(f"Error while receiving safe {current_user.safe_id}. Size too big")
         raise HTTPException(
@@ -174,7 +174,7 @@ async def post_safe(safePayload : SafePayloadNew, current_user: UserInDB = Depen
 async def del_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     x = Filehandler.deleteFile(current_user.safe_id)
     if x:
-        return{"message:", "Successfully deleted Safe"}
+        return{"message:": "Successfully deleted Safe"}
     else:
         logging.error(f"Error while deleting safe {current_user.safe_id}")
         raise HTTPException(
