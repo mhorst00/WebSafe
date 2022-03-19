@@ -1,24 +1,21 @@
 import unittest
 
 import app.user as user
-from app.model import UserInDB, UserNew, User
+from app.model import UserNew, User
 from app.db import Database
 
 Database.initalise()
 Database.clear_col()
 
+
 class TestUser(unittest.TestCase):
     u_new = UserNew(
-            full_name="testuser",
-            username="test@mail.com",
-            password="testpassword"
-        )
+        full_name="testuser", username="test@mail.com", password="testpassword"
+    )
     u_change = UserNew(
-            full_name="testuser",
-            username="test@mail.com",
-            password="someotherpass"
-        )
-    
+        full_name="testuser", username="test@mail.com", password="someotherpass"
+    )
+
     def test_add_user(self):
         x = user.add_user(self.u_new)
         self.assertTrue(x)
@@ -26,7 +23,7 @@ class TestUser(unittest.TestCase):
         self.assertIsNotNone(y)
         x = user.delete_user(y)
         self.assertTrue(x)
-    
+
     def test_get_user(self):
         x = user.add_user(self.u_new)
         self.assertTrue(x)

@@ -9,7 +9,8 @@ from app.model import User, UserInDB, UserInDBDel
 DB_URL = config("DB_URL", default="localhost")
 DB_PORT = config("DB_PORT", default=27017, cast=int)
 
-class Database():
+
+class Database:
     URI = f"mongodb://{DB_URL}:{DB_PORT}"
     DATABASE = None
 
@@ -17,16 +18,18 @@ class Database():
     def initalise():
         client = pymongo.MongoClient(Database.URI)
         try:
-            client.admin.command('ping')
+            client.admin.command("ping")
         except ConnectionFailure:
-            logging.exception("MongoDB server not available. Check you environment variables")
+            logging.exception(
+                "MongoDB server not available. Check you environment variables"
+            )
         Database.DATABASE = client["dbname"]
 
     @staticmethod
     @validate_arguments
     def add_user(user: UserInDB):
         x = None
-        if Database.find_user(user) == None:
+        if Database.find_user(user) is None:
             x = Database.DATABASE["users"].insert_one(user.dict())
         return x
 
@@ -37,12 +40,13 @@ class Database():
         if x:
             if "del_string" in x:
                 return UserInDBDel(**x)
-            else: return UserInDB(**x)
+            else:
+                return UserInDB(**x)
 
     @staticmethod
     @validate_arguments
     def find_by_value(key: str, value: str):
-        x = Database.DATABASE["users"].find_one({key:value})
+        x = Database.DATABASE["users"].find_one({key: value})
         if x:
             if "del_string" in x:
                 return UserInDBDel(**x)
