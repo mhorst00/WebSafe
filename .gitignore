@@ -135,4 +135,5 @@ dmypy.json
 .idea
 
 # Local dev setup
-backend/setup.fish
+*.fish
+*.sh
