@@ -9,10 +9,13 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
-    # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
+    paths:
+      - "backend/**"
   pull_request:
     branches: [ main ]
+    paths:
+      - "backend/**"
 
 env:
   REGISTRY: ghcr.io
