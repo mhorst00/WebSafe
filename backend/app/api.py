@@ -12,6 +12,7 @@ import app.auth as auth
 import app.user as user
 from app.files import Filehandler
 
+
 logging.basicConfig(
     filename="app.log",
     level=logging.INFO,
@@ -20,8 +21,8 @@ logging.basicConfig(
 )
 
 Database.initalise()
-Filehandler.preCheck()
 MailSend.initialise()
+Filehandler.preCheck()
 
 app = FastAPI()
 
