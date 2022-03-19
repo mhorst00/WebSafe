@@ -15,7 +15,7 @@ jobs:
     name: Unit Tests
     services:
       mongodb:
-        image: mongodb
+        image: mongo
         ports:
           - 27017:27017
     steps:
