@@ -130,3 +130,9 @@ dmypy.json
 
 # Dont upload safe
 /backend/safe
+
+# Jetbrains Stuff
+.idea
+
+# Local dev setup
+backend/setup.fish
