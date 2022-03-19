@@ -18,6 +18,19 @@ class User(BaseModel):
             }
         }
 
+class UserNew(User):
+    full_name: str
+    password: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "username": "boaty@mcboatface.com",
+                "full_name": "Boaty McBoatface",
+                "password": "password"
+            }
+        }
+
 class UserInDB(User):
     full_name: str
     hashed_password: str
@@ -33,17 +46,18 @@ class UserInDB(User):
             }
         }
 
-class UserNew(User):
-    full_name: str
-    password: str
+class UserInDBDel(UserInDB):
+    del_string: str
 
 
     class Config:
         schema_extra = {
             "example": {
+                "full_name": "BoatyMcBoatface",
                 "username": "boaty@mcboatface.com",
-                "full_name": "Boaty McBoatface",
-                "password": "password"
+                "hashed_password": "hashedpassword",
+                "safe_id": "BoatyMcBoatface",
+                "del_string": "BoatysUniqueDeletionString"
             }
         }
 class SafePayloadNew(BaseModel):
