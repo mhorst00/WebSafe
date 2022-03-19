@@ -1,5 +1,4 @@
 from datetime import timedelta
-from http.client import HTTPResponse
 
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,9 +11,7 @@ import app.user as user
 from app.files import Filehandler
 
 Database.initalise()
-if not Filehandler.preCheck():
-    quit()
-
+Filehandler.preCheck()
 app = FastAPI()
 
 origins = [
