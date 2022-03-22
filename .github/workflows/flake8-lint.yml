@@ -1,6 +1,14 @@
 name: flake8 Lint
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "backend/**"
+  pull_request:
+    types: [opened]
+    paths:
+      - "backend/**"
 
 jobs:
   flake8-lint:
@@ -9,7 +17,7 @@ jobs:
     steps:
       - name: Check out source repository
         uses: actions/checkout@v2
-      - name: Set up Python environment
+      - name: Set up Python 3.10 environment
         uses: actions/setup-python@v2
         with:
           python-version: "3.10"

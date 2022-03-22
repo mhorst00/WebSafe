@@ -2,18 +2,21 @@ import unittest
 
 from app.db import Database
 
-Database.initalise()
-Database.clear_col()
-
 
 class TestDb(unittest.TestCase):
-    u_db = {
-        "full_name": "testuser",
-        "username": "test@mail.com",
-        "hashed_password": "testpassword",
-        "safe_id": "testuser",
-    }
-    u = {"username": "test@mail.com"}
+    def setUp(self):
+        Database.initalise()
+        Database.clear_col()
+        self.u_db = {
+            "full_name": "testuser",
+            "username": "test@mail.com",
+            "hashed_password": "testpassword",
+            "safe_id": "testuser",
+        }
+        self.u = {"username": "test@mail.com"}
+
+    def tearDown(self):
+        Database.clear_col()
 
     def test_add_user(self):
         x = Database.add_user(self.u_db)
