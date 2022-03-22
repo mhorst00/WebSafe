@@ -68,8 +68,8 @@ class SafePayloadNew(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "safePayload": """The dark side of the Force is a pathway to many abilities
-                 some consider to be unnatural""",
+                "safePayload": ("The dark side of the Force is a pathway to many")
+                + (" abilities some consider to be unnatural")
             }
         }
 
