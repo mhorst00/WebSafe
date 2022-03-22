@@ -213,7 +213,7 @@ async def post_safe(
 ):
     x = Filehandler.writeFile(current_user.safe_id, safePayload.safePayload)
     if x:
-        return {"message:": "Successfully updated Safe"}
+        return {"message": "Successfully updated Safe"}
     else:
         logging.error(f"Error while receiving safe {current_user.safe_id}. Size too big")
         return JSONResponse(
@@ -231,7 +231,7 @@ async def post_safe(
 async def del_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     x = Filehandler.deleteFile(current_user.safe_id)
     if x:
-        return {"message:": "Successfully deleted safe"}
+        return {"message": "Successfully deleted safe"}
     else:
         logging.error(f"Error while deleting safe {current_user.safe_id}")
         return JSONResponse(
