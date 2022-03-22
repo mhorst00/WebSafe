@@ -5,9 +5,11 @@ import { AuthContext } from '../context/AuthContext';
 function Login() {
   const [register, setRegister] = useState(false);
   const [failed, setFailed] = useState(undefined);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+
 
   const {login} = useContext(AuthContext);
   
@@ -21,16 +23,20 @@ function Login() {
     setRegister(true);
   }
 
+  const onChangeName = (event) => {
+    setName(event.target.value);
+  }
+
   const onChangeEmail = (event) => {
-    setEmail(event.target.value)
+    setEmail(event.target.value);
   }
 
   const onChangePassword = (event) => {
-    setPassword(event.target.value)
+    setPassword(event.target.value);
   }
 
   const onChangePasswordConfirm = (event) => {
-    setPasswordConfirm(event.target.value)
+    setPasswordConfirm(event.target.value);
   }
 
   const validateInput = () => {
@@ -69,7 +75,13 @@ function Login() {
         <h2>WebSafe</h2>
         {failed ? (<p className='Login-Failed-Text'>{failed}</p>) : (<p></p>)}
         <div className='Login-Input'>
-            <label>E-Mail</label>
+            {register && (
+                <>
+                    <label className='Login-Password'>Name</label>
+                    <input type='password' placeholder='Your Name' onChange={onChangeName}/>
+                </>
+            )}
+            <label className='Login-Password'>E-Mail</label>
             <input type='email' placeholder='example@example.com' onChange={onChangeEmail}/>
             <label className='Login-Password'>Password</label>
             <input type='password' placeholder='password' onChange={onChangePassword}/>
