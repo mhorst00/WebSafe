@@ -1,17 +1,21 @@
 import logging
 import smtplib
 
-from decouple import config
+from decouple import config, UndefinedValueError
 from email.message import EmailMessage
 
 from app.model import UserInDB
 import app.user as u
 
-SMTP_SERVER = config("SMTP_SERVER")
-SMTP_PORT = config("SMTP_PORT", cast=int)
-MAIL_ADDRESS = config("MAIL_ADDRESS")
-MAIL_PASSWORD = config("MAIL_PASSWORD")
-URI = config("HOST_URI", default="localhost:8000")
+try:
+    SMTP_SERVER = config("SMTP_SERVER")
+    SMTP_PORT = config("SMTP_PORT", cast=int)
+    MAIL_ADDRESS = config("MAIL_ADDRESS")
+    MAIL_PASSWORD = config("MAIL_PASSWORD")
+    URI = config("HOST_URI", default="localhost:8000")
+    MAIL_UNSET = False
+except UndefinedValueError:
+    MAIL_UNSET = True
 
 
 class MailSend:
@@ -19,12 +23,16 @@ class MailSend:
 
     @staticmethod
     def initialise():
+        if MAIL_UNSET:
+            return None
         MailSend.CLIENT = smtplib.SMTP_SSL(host=SMTP_SERVER, port=SMTP_PORT)
         MailSend.CLIENT.ehlo()
         MailSend.CLIENT.login(user=MAIL_ADDRESS, password=MAIL_PASSWORD)
 
     @staticmethod
     def send_user_delete(user: UserInDB):
+        if MAIL_UNSET:
+            return None
         del_string = u.add_deletion_string(user)
         msg = EmailMessage()
         msg["Subject"] = f"WebSafe - Deletion of your account ({user.full_name})"
@@ -43,6 +51,8 @@ class MailSend:
 
     @staticmethod
     def send_user_greeting(user: UserInDB):
+        if MAIL_UNSET:
+            return None
         msg = EmailMessage()
         msg["Subject"] = f"WebSafe - Creation of your account ({user.full_name})"
         msg["From"] = f"noreply@{URI}"

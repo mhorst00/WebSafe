@@ -6,12 +6,12 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.model import Error, Message, User, UserInDB, Token, UserNew, SafePayloadNew
+from app.model import Message, User, UserInDB, Token, UserNew, SafePayloadNew
 from app.db import Database
 from app.mail import MailSend
+from app.files import Filehandler
 import app.auth as auth
 import app.user as user
-from app.files import Filehandler
 
 logging.basicConfig(
     filename="app.log",
@@ -37,7 +37,7 @@ app.add_middleware(
 )
 
 
-@app.get(
+@app.delete(
     "/user/delete",
     response_model=Message,
     responses={404: {"model": Message}},
@@ -55,7 +55,7 @@ async def del_user(current_user: UserInDB = Depends(auth.get_current_user)):
         )
 
 
-@app.get(
+@app.delete(
     "/user/delete/verify/{del_string}",
     response_model=Message,
     responses={500: {"model": Message}, 400: {"model": Message}},
@@ -221,8 +221,8 @@ async def post_safe(
         )
 
 
-@app.post(
-    "/safe/delete",
+@app.delete(
+    "/safe",
     response_model=Message,
     responses={500: {"model": Message}},
     tags=["safe"],
