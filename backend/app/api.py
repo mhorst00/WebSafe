@@ -5,7 +5,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.model import Message, User, UserInDB, Token, UserNew, SafePayloadNew
+from app.model import Error, Message, User, UserInDB, Token, UserNew, SafePayloadNew
 from app.db import Database
 from app.mail import MailSend
 import app.auth as auth
@@ -36,7 +36,12 @@ app.add_middleware(
 )
 
 
-@app.get("/user/delete", response_model=Message, tags=["user"])
+@app.get(
+    "/user/delete",
+    response_model=Message,
+    responses={404: {"model": Error}},
+    tags=["user"],
+)
 async def del_user(current_user: UserInDB = Depends(auth.get_current_user)):
     x = user.delete_user(current_user)
     if x:
@@ -51,7 +56,12 @@ async def del_user(current_user: UserInDB = Depends(auth.get_current_user)):
         )
 
 
-@app.get("/user/delete/verify/{del_string}", response_model=Message, tags=["user"])
+@app.get(
+    "/user/delete/verify/{del_string}",
+    response_model=Message,
+    responses={400: {"model": Error}},
+    tags=["user"],
+)
 async def del_user_verify(del_string: str):
     if len(del_string) != 32:
         logging.error("Received del_string in wrong format")
@@ -80,7 +90,12 @@ async def del_user_verify(del_string: str):
         )
 
 
-@app.post("/user/delete/pass_forgotten", response_model=Message, tags=["user"])
+@app.post(
+    "/user/delete/pass_forgotten",
+    response_model=Message,
+    responses={500: {"model": Error}},
+    tags=["user"],
+)
 async def del_user_no_pass(current_user: User):
     x = user.get_user(current_user)
     if x:
@@ -97,7 +112,12 @@ async def del_user_no_pass(current_user: User):
         )
 
 
-@app.post("/user/change", tags=["user"])
+@app.post(
+    "/user/change",
+    response_model=Message,
+    responses={500: {"model": Error}},
+    tags=["user"],
+)
 async def change_user(
     change_user: UserNew,
     current_user: UserInDB = Depends(auth.get_current_user),
@@ -115,7 +135,9 @@ async def change_user(
         )
 
 
-@app.post("/user/new", response_model=Message, tags=["user"])
+@app.post(
+    "/user/new", response_model=Message, responses={500: {"model": Error}}, tags=["user"]
+)
 async def new_user(new_user: UserNew):
     x = user.add_user(new_user)
     if x is None:
@@ -141,7 +163,9 @@ async def new_user(new_user: UserNew):
         )
 
 
-@app.get("/user/me", response_model=User, tags=["user"])
+@app.get(
+    "/user/me", response_model=User, responses={401: {"model": Error}}, tags=["user"]
+)
 async def read_user_me(
     current_user: UserInDB = Depends(auth.get_current_user),
 ):
@@ -166,7 +190,12 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.get("/safe", tags=["safe"])
+@app.get(
+    "/safe",
+    response_model=SafePayloadNew,
+    responses={500: {"model": Error}},
+    tags=["safe"],
+)
 async def get_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     x = Filehandler.readFile(current_user.safe_id)
     if x is None:
@@ -179,7 +208,9 @@ async def get_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     return {"safePayload": x}
 
 
-@app.post("/safe", tags=["safe"])
+@app.post(
+    "/safe", response_model=Message, responses={500: {"model": Error}}, tags=["safe"]
+)
 async def post_safe(
     safePayload: SafePayloadNew,
     current_user: UserInDB = Depends(auth.get_current_user),
@@ -196,7 +227,12 @@ async def post_safe(
         )
 
 
-@app.post("/safe/delete", tags=["safe"])
+@app.post(
+    "/safe/delete",
+    response_model=Message,
+    responses={500: {"model": Error}},
+    tags=["safe"],
+)
 async def del_safe(current_user: UserInDB = Depends(auth.get_current_user)):
     x = Filehandler.deleteFile(current_user.safe_id)
     if x:
