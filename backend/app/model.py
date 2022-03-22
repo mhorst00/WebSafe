@@ -79,3 +79,10 @@ class Message(BaseModel):
 
     class Config:
         scheme_extra = {"example": {"message": "status message on API call"}}
+
+
+class Error(BaseModel):
+    detail: str
+
+    class Config:
+        scheme_extra = {"example": {"detail": "status message on error in API call"}}

@@ -6,13 +6,12 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.model import Message, User, UserInDB, Token, UserNew, SafePayloadNew
+from app.model import Error, Message, User, UserInDB, Token, UserNew, SafePayloadNew
 from app.db import Database
 from app.mail import MailSend
 import app.auth as auth
 import app.user as user
 from app.files import Filehandler
-
 
 logging.basicConfig(
     filename="app.log",

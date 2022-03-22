@@ -8,20 +8,38 @@ name: Docker
 on:
   workflow_dispatch:
   push:
-    branches: [ feature-backend-deploy ]
-    # Publish semver tags as releases.
+    branches: [ main ]
     tags: [ 'v*.*.*' ]
+    paths:
+      - "backend/**"
   pull_request:
-    branches: [ feature-backend-deploy ]
+    branches: [ main ]
+    paths:
+      - "backend/**"
 
 env:
-  # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}-backend
 
 
 jobs:
+
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v2
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+        with:
+          args: "--config=backend/.flake8"
+          path: "backend"
+
   build:
 
     runs-on: ubuntu-latest
