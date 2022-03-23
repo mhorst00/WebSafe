@@ -7,4 +7,6 @@
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
     "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "git.ignoreLimitWarning": true,
 }

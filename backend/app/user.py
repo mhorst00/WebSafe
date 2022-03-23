@@ -3,7 +3,7 @@ import string
 import hashlib
 from pydantic import validate_arguments
 
-from app.model import User, UserInDB, UserInDBDel, UserNew
+from app.model import SafePayload, User, UserInDB, UserInDBDel, UserNew
 from app.db import Database
 from app.auth import get_password_hash
 from app.files import Filehandler
@@ -25,7 +25,8 @@ def add_user(user: UserNew):
         safe_id=safe_id,
     )
     Database.add_user(user_dict)
-    Filehandler.writeFile(safe_id, "")
+    empty_safe = SafePayload(safe_payload="", enc_data_key="", enc_vault_key="")
+    Filehandler.writeFile(safe_id, empty_safe)
     if Database.find_user(user_dict) and Filehandler.checkFile(safe_id):
         return True
 
