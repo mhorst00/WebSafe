@@ -127,9 +127,9 @@
 }
 
 .Save-Button {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     border-radius: 7px;
-    padding: 11px 12px;
+    padding: 12px 12px;
     border: none;
     background-color: white;
     color: black;
@@ -138,6 +138,7 @@
 }
 
 .Save-Button:hover {
+    border: none;
     background-color: green;
     transition: background-color 200ms linear;
     color: white;
@@ -173,7 +174,7 @@
     background-color: #636770;
     color: #e94242;
     font-size: 95%;
-    width: 70%;
+    width: 69%;
     margin-top: 4px;
     box-shadow: 1px 1px 2px #636770;
 }
@@ -182,7 +183,7 @@
     background-color: #636770;
     color: #e94242;
     font-size: 95%;
-    width: 70%;
+    width: 69%;
     margin-top: 4px;
     cursor: pointer;
     box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
@@ -193,7 +194,7 @@
     background-color: #636770;
     color: #e94242;
     font-size: 95%;
-    width: 70%;
+    width: 69%;
     margin-top: 4px;
     color: rgba(121, 255, 44, 0.75);
     cursor: pointer;
@@ -327,4 +328,9 @@ a {
 
 #copyElement {
     display: none;
+}
+
+.free {
+    width: 30px;
+    height: 10px;
 }

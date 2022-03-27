@@ -3,6 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import './Dashboard.css';
 
 function copyStringToClipboard(str) {
+  document.activeElement.blur();
+  if(!str) return;
   var el = document.createElement('textarea');
   el.value = str;
   el.setAttribute('readonly', '');
@@ -14,8 +16,8 @@ function copyStringToClipboard(str) {
 }
 
 function redirect(url) {
-  if(!url) return;
   document.activeElement.blur()
+  if(!url) return;
   var a = document.createElement('a'); 
   a.setAttribute('readonly', '');
   a.style = {position: 'absolute', left: '-9999px'};
@@ -179,6 +181,8 @@ function Dashboard() {
                     <div className='Dashboard-Password-Entry-Password'>
                       <p color='#fff'>Password: <input className='copy' title='Copy this entry' value={x.password} spellcheck="false"  onClick={() => copyStringToClipboard(x.password)}/></p>
                     </div>
+                    <div className='free'>
+                    </div>
                   </div>
          })}
         </div>
@@ -187,5 +191,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
-//target='_blank' rel="noreferrer"

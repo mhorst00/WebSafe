@@ -19,7 +19,7 @@
   left: 30%;
   height: 65%;
   width: 70%;
-  position: absolute;
+  position: fixed;
   opacity: 0.5;
   z-index: 1;
 }
