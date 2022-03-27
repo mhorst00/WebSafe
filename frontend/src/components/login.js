@@ -57,7 +57,7 @@ function Login() {
 
     try {
       if(register) {
-        console.log('API-CALL {' + email + password + passwordConfirm + '}');
+        console.log('API-CALL {' + name + email + password + passwordConfirm + '}');
       } else {
         console.log('API-CALL {' + email + password + '}');
         login();

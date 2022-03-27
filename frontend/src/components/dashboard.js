@@ -25,6 +25,8 @@ function Dashboard() {
 
   const [reset, setReset] = useState('');
 
+  const [glow, setGlow] = useState(false);
+
   const onChangeLink = (event) => {
     setLink(event.target.value);
   }
@@ -69,7 +71,6 @@ function Dashboard() {
 
   return (
     <div className='Dashboard'>
-
       {settings ? (
         <div className="Dashboard-Settings-Dialog">
           <div className='Dashboard-Settings-TopLane'> 
@@ -176,14 +177,14 @@ function Dashboard() {
                     <div className='Dashboard-Password-Entry-Link'>
                       <p color='#fff'>Link: <a href={aLink} target='_blank' rel="noreferrer">{linkNew}</a></p>
                     </div>
-                    <div className='Dashboard-Password-Entry-Email'>
-                      <p color='#fff'>E-Mail: <a onClick={() => copyStringToClipboard(x.email)}>{emailNew}</a></p>
+                    <div className='Dashboard-Password-Entry-Email copy'>
+                      <p color='#fff'>E-Mail: <a className='copy' onClick={() => copyStringToClipboard(x.email)}>{emailNew}</a></p>
                     </div>
-                    <div className='Dashboard-Password-Entry-Password'>
-                      <p color='#fff'>Password: <a onClick={() => copyStringToClipboard(x.password)}>{passwordNew}</a></p>
+                    <div className='Dashboard-Password-Entry-Password copy'>
+                      <p color='#fff'>Password: <a className='copy' onClick={() => copyStringToClipboard(x.password)}>{passwordNew}</a></p>
                     </div>
                     <div className='Dashboard-Password-Entry-Copy-Container'>
-                        <img src={'./copy.svg'} className="Dashboard-Password-Entry-Copy" alt="logo" onClick={() => copyStringToClipboard(password)}/>
+                      <img src={'./copy.svg'} className="Dashboard-Password-Entry-Copy" alt="logo" onClick={() => copyStringToClipboard(password)}/>  
                     </div>
                   </div>
          })}
