@@ -45,7 +45,7 @@
 .Dashboard-Settings:hover {
     border-radius: 30px;
     box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
-    transition: box-shadow 400ms linear;
+    transition: box-shadow 200ms linear;
 }
 
 .Dashboard-Logout-Container {
@@ -62,7 +62,7 @@
 .Dashboard-Logout:hover {
     border-radius: 12px;
     box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
-    transition: box-shadow 400ms linear;
+    transition: box-shadow 200ms linear;
 }
 
 .Dashboard-NewAccount {
@@ -139,7 +139,7 @@
 
 .Save-Button:hover {
     background-color: green;
-    transition: background-color 400ms linear;
+    transition: background-color 200ms linear;
     color: white;
 }
 
@@ -153,48 +153,55 @@
 .Dashboard-Entry-Garbage:hover {
     border-radius: 10px;
     box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
-    transition: box-shadow 400ms linear;
+    transition: box-shadow 200ms linear;
 }
 
 .Dashboard-Password-Entry-Link {
     padding-left: 40px;
-    flex: 30%;
-    position: relative;
+    flex: 25%;
 }
 
 .Dashboard-Password-Entry-Email {
-    flex: 40%;
+    flex: 30%;
 }
 
 .Dashboard-Password-Entry-Password {
     flex: 30%;
 }
 
-.Dashboard-Password-Entry-Copy-Container {
-    padding-right: 10px;
+.copy {
+    background-color: #636770;
+    color: #e94242;
+    font-size: 95%;
+    width: 70%;
+    margin-top: 4px;
+    box-shadow: 1px 1px 2px #636770;
 }
 
-.Dashboard-Password-Entry-Copy {
-    margin-top: 7px;
-    height: 53px;
-    width: 53px;
+.copy:hover {
+    background-color: #636770;
+    color: #e94242;
+    font-size: 95%;
+    width: 70%;
+    margin-top: 4px;
     cursor: pointer;
+    box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
+    transition: box-shadow 200ms linear;
 }
 
-.Dashboard-Password-Entry-Copy:hover {
-    border-radius: 10px;
-    box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
-    transition: box-shadow 400ms linear;
-}
-
-.copy:hover ~ .Dashboard-Password-Entry-Copy-Container .Dashboard-Password-Entry-Copy {
-    margin-top: 7px;
-    height: 53px;
-    width: 53px;
+.copy:active {
+    background-color: #636770;
+    color: #e94242;
+    font-size: 95%;
+    width: 70%;
+    margin-top: 4px;
+    color: rgba(121, 255, 44, 0.75);
     cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0px 3px 62px 0px rgba(121, 255, 44, 0.75);
-    transition: box-shadow 400ms linear;
+    caret-color: rgba(0,0,0,0);
+    box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
+    transition: box-shadow 50ms linear;
+    border: none;
+    outline:none;
 }
 
 .Dashboard-Settings-Dialog {
@@ -285,7 +292,7 @@
     
 .Delete-Button:hover {
     background-color: red;
-    transition: background-color 400ms linear;
+    transition: background-color 200ms linear;
     color: white;
 }
 

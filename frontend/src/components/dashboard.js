@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import './Dashboard.css';
 
-function copyStringToClipboard (str) {
+function copyStringToClipboard(str) {
   var el = document.createElement('textarea');
   el.value = str;
   el.setAttribute('readonly', '');
@@ -11,6 +11,20 @@ function copyStringToClipboard (str) {
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
+}
+
+function redirect(url) {
+  if(!url) return;
+  document.activeElement.blur()
+  var a = document.createElement('a'); 
+  a.setAttribute('readonly', '');
+  a.style = {position: 'absolute', left: '-9999px'};
+  a.target="_blank";
+  a.rel="noreferrer";
+  a.href=url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 
@@ -24,8 +38,6 @@ function Dashboard() {
   const [password, setPassword] = useState('');
 
   const [reset, setReset] = useState('');
-
-  const [glow, setGlow] = useState(false);
 
   const onChangeLink = (event) => {
     setLink(event.target.value);
@@ -153,38 +165,19 @@ function Dashboard() {
              aLink = 'https://';
            }
            aLink += x.link;
-           
-           let linkNew = x.link;
-           if(x.link.length > 12) {
-             linkNew = linkNew.slice(0, 13) + '...';
-           }
-
-           let emailNew = x.email;
-           if(x.email.length > 17) {
-             emailNew = emailNew.slice(0, 18) + '...';
-           }
-
-           let passwordNew = x.password;
-           if(x.password.length > 9) {
-             passwordNew = passwordNew.slice(0, 10) + '...';
-           }
-           
 
            return <div key={i} className='Dashboard-Password-Entry'>
                     <div className='Dashboard-Entry-Garbage-Container'>
                         <img src={'./garbage2.svg'} className="Dashboard-Entry-Garbage" alt="logo" onClick={() => deleteEntry(i)}/>
                     </div>
                     <div className='Dashboard-Password-Entry-Link'>
-                      <p color='#fff'>Link: <a href={aLink} target='_blank' rel="noreferrer">{linkNew}</a></p>
+                      <p color='#fff'>Link: <input className='copy' title='Go to Website' value={aLink} spellcheck="false" onClick={() => redirect(aLink)}/></p>
                     </div>
-                    <div className='Dashboard-Password-Entry-Email copy'>
-                      <p color='#fff'>E-Mail: <a className='copy' onClick={() => copyStringToClipboard(x.email)}>{emailNew}</a></p>
+                    <div className='Dashboard-Password-Entry-Email'>
+                      <p color='#fff'>E-Mail: <input className='copy' title='Copy this entry' value={x.email} spellcheck="false" onClick={() => copyStringToClipboard(x.email)}/></p>
                     </div>
-                    <div className='Dashboard-Password-Entry-Password copy'>
-                      <p color='#fff'>Password: <a className='copy' onClick={() => copyStringToClipboard(x.password)}>{passwordNew}</a></p>
-                    </div>
-                    <div className='Dashboard-Password-Entry-Copy-Container'>
-                      <img src={'./copy.svg'} className="Dashboard-Password-Entry-Copy" alt="logo" onClick={() => copyStringToClipboard(password)}/>  
+                    <div className='Dashboard-Password-Entry-Password'>
+                      <p color='#fff'>Password: <input className='copy' title='Copy this entry' value={x.password} spellcheck="false"  onClick={() => copyStringToClipboard(x.password)}/></p>
                     </div>
                   </div>
          })}
@@ -194,3 +187,5 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+//target='_blank' rel="noreferrer"
