@@ -151,7 +151,7 @@ function Dashboard() {
               </div>
               <div className='Dashboard-Entry-Password'>
                 <label>Password:</label>
-                <input type='password' value={password} placeholder='password' onChange={onChangePassword}/>
+                <input type='text' value={password} placeholder='password' onChange={onChangePassword}/>
               </div>
               <div className='Dashboard-Entry-Save'>
                 <button className='Save-Button' onClick={newEntry}>Save</button>
