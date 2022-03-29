@@ -31,7 +31,7 @@ class TestFilehandler(unittest.TestCase):
         self.assertTrue(x)
         x = Filehandler.readFile("66")
         self.assertIsNotNone(x)
-        self.assertEqual(x, "I Hate Sand")
+        self.assertEqual(x, self.test_safe)
 
     def testCDeleteFile(self):
         x = Filehandler.writeFile("66", self.test_safe)
