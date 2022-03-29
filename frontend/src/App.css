@@ -1,0 +1,25 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  z-index: 0;
+}
+
+.App-Logo-Login {
+  height: 60%;
+  width: 59.3%;
+  position: absolute;
+  opacity: 0.5;
+}
+
+.App-Logo-Dashboard {
+  top: 30%;
+  left: 30%;
+  height: 65%;
+  width: 70%;
+  position: fixed;
+  opacity: 0.5;
+  z-index: 1;
+}

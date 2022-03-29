@@ -1,0 +1,336 @@
+.Dashboard {
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.stick-top {
+    position: sticky;
+    background-color: #282c34;
+    top: 0;
+    z-index: 4;
+}
+
+.Dashboard-TopLane {
+    margin-left: 40px;
+    margin-right: 40px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    position: sticky;
+    z-index: 4;
+}
+
+.Dashboard-Topic-Container {
+    flex: 1;
+}
+
+.Dashboard-Topic {
+    flex: 1;
+}
+
+.Dashboard-Settings-Container {
+    padding-right: 30px;
+    padding-top: 9px;
+}
+
+.Dashboard-Settings {
+    height: 53px;
+    width: 53px;
+    cursor: pointer;
+}
+
+.Dashboard-Settings:hover {
+    border-radius: 30px;
+    box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
+    transition: box-shadow 200ms linear;
+}
+
+.Dashboard-Logout-Container {
+    justify-self: end;
+    padding-top: 8px;
+}
+
+.Dashboard-Logout {
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+.Dashboard-Logout:hover {
+    border-radius: 12px;
+    box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
+    transition: box-shadow 200ms linear;
+}
+
+.Dashboard-NewAccount {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.Dashboard-NewAccount-Entry {
+    height: 85px;
+    width: 95%;
+    align-items: center;
+    background-color: #636770;
+    border-radius: 12px;
+    box-sizing: border-box;
+    flex-direction: row;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.Dashboard-Password {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Dashboard-Password-Entry {
+    height: 70px;
+    width: 90%;
+    align-items: center;
+    background-color: #636770;
+    border-radius: 12px;
+    box-sizing: border-box;
+    flex-direction: row;
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    z-index: 2;
+    opacity: 0.8;
+}
+
+.Dashboard-Entry-Garbage-Container {
+    padding-left: 10px;
+}
+
+.Dashboard-Entry-Link {
+    flex: 40%;
+}
+
+.Dashboard-Entry-Email {
+    flex: 40%;
+}
+
+.Dashboard-Entry-Password {
+    flex: 40%;
+}
+
+.Dashboard-Entry-Save {
+    padding-right: 15px;
+}
+
+.Save-Button {
+    margin-bottom: 3px;
+    border-radius: 7px;
+    padding: 12px 12px;
+    border: none;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.Save-Button:hover {
+    border: none;
+    background-color: green;
+    transition: background-color 200ms linear;
+    color: white;
+}
+
+.Dashboard-Entry-Garbage {
+    margin-top: 9px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+.Dashboard-Entry-Garbage:hover {
+    border-radius: 10px;
+    box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
+    transition: box-shadow 200ms linear;
+}
+
+.Dashboard-Password-Entry-Link {
+    padding-left: 40px;
+    flex: 25%;
+}
+
+.Dashboard-Password-Entry-Email {
+    flex: 30%;
+}
+
+.Dashboard-Password-Entry-Password {
+    flex: 30%;
+}
+
+.copy {
+    background-color: #636770;
+    color: #e94242;
+    font-size: 95%;
+    width: 69%;
+    margin-top: 4px;
+    box-shadow: 1px 1px 2px #636770;
+}
+
+.copy:hover {
+    background-color: #636770;
+    color: #e94242;
+    font-size: 95%;
+    width: 69%;
+    margin-top: 4px;
+    cursor: pointer;
+    box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
+    transition: box-shadow 200ms linear;
+}
+
+.copy:active {
+    background-color: #636770;
+    color: #e94242;
+    font-size: 95%;
+    width: 69%;
+    margin-top: 4px;
+    color: rgba(121, 255, 44, 0.75);
+    cursor: pointer;
+    caret-color: rgba(0,0,0,0);
+    box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
+    transition: box-shadow 50ms linear;
+    border: none;
+    outline:none;
+}
+
+.Dashboard-Settings-Dialog {
+    height: 52%;
+    width: 37.7%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #edf2fb;
+    border-radius: 12px;
+    color: #282c34;
+    box-sizing: border-box;
+    z-index: 3;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    z-index: 5;
+}
+
+.Dashboard-Settings-TopLane {
+    display: flex;
+    flex-direction: row;
+    width: 45.9%;
+}
+
+.close-button-container {
+    margin-left: 92.5%;
+}
+
+.Settings-Container-Topic {
+    text-align: center;
+    margin-right: 38px;
+}
+
+.close-button {
+    border: none;
+}
+
+.Dashboard-Settings-Container-Topic {
+    align-items: center;
+    margin-left: 45px;
+    justify-content: center;
+    flex: 1;
+}
+
+.Account-Container {
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: #c1c1c1;
+    width: 99%;
+}
+
+.margin-kante {
+    margin-top: 20px;
+}
+
+.Dashboard-Settings-Dialog label {
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+.Account-Changer {
+    margin-top: 12px;
+    flex-direction: row;
+    display: flex;
+}
+
+.Account-Changer-Save {
+    margin-left: 27px;
+}
+
+.Account-Changer-Delete {
+    display: flex;
+    margin-top: 20%;
+}
+
+.Delete-Button {
+    margin-bottom: 5px;
+    margin-right: 18px;
+    border-radius: 7px;
+    padding: 11px 12px;
+    border: none;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    font-size: 17px;
+}
+    
+.Delete-Button:hover {
+    background-color: red;
+    transition: background-color 200ms linear;
+    color: white;
+}
+
+.Select-Data {
+    border-radius: 12px;
+    height: 40px;
+    margin-left: 20px;
+    margin-right: 27.5px;
+    box-shadow: 1px 1px 2px #282c3469;
+    border-radius: 7px;
+    border: none;
+}
+
+p {
+    font-size: auto;
+}
+
+a {
+    color: #e94242;
+}
+
+.Dashboard-NewAccount-Entry label {
+    font-size: 25px;
+    margin-left: 15px;
+}
+
+.Dashboard-NewAccount-Entry input {
+    margin-left: 20px;
+    margin-bottom: 5px;
+    width: 60%;
+}
+
+#copyElement {
+    display: none;
+}
+
+.free {
+    width: 30px;
+    height: 10px;
+}
