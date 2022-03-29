@@ -25,7 +25,9 @@ def add_user(user: UserNew):
         safe_id=safe_id,
     )
     Database.add_user(user_dict)
-    empty_safe = SafePayload(safe_payload="", enc_data_key="", enc_vault_key="")
+    empty_safe = SafePayload(
+        safe_payload="", enc_data_key="", enc_vault_key="", data_iv="", vault_iv=""
+    )
     Filehandler.writeFile(safe_id, empty_safe)
     if Database.find_user(user_dict) and Filehandler.checkFile(safe_id):
         return True
