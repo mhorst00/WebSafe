@@ -66,7 +66,8 @@ class SafePayload(BaseModel):
     safe_payload: str
     enc_data_key: str
     enc_vault_key: str
-    iv: str
+    data_iv: str
+    vault_iv: str
 
     class Config:
         schema_extra = {
@@ -75,7 +76,8 @@ class SafePayload(BaseModel):
                 + (" abilities some consider to be unnatural"),
                 "enc_data_key": "someencryptedstring",
                 "enc_vault_key": "someencryptedstring",
-                "iv": "base64InitialisationVector",
+                "data_iv": "base64InitialisationVector",
+                "vault_iv": "base64InitialisationVector",
             }
         }
 
