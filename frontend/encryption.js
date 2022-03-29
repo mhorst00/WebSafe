@@ -1,19 +1,46 @@
-async function pbkdf2Test(){
-    const username = document.getElementById("username-pbkdf2").value;
-    const password = document.getElementById("password-pbkdf2").value;
-    const masterKey = await genMasterKey(username, password);
-    const masterKeyBase64 = bufferToBase64(await exportKey(masterKey));
-    const authHash = await genAuthHash(masterKey, password);
-    const vaultKey = await genVaultKey();
-    const vaultKeyBase64 = bufferToBase64(await exportKey(vaultKey));
-    const encVaultKey = await wrapKey(vaultKey, masterKey);
-    const encVaultKeyBase64 = bufferToBase64(encVaultKey);
-    const vaultKeyBase64Test = bufferToBase64(await exportKey(await unwrapVaultKey(encVaultKey, masterKey)));
-    document.getElementById("pbkdf2-key").value = masterKeyBase64;
-    console.log("Master key: " + masterKeyBase64 + "\nAuth hash: " + authHash + "\nVault key: " + vaultKeyBase64 + "\nEncrypted vault key: " + encVaultKeyBase64 + "\nUnencrypted vault key: " + vaultKeyBase64Test);
-}
+export class encryptionModule {
+    static authHash;
+    static #USERNAME;
+    static #PASSWORD;
+    static #MASTERKEY;
+    static #IV;
+    static #VAULTKEY;
+    static #DATAKEY;
 
-const iv = genIv();
+
+    static  async initialise(username, password) {
+        this.#USERNAME = username;
+        this.#PASSWORD = password;
+        this.#MASTERKEY = await genMasterKey(this.#USERNAME, this.#PASSWORD);
+        this.#IV = genIv();
+        this.#VAULTKEY = await genVaultKey();
+        this.#DATAKEY = await genDataKey();
+        this.authHash = await genAuthHash(this.#MASTERKEY, this.#PASSWORD);
+    }
+
+    static async importSafe(safe) {
+        const encImportVaultKey = base64DecToArr(safe.enc_vault_key);
+        const encImportDataKey = base64DecToArr(safe.enc_data_key);
+        const safeImportPayload = base64DecToArr(safe.safe_payload);
+        this.#IV = base64DecToArr(safe.iv);
+        this.#VAULTKEY = await unwrapVaultKey(encImportVaultKey, this.#MASTERKEY);
+        this.#DATAKEY = await unwrapDataKey(encImportDataKey, this.#VAULTKEY);
+        return decryptSafe(safeImportPayload, this.#DATAKEY, this.#IV);
+    }
+
+    static async exportSafe(contentArray) {
+        const contentEncrypted = await encryptSafe(contentArray, this.#DATAKEY, this.#IV);
+        const dataKeyB64 = bufferToBase64(await wrapKey(this.#DATAKEY, this.#VAULTKEY));
+        const vaultKeyB64 = bufferToBase64(await wrapKey(this.#VAULTKEY, this.#MASTERKEY));
+        const ivB64 = bufferToBase64(this.#IV);
+        return safe = { 
+            "safe_payload":contentEncrypted,
+            "enc_data_key":dataKeyB64,
+            "enc_vault_key":vaultKeyB64,
+            "iv":ivB64
+        };
+    }
+}
 
 async function genMasterKey(username, password) {
     return genPbkdf2Key(username, password, 100000);
@@ -56,7 +83,7 @@ async function genPbkdf2Key(salt, password, iterations) {
     );
 }
 
-async function aesEncrypt(payload, key) {
+async function aesEncrypt(payload, key, iv) {
     return crypto.subtle.encrypt(
         {
             name: "AES-GCM",
@@ -67,7 +94,7 @@ async function aesEncrypt(payload, key) {
     );
 }
 
-async function aesDecrypt(payload, key) {
+async function aesDecrypt(payload, key, iv) {
     return crypto.subtle.decrypt(
         {
             name: "AES-GCM",
@@ -89,7 +116,7 @@ async function genVaultKey() {
     );
 }
 
-async function genSafeKey() {
+async function genDataKey() {
     return crypto.subtle.generateKey(
         {
             name: "AES-GCM",
@@ -104,22 +131,14 @@ function genIv() {
     return crypto.getRandomValues(new Uint8Array(12));
 }
 
-function exportIv(iv) {
-    return bufferToBase64(iv);
+async function encryptSafe(payload, dataKey, iv) {
+    const encBase64 = aesEncrypt(payload, dataKey);
+    return bufferToBase64(encBase64, iv);
 }
 
-function importIv(ivBase64) {
-    return base64DecToArr(ivBase64);
-}
-
-async function encryptSafe(payload, safeKey) {
-    const encBase64 = aesEncrypt(payload, safeKey);
-    return bufferToBase64(encBase64);
-}
-
-async function decryptSafe(payload, safeKey) {
+async function decryptSafe(payload, dataKey, iv) {
     const encBuffer = base64DecToArr(payload);
-    return aesDecrypt(encBuffer, safeKey);
+    return aesDecrypt(encBuffer, dataKey, iv);
 }
 
 async function exportKey(key) {
@@ -141,6 +160,22 @@ async function unwrapVaultKey(encVaultKey, masterKey) {
     return crypto.subtle.unwrapKey(
         "raw",
         encVaultKey,
+        masterKey,
+        "AES-KW",
+        {
+            name: "AES-GCM",
+            length: 256
+        },
+
+        true,
+        ["wrapKey", "unwrapKey"]
+    );
+}
+
+async function unwrapDataKey(encDataKey, masterKey) {
+    return crypto.subtle.unwrapKey(
+        "raw",
+        encDataKey,
         masterKey,
         "AES-KW",
         {
