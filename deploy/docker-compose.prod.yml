@@ -30,8 +30,8 @@ services:
       - traefik_certs:/cert
 
   backend:
-    build: ../backend/
-    container_name: "api"
+    image: ghcr.io/mhorst00/websafe-backend:latest
+    container_name: "backend"
     environment:
       - DB_URL=backend-db
     env_file:
@@ -48,10 +48,8 @@ services:
       - "traefik.http.routers.backend.tls.certresolver=websafe"
 
   frontend:
-    build: 
-      context: ../frontend/
-      dockerfile: Dockerfile.prod
-    container_name: "websafe"
+    image: ghcr.io/mhorst00/websafe-frontend:latest
+    container_name: "frontend"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`websafe.localhost`)"
