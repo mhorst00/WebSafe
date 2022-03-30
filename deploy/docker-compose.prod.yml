@@ -7,13 +7,18 @@ services:
     container_name: "traefik"
     command:
       #- "--log.level=DEBUG"
-      - "--api.insecure=true"
+      #- "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.filename=/etc/traefik/traefik-tls.yml"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls.options=default@file"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
       - "--certificatesresolvers.websafe.acme.email=your-email@example.com"
-      - "--certificatesresolvers.websafe.acme.storage=acme.json"
+      - "--certificatesresolvers.websafe.acme.storage=/cert/acme.json"
       - "--certificatesresolvers.websafe.acme.httpchallenge.entrypoint=web"
     ports:
       - "80:80"
@@ -21,9 +26,10 @@ services:
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - traefik_certs:/acme.json
+      - ./traefik-tls.yml:/etc/traefik/traefik-tls.yml
+      - traefik_certs:/cert
 
-  api:
+  backend:
     build: ../backend/
     container_name: "api"
     environment:
@@ -34,24 +40,25 @@ services:
       - backend_safe:/code/safe
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`websafe.localhost`) && PathPrefix(`/api/v1`)"
-      - "traefik.http.routers.api.middlewares=api-stripprefix"
-      - "traefik.http.middlewares.api-stripprefix.stripprefix.prefixes=/api/v1"
-      - "traefik.http.routers.api.entrypoints=web"
-      - "traefik.http.routers.api.tls=true"
-      - "traefik.http.routers.api.certresolver=websafe"
+      - "traefik.http.routers.backend.rule=Host(`websafe.localhost`) && PathPrefix(`/api/v1`)"
+      - "traefik.http.routers.backend.middlewares=backend-stripprefix,secHeaders@file"
+      - "traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api/v1"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.tls.certresolver=websafe"
 
-  websafe:
+  frontend:
     build: 
       context: ../frontend/
       dockerfile: Dockerfile.prod
     container_name: "websafe"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.websafe.rule=Host(`websafe.localhost`)"
-      - "traefik.http.routers.websafe.entrypoints=web"
-      - "traefik.http.routers.websafe.tls=true"
-      - "traefik.http.routers.websafe.certresolver=websafe"
+      - "traefik.http.routers.backend.rule=Host(`websafe.localhost`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.websafe.middlewares=secHeaders@file"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.tls.certresolver=websafe"
 
 
   db:
