@@ -1,4 +1,4 @@
-name: Docker Backend
+name: Docker Frontend
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -11,55 +11,14 @@ on:
     branches: [ main ]
     tags: [ 'v*.*.*' ]
     paths:
-      - "backend/**"
+      - "frontend/**"
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}-backend
+  IMAGE_NAME: ${{ github.repository }}-frontend
 
 
 jobs:
-
-  flake8-lint:
-    runs-on: ubuntu-latest
-    name: Lint
-    steps:
-      - name: Check out source repository
-        uses: actions/checkout@v2
-      - name: Set up Python environment
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
-      - name: flake8 Lint
-        uses: py-actions/flake8@v2
-        with:
-          args: "--config=backend/.flake8"
-          path: "backend"
-
-  unittests:
-    runs-on: ubuntu-latest
-    name: Unit Tests
-    services:
-      mongodb:
-        image: mongo
-        ports:
-          - 27017:27017
-    steps:
-      - name: Check out source repository
-        uses: actions/checkout@v2
-      - name: Set up Python 3.10 environment
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-        working-directory: ./backend
-      - name: unittest Tests
-        run: python -m unittest discover
-        working-directory: ./backend
-
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -101,7 +60,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: ./backend/
+          context: ./frontend
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
