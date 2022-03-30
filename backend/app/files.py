@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import sys
@@ -5,6 +6,8 @@ import errno
 
 from pydantic import validate_arguments
 from decouple import config
+
+from app.model import SafePayload
 
 FILE_BASE_DIR = config("FILE_BASE_DIR", default="safe/")
 FILE_SIZE_LIMIT_KB = config("FILE_SIZE_LIMIT_KB", default=50)
@@ -29,7 +32,7 @@ class Filehandler:
     def readFile(name: str, verify=False):
         try:
             with open(FILE_BASE_DIR + name, "r") as f:
-                content = f.read()
+                content = json.load(f)
                 f.close()
                 return content
         except OSError as e:
@@ -46,10 +49,10 @@ class Filehandler:
 
     @staticmethod
     @validate_arguments
-    def writeFile(name: str, payload: str):
+    def writeFile(name: str, payload: SafePayload):
         if sys.getsizeof(payload) / 1024 < FILE_SIZE_LIMIT_KB:
             with open(FILE_BASE_DIR + name, "w") as f:
-                f.write(payload)
+                f.write(payload.json())
                 f.close()
                 return True
         else:
