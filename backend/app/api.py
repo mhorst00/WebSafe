@@ -26,7 +26,7 @@ Filehandler.preCheck()
 
 app = FastAPI()
 
-origins = ["http://localhost:8000", "localhost:8000"]
+origins = ["https://gruppe4.testsites.info", "http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -214,7 +214,9 @@ async def post_safe(
     if x:
         return {"message": "Successfully updated Safe"}
     else:
-        logging.error(f"Error while receiving safe {current_user.safe_id}. Size too big")
+        logging.error(
+            f"Error while receiving safe {current_user.safe_id}. Size too big"
+        )
         return JSONResponse(
             status_code=500,
             content={"message": "Payload is larger than size limit, will not be saved"},
