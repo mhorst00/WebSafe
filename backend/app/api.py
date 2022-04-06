@@ -1,5 +1,6 @@
 from datetime import timedelta
 import logging
+import sys
 
 from fastapi import Depends, FastAPI
 from fastapi.responses import JSONResponse
@@ -14,10 +15,9 @@ import app.auth as auth
 import app.user as user
 
 logging.basicConfig(
-    filename="app.log",
+    stream=sys.stdout,
     level=logging.INFO,
     format="%(asctime)s %(levelname)s:%(message)s",
-    filemode="w",
 )
 
 Database.initalise()
