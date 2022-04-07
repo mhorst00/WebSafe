@@ -94,9 +94,9 @@ function Login() {
 
             <button className='Login-Button' onClick={onSubmit}>{register? "Register" : "Login"}</button>
             {register ? (
-                <p className='Login-Info-Text'>You already have an Account? <a href='' onClick={onClickLogin}>Login</a></p>
+                <p className='Login-Info-Text'>You already have an Account? <a href='https://gruppe4.testsites.info/' onClick={onClickLogin}>Login</a></p>
             ) : (
-                <p className='Login-Info-Text'>You don't have an Account? <a href='' onClick={onClickRegister}>Register</a></p>
+                <p className='Login-Info-Text'>You don't have an Account? <a href='https://gruppe4.testsites.info/' onClick={onClickRegister}>Register</a></p>
             )}
         </div>
       </div>
