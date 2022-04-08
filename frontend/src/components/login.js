@@ -11,6 +11,7 @@ function Login() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
 
+
   const { login } = useContext(AuthContext);
 
   const onClickLogin = (event) => {
@@ -41,6 +42,7 @@ function Login() {
 
   const validateInput = () => {
     let matchEmail = /\S+@\S+\.\S+/;
+
     if (!register) {
       return matchEmail.test(email) && password.length > 6;
     }
@@ -71,34 +73,34 @@ function Login() {
   }
 
   return (
-    <div className='Login-Container'>
-      <div className="Login-Field">
+    <div className='Login-Container'> 
+      <div className="Login-Field"> 
         <h2>WebSafe</h2>
         {failed ? (<p className='Login-Failed-Text'>{failed}</p>) : (<p></p>)}
         <div className='Login-Input'>
-          {register && (
-            <>
-              <label className='Login-Password'>Name</label>
-              <input type='password' placeholder='Your Name' onChange={onChangeName} />
-            </>
-          )}
-          <label className='Login-Password'>E-Mail</label>
-          <input type='email' placeholder='example@example.com' onChange={onChangeEmail} />
-          <label className='Login-Password'>Password</label>
-          <input type='password' placeholder='password' onChange={onChangePassword} />
-          {register && (
-            <>
-              <label className='Login-Password'>Password confirm</label>
-              <input type='password' placeholder='password' onChange={onChangePasswordConfirm} />
-            </>
-          )}
+            {register && (
+                <>
+                    <label className='Login-Password'>Name</label>
+                    <input type='password' placeholder='Your Name' onChange={onChangeName}/>
+                </>
+            )}
+            <label className='Login-Password'>E-Mail</label>
+            <input type='email' placeholder='example@example.com' onChange={onChangeEmail}/>
+            <label className='Login-Password'>Password</label>
+            <input type='password' placeholder='password' onChange={onChangePassword}/>
+            {register && (
+                <>
+                    <label className='Login-Password'>Password confirm</label>
+                    <input type='password' placeholder='password' onChange={onChangePasswordConfirm}/>
+                </>
+            )}
 
-          <button className='Login-Button' onClick={onSubmit}>{register ? "Register" : "Login"}</button>
-          {register ? (
-            <p className='Login-Info-Text'>You already have an Account? <a href='' onClick={onClickLogin}>Login</a></p>
-          ) : (
-            <p className='Login-Info-Text'>You don't have an Account? <a href='' onClick={onClickRegister}>Register</a></p>
-          )}
+            <button className='Login-Button' onClick={onSubmit}>{register? "Register" : "Login"}</button>
+            {register ? (
+                <p className='Login-Info-Text'>You already have an Account? <a href='https://gruppe4.testsites.info/' onClick={onClickLogin}>Login</a></p>
+            ) : (
+                <p className='Login-Info-Text'>You don't have an Account? <a href='https://gruppe4.testsites.info/' onClick={onClickRegister}>Register</a></p>
+            )}
         </div>
       </div>
     </div>

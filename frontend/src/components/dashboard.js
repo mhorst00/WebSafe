@@ -162,24 +162,36 @@ function Dashboard() {
 
         <div className='Dashboard-Password'>
          {entrys.map((x, i) => {
-           let aLink = '';
-           if(x.link[0] === 'w') {
-             aLink = 'https://';
-           }
-           aLink += x.link;
+          let aLink = '';
+          if(x.link[0] === 'w') {
+            aLink = 'https://';
+          }
+          aLink += x.link;
 
-           return <div key={i} className='Dashboard-Password-Entry'>
+          if(link || email || password) {
+            if(link.length > 2 && !x.link.includes(link)) {
+              return false;
+            }
+            if(email.length > 2 && !x.email.includes(email)) {
+              return false;
+            }
+            if(password.length > 2 && !x.password.includes(password)) {
+              return false;
+            }
+          }
+
+          return <div key={i} className='Dashboard-Password-Entry'>
                     <div className='Dashboard-Entry-Garbage-Container'>
                         <img src={'./garbage2.svg'} className="Dashboard-Entry-Garbage" alt="logo" onClick={() => deleteEntry(i)}/>
                     </div>
                     <div className='Dashboard-Password-Entry-Link'>
-                      <p color='#fff'>Link: <input className='copy' title='Go to Website' value={aLink} spellcheck="false" onClick={() => redirect(aLink)}/></p>
+                      <p color='#fff'>Link: <input readOnly={true} className='copy' title='Go to Website' value={aLink} spellcheck="false" onClick={() => redirect(aLink)}/></p>
                     </div>
                     <div className='Dashboard-Password-Entry-Email'>
-                      <p color='#fff'>E-Mail: <input className='copy' title='Copy this entry' value={x.email} spellcheck="false" onClick={() => copyStringToClipboard(x.email)}/></p>
+                      <p color='#fff'>E-Mail: <input readOnly={true} className='copy' title='Copy this entry' value={x.email} spellcheck="false" onClick={() => copyStringToClipboard(x.email)}/></p>
                     </div>
                     <div className='Dashboard-Password-Entry-Password'>
-                      <p color='#fff'>Password: <input className='copy' title='Copy this entry' value={x.password} spellcheck="false"  onClick={() => copyStringToClipboard(x.password)}/></p>
+                      <p color='#fff'>Password: <input readOnly={true} className='copy' title='Copy this entry' value={x.password} spellcheck="false"  onClick={() => copyStringToClipboard(x.password)}/></p>
                     </div>
                     <div className='free'>
                     </div>
