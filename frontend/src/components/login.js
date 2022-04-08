@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import './Login.css';
 import { AuthContext } from '../context/AuthContext';
- 
+
 function Login() {
   const [register, setRegister] = useState(false);
   const [failed, setFailed] = useState(undefined);
@@ -11,11 +11,12 @@ function Login() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
 
-  const {login} = useContext(AuthContext);
-  
+
+  const { login } = useContext(AuthContext);
+
   const onClickLogin = (event) => {
-      event.preventDefault();
-      setRegister(false);
+    event.preventDefault();
+    setRegister(false);
   }
 
   const onClickRegister = (event) => {
@@ -41,7 +42,8 @@ function Login() {
 
   const validateInput = () => {
     let matchEmail = /\S+@\S+\.\S+/;
-    if(!register) {
+
+    if (!register) {
       return matchEmail.test(email) && password.length > 6;
     }
     return matchEmail.test(email) && password.length > 6 && password === passwordConfirm;
@@ -53,14 +55,15 @@ function Login() {
       setFailed('There was a problem with your E-Mail!');
       return;
     }
-    */ 
+    */
 
     try {
-      if(register) {
+      if (register) {
         console.log('API-CALL {' + name + email + password + passwordConfirm + '}');
       } else {
         console.log('API-CALL {' + email + password + '}');
-        login();
+        let token = 'token';
+        login(token);
       }
     } catch (err) {
       setFailed('Wrong Password or E-Mail!');
