@@ -185,13 +185,13 @@ function Dashboard() {
                         <img src={'./garbage2.svg'} className="Dashboard-Entry-Garbage" alt="logo" onClick={() => deleteEntry(i)}/>
                     </div>
                     <div className='Dashboard-Password-Entry-Link'>
-                      <p color='#fff'>Link: <input readOnly={true} className='copy' title='Go to Website' value={aLink} spellcheck="false" onClick={() => redirect(aLink)}/></p>
+                      <label color='#fff'>Link:</label> <input readOnly={true} className='copy' title='Go to Website' value={aLink} spellcheck="false" onClick={() => redirect(aLink)}/>
                     </div>
                     <div className='Dashboard-Password-Entry-Email'>
-                      <p color='#fff'>E-Mail: <input readOnly={true} className='copy' title='Copy this entry' value={x.email} spellcheck="false" onClick={() => copyStringToClipboard(x.email)}/></p>
+                      <label color='#fff'>E-Mail:</label> <input readOnly={true} className='copy' title='Copy this entry' value={x.email} spellcheck="false" onClick={() => copyStringToClipboard(x.email)}/>
                     </div>
                     <div className='Dashboard-Password-Entry-Password'>
-                      <p color='#fff'>Password: <input readOnly={true} className='copy' title='Copy this entry' value={x.password} spellcheck="false"  onClick={() => copyStringToClipboard(x.password)}/></p>
+                      <label color='#fff'>Password:</label> <input readOnly={true} className='copy' title='Copy this entry' value={x.password} spellcheck="false"  onClick={() => copyStringToClipboard(x.password)}/>
                     </div>
                     <div className='free'>
                     </div>

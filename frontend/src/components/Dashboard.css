@@ -123,7 +123,7 @@
 }
 
 .Dashboard-Entry-Save {
-    padding-right: 15px;
+    flex: 5.8%;
 }
 
 .Save-Button {
@@ -158,23 +158,23 @@
 }
 
 .Dashboard-Password-Entry-Link {
-    padding-left: 40px;
-    flex: 25%;
+    padding-left: 1%;
+    flex: content;
 }
 
 .Dashboard-Password-Entry-Email {
-    flex: 30%;
+    flex: content;
 }
 
 .Dashboard-Password-Entry-Password {
-    flex: 30%;
+    width: content;
 }
 
 .copy {
     background-color: #636770;
     color: #e94242;
     font-size: 95%;
-    width: 69%;
+    width: 68%;
     margin-top: 4px;
     box-shadow: 1px 1px 2px #636770;
 }
@@ -183,7 +183,7 @@
     background-color: #636770;
     color: #e94242;
     font-size: 95%;
-    width: 69%;
+    width: 68%;
     margin-top: 4px;
     cursor: pointer;
     box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
@@ -194,7 +194,7 @@
     background-color: #636770;
     color: #e94242;
     font-size: 95%;
-    width: 69%;
+    width: 68%;
     margin-top: 4px;
     color: rgba(121, 255, 44, 0.75);
     cursor: pointer;
@@ -323,7 +323,11 @@ a {
 .Dashboard-NewAccount-Entry input {
     margin-left: 20px;
     margin-bottom: 5px;
-    width: 60%;
+    width: 50%;
+}
+
+.Dashboard-Password-Entry label {
+    font-size: 90%;
 }
 
 #copyElement {
@@ -333,4 +337,1087 @@ a {
 .free {
     width: 30px;
     height: 10px;
+}
+
+@media only screen and (max-width: 1750px) {
+    .copy {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 95%;
+        width: 60%;
+        margin-top: 4px;
+        box-shadow: 1px 1px 2px #636770;
+    }
+    
+    .copy:hover {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 95%;
+        width: 60%;
+        margin-top: 4px;
+        cursor: pointer;
+        box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+    
+    .copy:active {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 95%;
+        width: 60%;
+        margin-top: 4px;
+        color: rgba(121, 255, 44, 0.75);
+        cursor: pointer;
+        caret-color: rgba(0,0,0,0);
+        box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
+        transition: box-shadow 50ms linear;
+        border: none;
+        outline:none;
+    }
+
+    .Dashboard-Password-Entry {
+        height: 60px;
+        width: 90%;
+        align-items: center;
+        background-color: #636770;
+        border-radius: 12px;
+        box-sizing: border-box;
+        flex-direction: row;
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        z-index: 2;
+        opacity: 0.8;
+    }
+
+    .Dashboard-Password-Entry label {
+        font-size: 100%;
+    }
+
+    .Dashboard-NewAccount-Entry label {
+        font-size: 25px;
+        margin-left: 15px;
+    }
+    
+    .Dashboard-NewAccount-Entry input {
+        margin-left: 20px;
+        margin-bottom: 5px;
+        width: 60%;
+    }
+
+
+
+
+    .Dashboard-Settings-Dialog {
+        height: 52%;
+        width: 37.7%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        box-sizing: border-box;
+        z-index: 3;
+        justify-content: center;
+        z-index: 5;
+    }
+    
+    .Dashboard-Settings-TopLane {
+        flex-direction: row;
+        width: 36.9%;
+    }
+    
+    .close-button-container {
+        margin-left: 92.5%;
+    }
+    
+    .Settings-Container-Topic {
+        text-align: center;
+        margin-right: 38px;
+    }
+    
+    .close-button {
+        border: none;
+    }
+    
+    .Dashboard-Settings-Container-Topic {
+        align-items: center;
+        margin-left: 14%;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .Account-Container {
+        border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+        background-color: #c1c1c1;
+    }
+    
+    .margin-kante {
+        margin-top: 20px;
+    }
+    
+    .Dashboard-Settings-Dialog label {
+        font-size: 50%;
+        margin-left: 20px;
+    }
+    
+    .Account-Changer {
+        margin-top: 12px;
+        flex-direction: row;
+    }
+
+    .Account-Changer input {
+        font-size: 50%;
+    }
+    
+    .Account-Changer-Save {
+        margin-left: 10px;
+    }
+    
+    .Account-Changer-Delete {
+        display: flex;
+        margin-top: 20%;
+    }
+    
+    .Delete-Button {
+        margin-left: 15%;
+        border-radius: 7px;
+        padding: 11px 12px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        font-size: 50%;
+    }
+        
+    .Delete-Button:hover {
+        background-color: red;
+        transition: background-color 200ms linear;
+        color: white;
+    }
+    
+    .Select-Data {
+        border-radius: 12px;
+        height: 70%;
+        margin-left: 20px;
+        margin-right: 27.5px;
+        box-shadow: 1px 1px 2px #282c3469;
+        border-radius: 7px;
+        border: none;
+    }
+
+    .Save-Button {
+        margin-right: 20px;
+        border-radius: 7px;
+        padding: 8px 5.6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 59.5%;
+    }
+}
+
+@media only screen and (max-width: 1550px) {
+    .copy {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 95%;
+        width: 60%;
+        margin-top: 4px;
+        box-shadow: 1px 1px 2px #636770;
+    }
+    
+    .copy:hover {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 95%;
+        width: 60%;
+        margin-top: 4px;
+        cursor: pointer;
+        box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+    
+    .copy:active {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 95%;
+        width: 60%;
+        margin-top: 4px;
+        color: rgba(121, 255, 44, 0.75);
+        cursor: pointer;
+        caret-color: rgba(0,0,0,0);
+        box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
+        transition: box-shadow 50ms linear;
+        border: none;
+        outline:none;
+    }
+
+    .Dashboard-Password-Entry {
+        height: 60px;
+        width: 90%;
+        align-items: center;
+        background-color: #636770;
+        border-radius: 12px;
+        box-sizing: border-box;
+        flex-direction: row;
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        z-index: 2;
+        opacity: 0.8;
+    }
+
+    .Dashboard-Password-Entry label {
+        font-size: 88%;
+    }
+
+    .Dashboard-NewAccount-Entry label {
+        font-size: 25px;
+        margin-left: 15px;
+    }
+    
+    .Dashboard-NewAccount-Entry input {
+        margin-left: 20px;
+        margin-bottom: 5px;
+        width: 50%;
+    }
+
+    .Dashboard-Entry-Save {
+        flex: 7.8%;
+    }
+    
+    .Save-Button {
+        border-radius: 7px;
+        padding: 8px 5.6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 59.5%;
+    }
+
+
+
+    .Dashboard-Settings-Dialog {
+        height: 52%;
+        width: 57.7%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        box-sizing: border-box;
+        z-index: 3;
+        justify-content: center;
+        z-index: 5;
+    }
+    
+    .Dashboard-Settings-TopLane {
+        flex-direction: row;
+        width: 36.9%;
+    }
+    
+    .close-button-container {
+        margin-left: 92.5%;
+    }
+    
+    .Settings-Container-Topic {
+        text-align: center;
+    }
+    
+    .close-button {
+        border: none;
+    }
+    
+    .Dashboard-Settings-Container-Topic {
+        align-items: center;
+        margin-left: 14%;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .Account-Container {
+        border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+        background-color: #c1c1c1;
+    }
+    
+    .margin-kante {
+        margin-top: 20px;
+    }
+    
+    .Dashboard-Settings-Dialog label {
+        font-size: 50%;
+        margin-left: 20px;
+    }
+    
+    .Account-Changer {
+        margin-top: 12px;
+        flex-direction: row;
+    }
+
+    .Account-Changer input {
+        font-size: 50%;
+    }
+    
+    .Account-Changer-Save {
+        margin-left: 10px;
+    }
+    
+    .Account-Changer-Delete {
+        display: flex;
+        margin-top: 20%;
+    }
+    
+    .Delete-Button {
+        margin-left: 15%;
+        border-radius: 7px;
+        padding: 11px 12px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        font-size: 50%;
+    }
+        
+    .Delete-Button:hover {
+        background-color: red;
+        transition: background-color 200ms linear;
+        color: white;
+    }
+    
+    .Select-Data {
+        border-radius: 12px;
+        height: 70%;
+        margin-left: 20px;
+        margin-right: 27.5px;
+        box-shadow: 1px 1px 2px #282c3469;
+        border-radius: 7px;
+        border: none;
+    }
+
+    .Save-Button {
+        margin-right: 20px;
+        border-radius: 7px;
+        padding: 8px 5.6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 59.5%;
+    }
+}
+
+@media only screen and (max-width: 1240px) { 
+    .copy {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 40%;
+        margin-top: 4px;
+        box-shadow: 1px 1px 2px #636770;
+    }
+    
+    .copy:hover {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 40%;
+        margin-top: 4px;
+        cursor: pointer;
+        box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+    
+    .copy:active {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 40%;
+        margin-top: 4px;
+        color: rgba(121, 255, 44, 0.75);
+        cursor: pointer;
+        caret-color: rgba(0,0,0,0);
+        box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
+        transition: box-shadow 50ms linear;
+        border: none;
+        outline:none;
+    }
+
+    .Dashboard-Password-Entry {
+        height: 70px;
+        width: 90%;
+        align-items: center;
+        background-color: #636770;
+        border-radius: 12px;
+        box-sizing: border-box;
+        flex-direction: row;
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        z-index: 2;
+        opacity: 0.8;
+    }
+
+    .Dashboard-Password-Entry label {
+        font-size: 78%;
+    }
+
+    .Dashboard-NewAccount-Entry label {
+        font-size: 70%;
+        margin-left: 10px;
+    }
+    
+    .Dashboard-NewAccount-Entry input {
+        font-size: 50%;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        width: 40%;
+    }
+
+    .Dashboard-Entry-Save {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    
+    .Save-Button {
+        margin-bottom: 4px;
+        border-radius: 7px;
+        padding: 5px 5px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 60%;
+    }
+
+    .Dashboard-Entry-Garbage {
+        margin-top: 9px;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+    }
+
+    .Dashboard-Entry-Link {
+        flex: auto;
+    }
+    
+    .Dashboard-Entry-Email {
+        flex: auto;
+    }
+    
+    .Dashboard-Entry-Password {
+        flex: auto;
+    }
+
+
+    .Dashboard-Settings-Dialog {
+        height: 52%;
+        width: 77.7%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        box-sizing: border-box;
+        z-index: 3;
+        justify-content: center;
+        z-index: 5;
+    }
+    
+    .Dashboard-Settings-TopLane {
+        flex-direction: row;
+        width: 36.9%;
+    }
+    
+    .close-button-container {
+        margin-left: 92.5%;
+    }
+    
+    .Settings-Container-Topic {
+        text-align: center;
+    }
+    
+    .close-button {
+        border: none;
+    }
+    
+    .Dashboard-Settings-Container-Topic {
+        align-items: center;
+        margin-left: 14%;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .Account-Container {
+        border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+        background-color: #c1c1c1;
+    }
+    
+    .margin-kante {
+        margin-top: 20px;
+    }
+    
+    .Dashboard-Settings-Dialog label {
+        font-size: 50%;
+        margin-left: 20px;
+    }
+    
+    .Account-Changer {
+        margin-top: 12px;
+        flex-direction: row;
+    }
+
+    .Account-Changer input {
+        font-size: 50%;
+    }
+    
+    .Account-Changer-Save {
+        margin-left: 10px;
+    }
+    
+    .Account-Changer-Delete {
+        display: flex;
+        margin-top: 20%;
+    }
+    
+    .Delete-Button {
+        margin-left: 15%;
+        border-radius: 7px;
+        padding: 11px 12px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        font-size: 50%;
+    }
+        
+    .Delete-Button:hover {
+        background-color: red;
+        transition: background-color 200ms linear;
+        color: white;
+    }
+    
+    .Select-Data {
+        border-radius: 12px;
+        height: 70%;
+        margin-left: 20px;
+        margin-right: 27.5px;
+        box-shadow: 1px 1px 2px #282c3469;
+        border-radius: 7px;
+        border: none;
+    }
+
+    .Save-Button {
+        margin-right: 20px;
+        border-radius: 7px;
+        padding: 8px 5.6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 59.5%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .copy {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 80%;
+        box-shadow: 1px 1px 2px #636770;
+    }
+    
+    .copy:hover {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 80%;
+        margin-top: 4px;
+        cursor: pointer;
+        box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+    
+    .copy:active {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 80%;
+        margin-top: 4px;
+        color: rgba(121, 255, 44, 0.75);
+        cursor: pointer;
+        caret-color: rgba(0,0,0,0);
+        box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
+        transition: box-shadow 50ms linear;
+        border: none;
+        outline:none;
+    }
+
+    .Dashboard-Password-Entry {
+        height: 80px;
+        width: 93%;
+        align-items: center;
+        background-color: #636770;
+        border-radius: 12px;
+        box-sizing: border-box;
+        flex-direction: row;
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        z-index: 2;
+        opacity: 0.8;
+    }
+
+    .Dashboard-Password-Entry label {
+        font-size: 82%;
+        margin-left: 10px;
+    }
+
+    .Dashboard-NewAccount-Entry label {
+        font-size: 70%;
+        margin-left: 15px;
+    }
+    
+    .Dashboard-NewAccount-Entry input {
+        font-size: 50%;
+        margin-left: 15px;
+        margin-bottom: 5px;
+        width: 70%;
+    }
+
+    .Dashboard-Entry-Save {
+        margin-left: 5px;
+        margin-right: 15px;
+    }
+    
+    .Save-Button {
+        margin-bottom: 4px;
+        border-radius: 7px;
+        padding: 7px 6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        font-size: 70%;
+    }
+
+    .Dashboard-Entry-Garbage {
+        margin-top: 6px;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+    }
+
+    .Dashboard-Entry-Link {
+        flex: auto;
+    }
+    
+    .Dashboard-Entry-Email {
+        flex: auto;
+    }
+    
+    .Dashboard-Entry-Password {
+        flex: auto;
+    }
+
+    .Dashboard-Settings-Container {
+        padding-right: 30px;
+        padding-top: 9px;
+    }
+    
+    .Dashboard-Settings {
+        height: 43px;
+        width: 43px;
+        cursor: pointer;
+    }
+    
+    .Dashboard-Settings:hover {
+        border-radius: 30px;
+        box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+
+    .Dashboard-Logout-Container {
+        justify-self: end;
+        padding-top: 8px;
+    }
+    
+    .Dashboard-Logout {
+        margin-top: 2px;
+        height: 41px;
+        width: 41px;
+        cursor: pointer;
+    }
+    
+    .Dashboard-Logout:hover {
+        border-radius: 12px;
+        box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+
+
+
+    .Dashboard-Settings-Dialog {
+        height: 42%;
+        width: 82.7%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        box-sizing: border-box;
+        z-index: 3;
+        justify-content: center;
+        z-index: 5;
+    }
+    
+    .Dashboard-Settings-TopLane {
+        flex-direction: row;
+        width: 56.9%;
+    }
+    
+    .close-button-container {
+        margin-left: 92.5%;
+    }
+    
+    .Settings-Container-Topic {
+        text-align: center;
+    }
+    
+    .close-button {
+        border: none;
+    }
+    
+    .Dashboard-Settings-Container-Topic {
+       margin-left: 23%;
+    }
+
+    .Account-Container {
+        border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+        background-color: #c1c1c1;
+    }
+    
+    .margin-kante {
+        margin-top: 20px;
+    }
+    
+    .Dashboard-Settings-Dialog label {
+        font-size: 50%;
+        margin-left: 20px;
+    }
+    
+    .Account-Changer {
+        margin-top: 12px;
+        flex-direction: row;
+    }
+
+    .Account-Changer input {
+        font-size: 50%;
+    }
+    
+    .Account-Changer-Save {
+        margin-left: 10px;
+    }
+    
+    .Account-Changer-Delete {
+        display: flex;
+        margin-top: 20%;
+    }
+    
+    .Delete-Button {
+        margin-left: 15%;
+        border-radius: 7px;
+        padding: 11px 12px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        font-size: 50%;
+    }
+        
+    .Delete-Button:hover {
+        background-color: red;
+        transition: background-color 200ms linear;
+        color: white;
+    }
+    
+    .Select-Data {
+        border-radius: 12px;
+        height: 70%;
+        margin-left: 20px;
+        margin-right: 27.5px;
+        box-shadow: 1px 1px 2px #282c3469;
+        border-radius: 7px;
+        border: none;
+    }
+
+    .Save-Button {
+        margin-right: 20px;
+        border-radius: 7px;
+        padding: 8px 5.6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 59.5%;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .copy {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 80%;
+        box-shadow: 1px 1px 2px #636770;
+    }
+    
+    .copy:hover {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 80%;
+        margin-top: 4px;
+        cursor: pointer;
+        box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+    
+    .copy:active {
+        background-color: #636770;
+        color: #e94242;
+        font-size: 80%;
+        width: 80%;
+        margin-top: 4px;
+        color: rgba(121, 255, 44, 0.75);
+        cursor: pointer;
+        caret-color: rgba(0,0,0,0);
+        box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
+        transition: box-shadow 50ms linear;
+        border: none;
+        outline:none;
+    }
+
+    .Dashboard-Password-Entry {
+        height: 80px;
+        width: 93%;
+        align-items: center;
+        background-color: #636770;
+        border-radius: 12px;
+        box-sizing: border-box;
+        flex-direction: row;
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        z-index: 2;
+        opacity: 0.8;
+    }
+
+    .Dashboard-Password-Entry label {
+        font-size: 82%;
+        margin-left: 10px;
+    }
+
+    .Dashboard-NewAccount-Entry label {
+        font-size: 70%;
+        margin-left: 15px;
+    }
+    
+    .Dashboard-NewAccount-Entry input {
+        font-size: 50%;
+        margin-left: 15px;
+        margin-bottom: 5px;
+        width: 70%;
+    }
+
+    .Dashboard-Entry-Save {
+        margin-left: 15px;
+        margin-right: 5px;
+    }
+    
+    .Save-Button {
+        margin-bottom: 4px;
+        border-radius: 7px;
+        padding: 7px 6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        font-size: 70%;
+    }
+
+    .Dashboard-Entry-Garbage {
+        margin-top: 6px;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+    }
+
+    .Dashboard-Entry-Link {
+        flex: auto;
+    }
+    
+    .Dashboard-Entry-Email {
+        flex: auto;
+    }
+    
+    .Dashboard-Entry-Password {
+        flex: auto;
+    }
+
+    .Dashboard-Settings-Container {
+        padding-right: 30px;
+        padding-top: 9px;
+    }
+    
+    .Dashboard-Settings {
+        height: 33px;
+        width: 33px;
+        cursor: pointer;
+    }
+    
+    .Dashboard-Settings:hover {
+        border-radius: 30px;
+        box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+
+    .Dashboard-Logout-Container {
+        justify-self: end;
+        padding-top: 8px;
+    }
+    
+    .Dashboard-Logout {
+        margin-top: 4px;
+        height: 33px;
+        width: 33px;
+        cursor: pointer;
+    }
+    
+    .Dashboard-Logout:hover {
+        border-radius: 12px;
+        box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
+        transition: box-shadow 200ms linear;
+    }
+
+
+
+    .Dashboard-Settings-Dialog {
+        height: 32%;
+        width: 82.7%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        box-sizing: border-box;
+        z-index: 3;
+        justify-content: center;
+        z-index: 5;
+    }
+    
+    .Dashboard-Settings-TopLane {
+        flex-direction: row;
+        width: 56.9%;
+    }
+    
+    .close-button-container {
+        margin-left: 88.5%;
+    }
+    
+    .Settings-Container-Topic {
+        text-align: center;
+    }
+    
+    .close-button {
+        border: none;
+    }
+    
+    .Dashboard-Settings-Container-Topic {
+       margin-left: 23%;
+    }
+
+    .Account-Container {
+        border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+        background-color: #c1c1c1;
+        width: 80%;
+    }
+    
+    .margin-kante {
+        margin-top: 20px;
+    }
+    
+    .Dashboard-Settings-Dialog label {
+        font-size: 50%;
+        margin-left: 10px;
+    }
+    
+    .Account-Changer {
+        margin-top: 12px;
+        flex-direction: row;
+    }
+
+    .Account-Changer input {
+        font-size: 35%;
+        height: 15%;
+    }
+    
+    .Account-Changer-Save {
+        margin-left: 10px;
+    }
+    
+    .Account-Changer-Delete {
+        display: flex;
+        margin-top: 20%;
+    }
+    
+    .Delete-Button {
+        margin-left: 15%;
+        border-radius: 7px;
+        padding: 11px 12px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-weight: 600;
+        font-size: 36%;
+    }
+        
+    .Delete-Button:hover {
+        background-color: red;
+        transition: background-color 200ms linear;
+        color: white;
+    }
+    
+    .Select-Data {
+        border-radius: 12px;
+        height: 70%;
+        font-size: 30%;
+        margin-left: 10px;
+        margin-right: 10px;
+        box-shadow: 1px 1px 2px #282c3469;
+        border-radius: 7px;
+        border: none;
+    }
+
+    .Save-Button {
+        margin-right: 20px;
+        margin-top: 4px;
+        border-radius: 7px;
+        padding: 7px 5.6px;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 59.5%;
+    }
+    h3 {
+        font-size: 80%;
+        align-self: center;
+    }
 }
