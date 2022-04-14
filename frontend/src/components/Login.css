@@ -37,7 +37,7 @@
     background-color: coral;
     color: #912f0b;
     font-weight: 600;
-    font-size: 0.55em;
+    font-size: 16px;
 }
 
 .Login-Password {
@@ -66,3 +66,88 @@ input {
     box-shadow: 1px 1px 2px #282c3469;
 }
 
+@media only screen and (max-width: 1550px) {
+    .Login-Field {
+        width: 30.5%;
+        min-height: 30%;
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+        align-self: center;
+    }
+
+
+}
+
+@media only screen and (max-width: 1150px) {
+    .Login-Field {
+        width: 40.5%;
+        min-height: 30%;
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+        align-self: center;
+    }
+}
+
+@media only screen and (max-width: 820px) {
+    .Login-Field {
+        width: 50.5%;
+        min-height: 30%;
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+        align-self: center;
+    }
+}
+
+@media only screen and (max-width: 690px) {
+    .Login-Field {
+        width: 60.5%;
+        min-height: 30%;
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+        align-self: center;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .Login-Field {
+        width: 70.5%;
+        min-height: 30%;
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+        align-self: center;
+    }
+}
+
+@media only screen and (max-width: 490px) {
+    .Login-Field {
+        width: 85.5%;
+        min-height: 30%;
+        background-color: #edf2fb;
+        border-radius: 12px;
+        color: #282c34;
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+        align-self: center;
+    }
+}
