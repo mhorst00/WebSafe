@@ -428,19 +428,20 @@ a {
         width: 36.9%;
     }
 
+    
     .close-button-container {
         margin-left: 92.5%;
     }
-
+    
     .Settings-Container-Topic {
         text-align: center;
         margin-right: 38px;
     }
-
+    
     .close-button {
         border: none;
     }
-
+    
     .Dashboard-Settings-Container-Topic {
         align-items: center;
         margin-left: 14%;
@@ -453,16 +454,16 @@ a {
         border-top-right-radius: 12px;
         background-color: #c1c1c1;
     }
-
+    
     .margin-kante {
         margin-top: 20px;
     }
-
+    
     .Dashboard-Settings-Dialog label {
         font-size: 50%;
         margin-left: 20px;
     }
-
+  
     .Account-Changer {
         margin-top: 12px;
         flex-direction: row;
@@ -471,16 +472,16 @@ a {
     .Account-Changer input {
         font-size: 50%;
     }
-
+    
     .Account-Changer-Save {
         margin-left: 10px;
     }
-
+    
     .Account-Changer-Delete {
         display: flex;
         margin-top: 20%;
     }
-
+  
     .Delete-Button {
         margin-left: 15%;
         border-radius: 7px;
@@ -548,11 +549,11 @@ a {
         margin-top: 4px;
         color: rgba(121, 255, 44, 0.75);
         cursor: pointer;
-        caret-color: rgba(0, 0, 0, 0);
+        caret-color: rgba(0,0,0,0);
         box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
         transition: box-shadow 50ms linear;
         border: none;
-        outline: none;
+        outline:none;
     }
 
     .Dashboard-Password-Entry {
@@ -619,19 +620,19 @@ a {
         flex-direction: row;
         width: 36.9%;
     }
-
+    
     .close-button-container {
         margin-left: 92.5%;
     }
-
+    
     .Settings-Container-Topic {
         text-align: center;
     }
-
+    
     .close-button {
         border: none;
     }
-
+    
     .Dashboard-Settings-Container-Topic {
         align-items: center;
         margin-left: 14%;
@@ -645,10 +646,11 @@ a {
         background-color: #c1c1c1;
     }
 
+    
     .margin-kante {
         margin-top: 20px;
     }
-
+    
     .Dashboard-Settings-Dialog label {
         font-size: 50%;
         margin-left: 20px;
@@ -663,10 +665,11 @@ a {
         font-size: 50%;
     }
 
+    
     .Account-Changer-Save {
         margin-left: 10px;
     }
-
+    
     .Account-Changer-Delete {
         display: flex;
         margin-top: 20%;
@@ -710,7 +713,8 @@ a {
     }
 }
 
-@media only screen and (max-width: 1240px) {
+
+@media only screen and (max-width: 1240px) { 
     .copy {
         background-color: #636770;
         color: #e94242;
@@ -739,11 +743,12 @@ a {
         margin-top: 4px;
         color: rgba(121, 255, 44, 0.75);
         cursor: pointer;
-        caret-color: rgba(0, 0, 0, 0);
+
+        caret-color: rgba(0,0,0,0);
         box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
         transition: box-shadow 50ms linear;
         border: none;
-        outline: none;
+        outline:none;
     }
 
     .Dashboard-Password-Entry {
@@ -802,11 +807,11 @@ a {
     .Dashboard-Entry-Link {
         flex: auto;
     }
-
+    
     .Dashboard-Entry-Email {
         flex: auto;
     }
-
+    
     .Dashboard-Entry-Password {
         flex: auto;
     }
@@ -832,18 +837,19 @@ a {
         width: 36.9%;
     }
 
+    
     .close-button-container {
         margin-left: 92.5%;
     }
-
+    
     .Settings-Container-Topic {
         text-align: center;
     }
-
+    
     .close-button {
         border: none;
     }
-
+    
     .Dashboard-Settings-Container-Topic {
         align-items: center;
         margin-left: 14%;
@@ -857,10 +863,11 @@ a {
         background-color: #c1c1c1;
     }
 
+    
     .margin-kante {
         margin-top: 20px;
     }
-
+    
     .Dashboard-Settings-Dialog label {
         font-size: 50%;
         margin-left: 20px;
@@ -875,10 +882,11 @@ a {
         font-size: 50%;
     }
 
+    
     .Account-Changer-Save {
         margin-left: 10px;
     }
-
+    
     .Account-Changer-Delete {
         display: flex;
         margin-top: 20%;
@@ -950,11 +958,12 @@ a {
         margin-top: 4px;
         color: rgba(121, 255, 44, 0.75);
         cursor: pointer;
-        caret-color: rgba(0, 0, 0, 0);
+        caret-color: rgba(0,0,0,0);
         box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
         transition: box-shadow 50ms linear;
         border: none;
-        outline: none;
+        outline:none;
+
     }
 
     .Dashboard-Password-Entry {
@@ -1019,7 +1028,7 @@ a {
     .Dashboard-Entry-Email {
         flex: auto;
     }
-
+    
     .Dashboard-Entry-Password {
         flex: auto;
     }
@@ -1080,21 +1089,21 @@ a {
         flex-direction: row;
         width: 56.9%;
     }
-
+    
     .close-button-container {
         margin-left: 92.5%;
     }
-
+    
     .Settings-Container-Topic {
         text-align: center;
     }
-
+    
     .close-button {
         border: none;
     }
-
+    
     .Dashboard-Settings-Container-Topic {
-        margin-left: 23%;
+       margin-left: 23%;
     }
 
     .Account-Container {
@@ -1102,16 +1111,16 @@ a {
         border-top-right-radius: 12px;
         background-color: #c1c1c1;
     }
-
+    
     .margin-kante {
         margin-top: 20px;
     }
-
+    
     .Dashboard-Settings-Dialog label {
         font-size: 50%;
         margin-left: 20px;
     }
-
+  
     .Account-Changer {
         margin-top: 12px;
         flex-direction: row;
@@ -1120,11 +1129,11 @@ a {
     .Account-Changer input {
         font-size: 50%;
     }
-
+    
     .Account-Changer-Save {
         margin-left: 10px;
     }
-
+    
     .Account-Changer-Delete {
         display: flex;
         margin-top: 20%;
@@ -1261,11 +1270,11 @@ a {
     .Dashboard-Entry-Link {
         flex: auto;
     }
-
+    
     .Dashboard-Entry-Email {
         flex: auto;
     }
-
+    
     .Dashboard-Entry-Password {
         flex: auto;
     }
@@ -1326,21 +1335,21 @@ a {
         flex-direction: row;
         width: 56.9%;
     }
-
+    
     .close-button-container {
         margin-left: 88.5%;
     }
-
+    
     .Settings-Container-Topic {
         text-align: center;
     }
-
+    
     .close-button {
         border: none;
     }
-
+    
     .Dashboard-Settings-Container-Topic {
-        margin-left: 23%;
+       margin-left: 23%;
     }
 
     .Account-Container {
@@ -1349,11 +1358,11 @@ a {
         background-color: #c1c1c1;
         width: 80%;
     }
-
+    
     .margin-kante {
         margin-top: 20px;
     }
-
+    
     .Dashboard-Settings-Dialog label {
         font-size: 50%;
         margin-left: 10px;
@@ -1368,16 +1377,16 @@ a {
         font-size: 35%;
         height: 15%;
     }
-
+    
     .Account-Changer-Save {
         margin-left: 10px;
     }
-
+    
     .Account-Changer-Delete {
         display: flex;
         margin-top: 20%;
     }
-
+  
     .Delete-Button {
         margin-left: 15%;
         border-radius: 7px;
