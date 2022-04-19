@@ -10,8 +10,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-
-
   const { login } = useContext(AuthContext);
 
   const onClickLogin = (event) => {
