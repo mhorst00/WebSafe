@@ -167,7 +167,7 @@
 }
 
 .Dashboard-Password-Entry-Password {
-    width: content;
+    flex: content;
 }
 
 .copy {
@@ -198,11 +198,11 @@
     margin-top: 4px;
     color: rgba(121, 255, 44, 0.75);
     cursor: pointer;
-    caret-color: rgba(0,0,0,0);
+    caret-color: rgba(0, 0, 0, 0);
     box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
     transition: box-shadow 50ms linear;
     border: none;
-    outline:none;
+    outline: none;
 }
 
 .Dashboard-Settings-Dialog {
@@ -290,7 +290,7 @@
     font-weight: 600;
     font-size: 17px;
 }
-    
+
 .Delete-Button:hover {
     background-color: red;
     transition: background-color 200ms linear;
@@ -348,7 +348,7 @@ a {
         margin-top: 4px;
         box-shadow: 1px 1px 2px #636770;
     }
-    
+
     .copy:hover {
         background-color: #636770;
         color: #e94242;
@@ -359,7 +359,7 @@ a {
         box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
         transition: box-shadow 200ms linear;
     }
-    
+
     .copy:active {
         background-color: #636770;
         color: #e94242;
@@ -368,11 +368,11 @@ a {
         margin-top: 4px;
         color: rgba(121, 255, 44, 0.75);
         cursor: pointer;
-        caret-color: rgba(0,0,0,0);
+        caret-color: rgba(0, 0, 0, 0);
         box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
         transition: box-shadow 50ms linear;
         border: none;
-        outline:none;
+        outline: none;
     }
 
     .Dashboard-Password-Entry {
@@ -398,7 +398,7 @@ a {
         font-size: 25px;
         margin-left: 15px;
     }
-    
+
     .Dashboard-NewAccount-Entry input {
         margin-left: 20px;
         margin-bottom: 5px;
@@ -422,11 +422,12 @@ a {
         justify-content: center;
         z-index: 5;
     }
-    
+
     .Dashboard-Settings-TopLane {
         flex-direction: row;
         width: 36.9%;
     }
+
     
     .close-button-container {
         margin-left: 92.5%;
@@ -462,7 +463,7 @@ a {
         font-size: 50%;
         margin-left: 20px;
     }
-    
+  
     .Account-Changer {
         margin-top: 12px;
         flex-direction: row;
@@ -480,7 +481,7 @@ a {
         display: flex;
         margin-top: 20%;
     }
-    
+  
     .Delete-Button {
         margin-left: 15%;
         border-radius: 7px;
@@ -491,13 +492,13 @@ a {
         font-weight: 600;
         font-size: 50%;
     }
-        
+
     .Delete-Button:hover {
         background-color: red;
         transition: background-color 200ms linear;
         color: white;
     }
-    
+
     .Select-Data {
         border-radius: 12px;
         height: 70%;
@@ -528,7 +529,7 @@ a {
         margin-top: 4px;
         box-shadow: 1px 1px 2px #636770;
     }
-    
+
     .copy:hover {
         background-color: #636770;
         color: #e94242;
@@ -539,7 +540,7 @@ a {
         box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
         transition: box-shadow 200ms linear;
     }
-    
+
     .copy:active {
         background-color: #636770;
         color: #e94242;
@@ -578,7 +579,7 @@ a {
         font-size: 25px;
         margin-left: 15px;
     }
-    
+
     .Dashboard-NewAccount-Entry input {
         margin-left: 20px;
         margin-bottom: 5px;
@@ -588,7 +589,7 @@ a {
     .Dashboard-Entry-Save {
         flex: 7.8%;
     }
-    
+
     .Save-Button {
         border-radius: 7px;
         padding: 8px 5.6px;
@@ -614,7 +615,7 @@ a {
         justify-content: center;
         z-index: 5;
     }
-    
+
     .Dashboard-Settings-TopLane {
         flex-direction: row;
         width: 36.9%;
@@ -644,6 +645,7 @@ a {
         border-top-right-radius: 12px;
         background-color: #c1c1c1;
     }
+
     
     .margin-kante {
         margin-top: 20px;
@@ -653,7 +655,7 @@ a {
         font-size: 50%;
         margin-left: 20px;
     }
-    
+
     .Account-Changer {
         margin-top: 12px;
         flex-direction: row;
@@ -662,6 +664,7 @@ a {
     .Account-Changer input {
         font-size: 50%;
     }
+
     
     .Account-Changer-Save {
         margin-left: 10px;
@@ -671,7 +674,7 @@ a {
         display: flex;
         margin-top: 20%;
     }
-    
+
     .Delete-Button {
         margin-left: 15%;
         border-radius: 7px;
@@ -682,13 +685,13 @@ a {
         font-weight: 600;
         font-size: 50%;
     }
-        
+
     .Delete-Button:hover {
         background-color: red;
         transition: background-color 200ms linear;
         color: white;
     }
-    
+
     .Select-Data {
         border-radius: 12px;
         height: 70%;
@@ -710,6 +713,7 @@ a {
     }
 }
 
+
 @media only screen and (max-width: 1240px) { 
     .copy {
         background-color: #636770;
@@ -719,7 +723,7 @@ a {
         margin-top: 4px;
         box-shadow: 1px 1px 2px #636770;
     }
-    
+
     .copy:hover {
         background-color: #636770;
         color: #e94242;
@@ -730,7 +734,7 @@ a {
         box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
         transition: box-shadow 200ms linear;
     }
-    
+
     .copy:active {
         background-color: #636770;
         color: #e94242;
@@ -739,6 +743,7 @@ a {
         margin-top: 4px;
         color: rgba(121, 255, 44, 0.75);
         cursor: pointer;
+
         caret-color: rgba(0,0,0,0);
         box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
         transition: box-shadow 50ms linear;
@@ -769,7 +774,7 @@ a {
         font-size: 70%;
         margin-left: 10px;
     }
-    
+
     .Dashboard-NewAccount-Entry input {
         font-size: 50%;
         margin-left: 5px;
@@ -781,7 +786,7 @@ a {
         margin-left: 5px;
         margin-right: 5px;
     }
-    
+
     .Save-Button {
         margin-bottom: 4px;
         border-radius: 7px;
@@ -826,11 +831,12 @@ a {
         justify-content: center;
         z-index: 5;
     }
-    
+
     .Dashboard-Settings-TopLane {
         flex-direction: row;
         width: 36.9%;
     }
+
     
     .close-button-container {
         margin-left: 92.5%;
@@ -856,6 +862,7 @@ a {
         border-top-right-radius: 12px;
         background-color: #c1c1c1;
     }
+
     
     .margin-kante {
         margin-top: 20px;
@@ -865,7 +872,7 @@ a {
         font-size: 50%;
         margin-left: 20px;
     }
-    
+
     .Account-Changer {
         margin-top: 12px;
         flex-direction: row;
@@ -874,6 +881,7 @@ a {
     .Account-Changer input {
         font-size: 50%;
     }
+
     
     .Account-Changer-Save {
         margin-left: 10px;
@@ -883,7 +891,7 @@ a {
         display: flex;
         margin-top: 20%;
     }
-    
+
     .Delete-Button {
         margin-left: 15%;
         border-radius: 7px;
@@ -894,13 +902,13 @@ a {
         font-weight: 600;
         font-size: 50%;
     }
-        
+
     .Delete-Button:hover {
         background-color: red;
         transition: background-color 200ms linear;
         color: white;
     }
-    
+
     .Select-Data {
         border-radius: 12px;
         height: 70%;
@@ -930,7 +938,7 @@ a {
         width: 80%;
         box-shadow: 1px 1px 2px #636770;
     }
-    
+
     .copy:hover {
         background-color: #636770;
         color: #e94242;
@@ -941,7 +949,7 @@ a {
         box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
         transition: box-shadow 200ms linear;
     }
-    
+
     .copy:active {
         background-color: #636770;
         color: #e94242;
@@ -955,6 +963,7 @@ a {
         transition: box-shadow 50ms linear;
         border: none;
         outline:none;
+
     }
 
     .Dashboard-Password-Entry {
@@ -981,7 +990,7 @@ a {
         font-size: 70%;
         margin-left: 15px;
     }
-    
+
     .Dashboard-NewAccount-Entry input {
         font-size: 50%;
         margin-left: 15px;
@@ -993,7 +1002,7 @@ a {
         margin-left: 5px;
         margin-right: 15px;
     }
-    
+
     .Save-Button {
         margin-bottom: 4px;
         border-radius: 7px;
@@ -1015,7 +1024,7 @@ a {
     .Dashboard-Entry-Link {
         flex: auto;
     }
-    
+
     .Dashboard-Entry-Email {
         flex: auto;
     }
@@ -1028,13 +1037,13 @@ a {
         padding-right: 30px;
         padding-top: 9px;
     }
-    
+
     .Dashboard-Settings {
         height: 43px;
         width: 43px;
         cursor: pointer;
     }
-    
+
     .Dashboard-Settings:hover {
         border-radius: 30px;
         box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
@@ -1045,14 +1054,14 @@ a {
         justify-self: end;
         padding-top: 8px;
     }
-    
+
     .Dashboard-Logout {
         margin-top: 2px;
         height: 41px;
         width: 41px;
         cursor: pointer;
     }
-    
+
     .Dashboard-Logout:hover {
         border-radius: 12px;
         box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
@@ -1075,7 +1084,7 @@ a {
         justify-content: center;
         z-index: 5;
     }
-    
+
     .Dashboard-Settings-TopLane {
         flex-direction: row;
         width: 56.9%;
@@ -1111,7 +1120,7 @@ a {
         font-size: 50%;
         margin-left: 20px;
     }
-    
+  
     .Account-Changer {
         margin-top: 12px;
         flex-direction: row;
@@ -1129,7 +1138,7 @@ a {
         display: flex;
         margin-top: 20%;
     }
-    
+
     .Delete-Button {
         margin-left: 15%;
         border-radius: 7px;
@@ -1140,13 +1149,13 @@ a {
         font-weight: 600;
         font-size: 50%;
     }
-        
+
     .Delete-Button:hover {
         background-color: red;
         transition: background-color 200ms linear;
         color: white;
     }
-    
+
     .Select-Data {
         border-radius: 12px;
         height: 70%;
@@ -1176,7 +1185,7 @@ a {
         width: 80%;
         box-shadow: 1px 1px 2px #636770;
     }
-    
+
     .copy:hover {
         background-color: #636770;
         color: #e94242;
@@ -1187,7 +1196,7 @@ a {
         box-shadow: 0px 3px 24px 0px rgba(255, 255, 255, 0.75);
         transition: box-shadow 200ms linear;
     }
-    
+
     .copy:active {
         background-color: #636770;
         color: #e94242;
@@ -1196,11 +1205,11 @@ a {
         margin-top: 4px;
         color: rgba(121, 255, 44, 0.75);
         cursor: pointer;
-        caret-color: rgba(0,0,0,0);
+        caret-color: rgba(0, 0, 0, 0);
         box-shadow: 0px 3px 24px 0px rgba(121, 255, 44, 0.75);
         transition: box-shadow 50ms linear;
         border: none;
-        outline:none;
+        outline: none;
     }
 
     .Dashboard-Password-Entry {
@@ -1227,7 +1236,7 @@ a {
         font-size: 70%;
         margin-left: 15px;
     }
-    
+
     .Dashboard-NewAccount-Entry input {
         font-size: 50%;
         margin-left: 15px;
@@ -1239,7 +1248,7 @@ a {
         margin-left: 15px;
         margin-right: 5px;
     }
-    
+
     .Save-Button {
         margin-bottom: 4px;
         border-radius: 7px;
@@ -1274,13 +1283,13 @@ a {
         padding-right: 30px;
         padding-top: 9px;
     }
-    
+
     .Dashboard-Settings {
         height: 33px;
         width: 33px;
         cursor: pointer;
     }
-    
+
     .Dashboard-Settings:hover {
         border-radius: 30px;
         box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
@@ -1291,14 +1300,14 @@ a {
         justify-self: end;
         padding-top: 8px;
     }
-    
+
     .Dashboard-Logout {
         margin-top: 4px;
         height: 33px;
         width: 33px;
         cursor: pointer;
     }
-    
+
     .Dashboard-Logout:hover {
         border-radius: 12px;
         box-shadow: 0px 3px 62px 0px rgba(255, 255, 255, 0.75);
@@ -1321,7 +1330,7 @@ a {
         justify-content: center;
         z-index: 5;
     }
-    
+
     .Dashboard-Settings-TopLane {
         flex-direction: row;
         width: 56.9%;
@@ -1358,7 +1367,7 @@ a {
         font-size: 50%;
         margin-left: 10px;
     }
-    
+
     .Account-Changer {
         margin-top: 12px;
         flex-direction: row;
@@ -1377,7 +1386,7 @@ a {
         display: flex;
         margin-top: 20%;
     }
-    
+  
     .Delete-Button {
         margin-left: 15%;
         border-radius: 7px;
@@ -1388,13 +1397,13 @@ a {
         font-weight: 600;
         font-size: 36%;
     }
-        
+
     .Delete-Button:hover {
         background-color: red;
         transition: background-color 200ms linear;
         color: white;
     }
-    
+
     .Select-Data {
         border-radius: 12px;
         height: 70%;
@@ -1416,6 +1425,7 @@ a {
         color: black;
         font-size: 59.5%;
     }
+
     h3 {
         font-size: 80%;
         align-self: center;

@@ -10,8 +10,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-
-
   const { login } = useContext(AuthContext);
 
   const onClickLogin = (event) => {
@@ -81,7 +79,7 @@ function Login() {
             {register && (
                 <>
                     <label className='Login-Password'>Name</label>
-                    <input type='password' placeholder='Your Name' onChange={onChangeName}/>
+                    <input type='text' placeholder='Your Name' onChange={onChangeName}/>
                 </>
             )}
             <label className='Login-Password'>E-Mail</label>
