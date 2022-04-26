@@ -4,7 +4,7 @@ import { encryptionModule } from "../encryption";
 import { getSafe } from "./login";
 import "./Dashboard.css";
 
-const baseUrl = "http://websafe.localhost/api/v1";
+const baseUrl = "https://gruppe4.testsites.info/api/v1";
 
 function copyStringToClipboard(str) {
   document.activeElement.blur();
