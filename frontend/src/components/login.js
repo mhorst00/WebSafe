@@ -30,13 +30,20 @@ function isSafeImportable(payload) {
   return true;
 }
 
+function getRequest(method, url, token) {
+  let request = new XMLHttpRequest();
+  request.open(method, baseUrl + url);
+  request.setRequestHeader("Accept", "application/json");
+  if (token != null) {
+    request.setRequestHeader("Authorization", "Bearer " + token);
+  }
+  return request;
+}
+
 function registerUser(email, name, password) {
   return new Promise(function (resolve, reject) {
-    let request = new XMLHttpRequest();
-    request.open("POST", baseUrl + "/user/new");
+    let request = getRequest("POST", "/user/new");
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Accept", "application/json");
-
     request.onload = function () {
       if (request.status === 200) {
         resolve(request.status);
@@ -63,13 +70,11 @@ function registerUser(email, name, password) {
 
 function loginUser(email, password) {
   return new Promise(function (resolve, reject) {
-    let request = new XMLHttpRequest();
-    request.open("POST", baseUrl + "/token");
+    let request = getRequest("POST", "/token");
     request.setRequestHeader(
       "Content-Type",
       "application/x-www-form-urlencoded"
     );
-    request.setRequestHeader("Accept", "application/json");
     request.onload = function () {
       if (request.status == 200) {
         resolve(JSON.parse(request.response).access_token);
@@ -96,11 +101,7 @@ function loginUser(email, password) {
 
 export async function getSafe(token, email, password) {
   return new Promise(function (resolve, reject) {
-    let request = new XMLHttpRequest();
-    request.open("GET", baseUrl + "/safe");
-    request.setRequestHeader("Accept", "application/json");
-    request.setRequestHeader("Authorization", "Bearer " + token);
-
+    let request = getRequest("GET", "/safe", token);
     request.onload = function () {
       if (request.status == 200) {
         //sollte als JSON objekt übergeben

@@ -34,6 +34,15 @@ function redirect(url) {
   document.body.removeChild(a);
 }
 
+function getRequest(method, url, token) {
+  let request = new XMLHttpRequest();
+  request.open(method, baseUrl + url);
+  request.setRequestHeader("Accept", "application/json");
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Authorization", "Bearer " + token);
+  return request;
+}
+
 function Dashboard() {
   const { logout, authState, userEmail, userPassword } =
     useContext(AuthContext);
@@ -51,12 +60,7 @@ function Dashboard() {
   // entrys werden verschlüsselt und mit den restlichen daten wie IV's verpackt und an die api geschickt
   const onLogoutClick = (event) => {
     encryptionModule.exportSafe(entrys).then((exportPayload) => {
-      let request = new XMLHttpRequest();
-      request.open("POST", baseUrl + "/safe");
-      request.setRequestHeader("Accept", "application/json");
-      request.setRequestHeader("Content-Type", "application/json");
-      request.setRequestHeader("Authorization", "Bearer " + authState);
-      console.log(request);
+      let request = getRequest("POST", "/safe", authState);
       request.send(JSON.stringify(exportPayload));
       request.onreadystatechange = function () {
         if (request.readyState === 4) {
@@ -106,13 +110,9 @@ function Dashboard() {
   const changeAccount = () => {
     console.log("Change: " + reset);
   };
-  //Zum account löschen
+  //Löscht den Account endgültig
   const deleteAccount = () => {
-    let request = new XMLHttpRequest();
-    request.open("DELETE", baseUrl + "/user/delete");
-    request.setRequestHeader("Accept", "application/json");
-    request.setRequestHeader("Authorization", "Bearer " + authState);
-    console.log(request);
+    let request = getRequest("DELETE", "/user/delete", authState);
     request.send();
     request.onreadystatechange = function () {
       if (request.readyState === 4) {
@@ -126,7 +126,7 @@ function Dashboard() {
     };
   };
 
-  //holt andauernd den Safe von der api
+  //holt den Safe von der api und fügt ihn den entrys hinzu
   useEffect(() => {
     async function importData() {
       const safe = await getSafe(authState, userEmail, userPassword);
