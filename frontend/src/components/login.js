@@ -3,7 +3,7 @@ import "./Login.css";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
 
-const baseUrl = "http://websafe.localhost/api/v1";
+const baseUrl = "https://gruppe4.testsites.info/api/v1";
 
 function isSafeImportable(payload) {
   if (payload == "") {
