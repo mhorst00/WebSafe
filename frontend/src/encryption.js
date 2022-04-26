@@ -9,6 +9,12 @@ export class encryptionModule {
   static #DATAKEY;
 
   static async initialise(username, password) {
+    if (typeof username !== "string" || typeof password !== "string") {
+      window.alert(
+        "Initialisation of encryptionModule failed because of type errors."
+      );
+      return;
+    }
     this.#USERNAME = username;
     this.#PASSWORD = password;
     this.#MASTERKEY = await genMasterKey(this.#USERNAME, this.#PASSWORD);
@@ -20,6 +26,15 @@ export class encryptionModule {
   }
 
   static async importSafe(safe) {
+    if (
+      typeof safe.enc_vault_key !== "string" ||
+      typeof safe.enc_data_key !== "string" ||
+      typeof safe.data_iv !== "string" ||
+      typeof safe.vault_iv !== "string"
+    ) {
+      window.alert("Type error while importing safe object.");
+      return;
+    }
     const encImportVaultKey = base64DecToArr(safe.enc_vault_key);
     const encImportDataKey = base64DecToArr(safe.enc_data_key);
     const safeImportPayload = base64DecToArr(safe.safe_payload);
@@ -35,6 +50,11 @@ export class encryptionModule {
   }
 
   static async exportSafe(contentArray) {
+    console.log("export safe");
+    if (!Array.isArray(contentArray)) {
+      window.alert("Type error in exportSafe: Passed object is not an array.");
+      return;
+    }
     const contentEncrypted = await encryptSafe(
       contentArray,
       this.#DATAKEY,
