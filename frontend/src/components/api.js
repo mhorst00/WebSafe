@@ -53,6 +53,9 @@ export function loginUser(email, password) {
         if (request.status == 200) {
           resolve(JSON.parse(request.response).access_token);
         }
+        else {
+            reject(request.status);
+        }
       };
       request.onerror = function () {
         console.log("Error with call:" + request.responseText);
