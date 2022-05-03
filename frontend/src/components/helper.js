@@ -1,4 +1,5 @@
 export function copyStringToClipboard(str) {
+    console.log(str);
     document.activeElement.blur();
     if (!str) return;
     var el = document.createElement("textarea");

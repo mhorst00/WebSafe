@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
 import { copyStringToClipboard, redirect } from "./helper";
-import { authorizedRequest, getSafe } from "./api";
+import { authorizedRequest, getSafe, getUserName, sendSafe, loginUser } from "./api";
 
 import "./Dashboard.css";
 
 
 function Dashboard() {
-  const { logout, authState } = useContext(AuthContext);
+  const { logout, authState, userEmail, userPassword, login } = useContext(AuthContext);
 
   const [link, setLink] = useState("");
   const [email, setEmail] = useState("");
@@ -17,9 +17,14 @@ function Dashboard() {
   const [settings, setSettings] = useState(false);
   const [entrys, setEntrys] = useState([]);
 
-  const [reset, setReset] = useState("");
+  const [reset, setReset] = useState("E-Mail");
+  const [resetValue, setResetValue] = useState("");
 
+  const [seconds, setSeconds] = useState(0);
 
+  const handleSelect = (event) => {
+    setReset(event.target.value);
+  }
 
   const onChangeLink = (event) => {
     setLink(event.target.value);
@@ -35,7 +40,7 @@ function Dashboard() {
 
   const onChangeReset = (event) => {
     console.log("onChangeReset");
-    setReset(event.target.value);
+    setResetValue(event.target.value);
   };
 
   const newEntry = () => {
@@ -54,9 +59,10 @@ function Dashboard() {
   };
 
   const changeAccount = async () => {
-    await new Promise(function (resolve, reject) {
+    const userName = await getUserName(authState);
+    
+    await new Promise(async function (resolve, reject) {
       let request = authorizedRequest("POST", "/user/change", authState);
-      request.setRequestHeader("Content-Type", "application/json");
       request.onload = function () {
         if (request.status === 200) {
           resolve(request.status);
@@ -69,13 +75,34 @@ function Dashboard() {
         console.log("Error with call:" + request.responseText);
         reject(request.status);
       };
-      request.send(
-        JSON.stringify({
-          username: email,
-          full_name: name,
-          password: password,
-        })
-      );
+
+      switch(reset) {
+        case 'E-Mail':
+            let matchEmail = /\S+@\S+\.\S+/;
+            if(!matchEmail.test(resetValue)) return;
+            await encryptionModule.initialise(resetValue, userPassword);
+            if(await sendSafe(entrys, authState)) {
+              request.send(JSON.stringify({
+              username: resetValue,
+              full_name: userName,
+              password: userPassword,
+            }));
+            }
+          break;
+        case 'Password':
+            if(resetValue.length < 8) return; 
+            await encryptionModule.initialise(userEmail, resetValue);
+            if(await sendSafe(entrys, authState)) {
+              request.send(JSON.stringify({
+              username: userEmail,
+              full_name: userName,
+              password: resetValue,
+            }));
+            }
+          break;
+        default:
+          break;
+      }
     });
     logout();
   };
@@ -83,8 +110,7 @@ function Dashboard() {
   //Löscht den Account endgültig
   const deleteAccount = async () => {
     await new Promise(function (resolve, reject) {
-      let request = authorizedRequest("DELETE", "/user/delete", authState);
-      request.setRequestHeader("Content-Type", "application/json");
+      let request = authorizedRequest("DELETE", "/user/delete", authState)
       request.onload = function () {
         if (request.status === 200) {
           resolve(request.status);
@@ -102,22 +128,23 @@ function Dashboard() {
     logout();
   }
 
+  useEffect(() => {
+    let interval = null;
+    if(seconds < 10) {
+      interval = setInterval(() => {
+        setSeconds(seconds => seconds + 1);
+      }, 30000); 
+    } else {
+      clearInterval(interval);
+      loginUser(userEmail, userPassword).then(x => login(x, userEmail, userPassword));
+    }
+    
+    return () => clearInterval(interval);
+  }, [seconds]);
+
   //Update Safe wenn sich entrys ändern
   useEffect(() => {
-    encryptionModule.exportSafe(entrys).then((exportPayload) => {
-      let request = authorizedRequest("POST", "/safe", authState);
-      request.send(JSON.stringify(exportPayload));
-      request.onreadystatechange = function () {
-        if (request.readyState === 4) {
-          if (request.status === 200) {
-            console.log('Update Entry Safe');
-          } else {
-            window.alert("Error with call:" + request.responseText);
-            console.log("Error with call:" + request.responseText);
-          }
-        }
-      };
-    });
+    sendSafe(entrys, authState);
   }, [entrys]);
 
   //holt den Safe von der api und fügt ihn den entrys hinzu
@@ -157,7 +184,7 @@ function Dashboard() {
             </div>
             <div className="Account-Changer">
               <div>
-                <select className="Select-Data">
+                <select className="Select-Data" onChange={handleSelect}>
                   <option>E-Mail</option>
                   <option>Password</option>
                 </select>
@@ -304,7 +331,7 @@ function Dashboard() {
                   title="Copy this entry"
                   value={x.password}
                   spellcheck="false"
-                  onClick={() => copyStringToClipboard(x.passwordSafe)}
+                  onClick={() => copyStringToClipboard(x.password)}
                 />
               </div>
               <div className="free"></div>

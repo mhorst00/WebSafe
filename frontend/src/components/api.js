@@ -71,7 +71,6 @@ export function loginUser(email, password) {
     });
 }
 
-
 function isSafeImportable(payload) {
     if (payload === "") {
       return false;
@@ -97,7 +96,6 @@ function isSafeImportable(payload) {
     return true;
 }
 
-
 export async function getSafe(token) {
     return new Promise(function (resolve, reject) {
       let request = authorizedRequest("GET", "/safe", token);
@@ -118,3 +116,42 @@ export async function getSafe(token) {
       request.send();
     });
   }
+
+  export async function getUserName(authState) {
+    return new Promise(function (resolve, reject) {
+      let request = authorizedRequest("GET", "/user/me", authState);
+      request.onload = function () {
+        if (request.status === 200) {
+          resolve(JSON.parse(request.responseText).full_name);
+        } else {
+          console.log("Error with call:" + request.responseText);
+          reject(request.status);
+        }
+      };
+      request.onerror = function () {
+        console.log("Error with call:" + request.responseText);
+        reject(request.status);
+      };
+      request.send();
+    });
+  } 
+
+export async function sendSafe (entrys, authState) {
+  return new Promise(async function (resolve, reject) {
+    const exportPayload = await encryptionModule.exportSafe(entrys);
+    
+    let request = authorizedRequest("POST", "/safe", authState);
+    request.onload = function () {
+      if (request.status === 200) {
+        resolve(true);
+      } else {
+        console.log("Error with call:" + request.responseText);
+        reject(false);
+      }
+    };
+    request.onerror = function () {
+      reject(false);
+    };
+    request.send(JSON.stringify(exportPayload));
+  })
+}
