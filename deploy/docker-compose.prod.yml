@@ -5,6 +5,7 @@ services:
   traefik:
     image: "traefik:v2.6"
     container_name: "traefik"
+    restart: always
     command:
       #- "--log.level=DEBUG"
       #- "--api.insecure=true"
@@ -17,7 +18,7 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
-      - "--certificatesresolvers.websafe.acme.email=your-email@example.com"
+      - "--certificatesresolvers.websafe.acme.email=maltehorst@gmail.com"
       - "--certificatesresolvers.websafe.acme.storage=/cert/acme.json"
       - "--certificatesresolvers.websafe.acme.httpchallenge.entrypoint=web"
     ports:
@@ -32,6 +33,7 @@ services:
   backend:
     image: ghcr.io/mhorst00/websafe-backend:latest
     container_name: "backend"
+    restart: always
     environment:
       - DB_URL=backend-db
     env_file:
@@ -40,7 +42,7 @@ services:
       - backend_safe:/code/safe
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`websafe.localhost`) && PathPrefix(`/api/v1`)"
+      - "traefik.http.routers.backend.rule=Host(`gruppe4.testsites.info`) && PathPrefix(`/api/v1`)"
       - "traefik.http.routers.backend.middlewares=backend-stripprefix,secHeaders@file"
       - "traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api/v1"
       - "traefik.http.routers.backend.entrypoints=websecure"
@@ -50,21 +52,25 @@ services:
   frontend:
     image: ghcr.io/mhorst00/websafe-frontend:latest
     container_name: "frontend"
+    restart: always
     environment:
       - REACT_APP_DOMAIN=https://gruppe4.testsites.info
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`websafe.localhost`)"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.websafe.middlewares=secHeaders@file"
-      - "traefik.http.routers.backend.tls=true"
-      - "traefik.http.routers.backend.tls.certresolver=websafe"
-
+      - "traefik.http.routers.frontend.rule=Host(`gruppe4.testsites.info`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.middlewares=secHeaders@file"
+      - "traefik.http.routers.frontend.tls=true"
+      - "traefik.http.routers.frontend.tls.certresolver=websafe"
 
   db:
     image: mongo
+    restart: always
     container_name: backend-db
+    volumes:
+      - backend_db:/data/db
 
 volumes:
   traefik_certs:
   backend_safe:
+  backend_db:
