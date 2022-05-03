@@ -8,7 +8,7 @@ import "./Dashboard.css";
 
 
 function Dashboard() {
-  const { logout, authState, userEmail, userPassword } = useContext(AuthContext);
+  const { logout, authState } = useContext(AuthContext);
 
   const [link, setLink] = useState("");
   const [email, setEmail] = useState("");
@@ -53,26 +53,54 @@ function Dashboard() {
     ]);
   };
 
-  // ! Achtung noch nicht fertig
-  const changeAccount = () => {
-    console.log("Change: " + reset);
+  const changeAccount = async () => {
+    await new Promise(function (resolve, reject) {
+      let request = authorizedRequest("POST", "/user/change", authState);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onload = function () {
+        if (request.status === 200) {
+          resolve(request.status);
+        } else {
+          console.log("Error with call:" + request.responseText);
+          reject(request.status);
+        }
+      };
+      request.onerror = function () {
+        console.log("Error with call:" + request.responseText);
+        reject(request.status);
+      };
+      request.send(
+        JSON.stringify({
+          username: email,
+          full_name: name,
+          password: password,
+        })
+      );
+    });
+    logout();
   };
 
   //Löscht den Account endgültig
-  const deleteAccount = () => {
-    let request = authorizedRequest("DELETE", "/user/delete", authState);
-    request.send();
-    request.onreadystatechange = function () {
-      if (request.readyState === 4) {
-        if (request.status == 200) {
-          logout();
+  const deleteAccount = async () => {
+    await new Promise(function (resolve, reject) {
+      let request = authorizedRequest("DELETE", "/user/delete", authState);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onload = function () {
+        if (request.status === 200) {
+          resolve(request.status);
         } else {
-          window.alert("Error with call:" + request.responseText);
           console.log("Error with call:" + request.responseText);
+          reject(request.status);
         }
-      }
-    };
-  };
+      };
+      request.onerror = function () {
+        console.log("Error with call:" + request.responseText);
+        reject(request.status);
+      };
+      request.send();
+    });
+    logout();
+  }
 
   //Update Safe wenn sich entrys ändern
   useEffect(() => {
@@ -81,7 +109,7 @@ function Dashboard() {
       request.send(JSON.stringify(exportPayload));
       request.onreadystatechange = function () {
         if (request.readyState === 4) {
-          if (request.status == 200) {
+          if (request.status === 200) {
             console.log('Update Entry Safe');
           } else {
             window.alert("Error with call:" + request.responseText);

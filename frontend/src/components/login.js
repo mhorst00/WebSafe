@@ -70,9 +70,9 @@ function Login() {
   };
 
   const onSubmit = async () => {
-    if(validateInput()) {
+    /*if(validateInput()) {
       return;
-    }
+    }*/
 
     try {
       let response;
@@ -106,7 +106,7 @@ function Login() {
       setFailed("Wrong Password or E-Mail!");
     }
   };
-
+  
   return (
     <div className="Login-Container">
       <div className="Login-Field">
@@ -120,6 +120,7 @@ function Login() {
                 type="text"
                 placeholder="Your Name"
                 onInput={onInputName}
+                onKeyDown={event => event.key === 'Enter' && onSubmit()}
               />
             </>
           )}
@@ -128,12 +129,14 @@ function Login() {
             type="email"
             placeholder="example@example.com"
             onInput={onInputEmail}
+            onKeyDown={event => event.key === 'Enter' && onSubmit()}
           />
           <label className="Login-Password">Password</label>
           <input
             type="password"
             placeholder="password"
             onInput={onInputPassword}
+            onKeyDown={event => event.key === 'Enter' && onSubmit()}
           />
           {register && (
             <>
@@ -142,6 +145,7 @@ function Login() {
                 type="password"
                 placeholder="password"
                 onInput={onInputPasswordConfirm}
+                onKeyDown={event => event.key === 'Enter' && onSubmit()}
               />
             </>
           )}

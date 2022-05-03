@@ -50,7 +50,7 @@ export function loginUser(email, password) {
         "application/x-www-form-urlencoded"
       );
       request.onload = function () {
-        if (request.status == 200) {
+        if (request.status === 200) {
           resolve(JSON.parse(request.response).access_token);
         }
         else {
@@ -73,25 +73,25 @@ export function loginUser(email, password) {
 
 
 function isSafeImportable(payload) {
-    if (payload == "") {
+    if (payload === "") {
       return false;
     }
-    if (payload.safe_payload == "") {
+    if (payload.safe_payload === "") {
       return false;
     }
-    if (payload.safe_payload == "") {
+    if (payload.safe_payload === "") {
       return false;
     }
-    if (payload.enc_data_key == "") {
+    if (payload.enc_data_key === "") {
       return false;
     }
-    if (payload.enc_vault_key == "") {
+    if (payload.enc_vault_key === "") {
       return false;
     }
-    if (payload.data_iv == "") {
+    if (payload.data_iv === "") {
       return false;
     }
-    if (payload.vault_iv == "") {
+    if (payload.vault_iv === "") {
       return false;
     }
     return true;
@@ -102,7 +102,7 @@ export async function getSafe(token) {
     return new Promise(function (resolve, reject) {
       let request = authorizedRequest("GET", "/safe", token);
       request.onload = function () {
-        if (request.status == 200) {
+        if (request.status === 200) {
           //sollte als JSON objekt übergeben
           let safe = JSON.parse(request.responseText);
           if (isSafeImportable(safe)) {
