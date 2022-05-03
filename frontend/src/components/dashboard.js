@@ -1,51 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
-import { getSafe } from "./login";
+import { copyStringToClipboard, redirect } from "./helper";
+import { authorizedRequest, getSafe } from "./api";
+
 import "./Dashboard.css";
 
-const baseUrl = "https://gruppe4.testsites.info/api/v1";
-
-function copyStringToClipboard(str) {
-  document.activeElement.blur();
-  if (!str) return;
-  var el = document.createElement("textarea");
-  el.value = str;
-  el.setAttribute("readonly", "");
-  el.style = { position: "absolute", left: "-9999px" };
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand("copy");
-  document.body.removeChild(el);
-}
-
-function redirect(url) {
-  console.log("changing screen");
-  document.activeElement.blur();
-  if (!url) return;
-  var a = document.createElement("a");
-  a.setAttribute("readonly", "");
-  a.style = { position: "absolute", left: "-9999px" };
-  a.target = "_blank";
-  a.rel = "noreferrer";
-  a.href = url;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
-
-function getRequest(method, url, token) {
-  let request = new XMLHttpRequest();
-  request.open(method, baseUrl + url);
-  request.setRequestHeader("Accept", "application/json");
-  request.setRequestHeader("Content-Type", "application/json");
-  request.setRequestHeader("Authorization", "Bearer " + token);
-  return request;
-}
 
 function Dashboard() {
-  const { logout, authState, userEmail, userPassword } =
-    useContext(AuthContext);
+  const { logout, authState, userEmail, userPassword } = useContext(AuthContext);
 
   const [link, setLink] = useState("");
   const [email, setEmail] = useState("");
@@ -56,24 +19,7 @@ function Dashboard() {
 
   const [reset, setReset] = useState("");
 
-  //der logout vorgang
-  // entrys werden verschlüsselt und mit den restlichen daten wie IV's verpackt und an die api geschickt
-  const onLogoutClick = (event) => {
-    encryptionModule.exportSafe(entrys).then((exportPayload) => {
-      let request = getRequest("POST", "/safe", authState);
-      request.send(JSON.stringify(exportPayload));
-      request.onreadystatechange = function () {
-        if (request.readyState === 4) {
-          if (request.status == 200) {
-            logout();
-          } else {
-            window.alert("Error with call:" + request.responseText);
-            console.log("Error with call:" + request.responseText);
-          }
-        }
-      };
-    });
-  };
+
 
   const onChangeLink = (event) => {
     setLink(event.target.value);
@@ -107,12 +53,14 @@ function Dashboard() {
     ]);
   };
 
+  // ! Achtung noch nicht fertig
   const changeAccount = () => {
     console.log("Change: " + reset);
   };
+
   //Löscht den Account endgültig
   const deleteAccount = () => {
-    let request = getRequest("DELETE", "/user/delete", authState);
+    let request = authorizedRequest("DELETE", "/user/delete", authState);
     request.send();
     request.onreadystatechange = function () {
       if (request.readyState === 4) {
@@ -126,10 +74,28 @@ function Dashboard() {
     };
   };
 
+  //Update Safe wenn sich entrys ändern
+  useEffect(() => {
+    encryptionModule.exportSafe(entrys).then((exportPayload) => {
+      let request = authorizedRequest("POST", "/safe", authState);
+      request.send(JSON.stringify(exportPayload));
+      request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+          if (request.status == 200) {
+            console.log('Update Entry Safe');
+          } else {
+            window.alert("Error with call:" + request.responseText);
+            console.log("Error with call:" + request.responseText);
+          }
+        }
+      };
+    });
+  }, [entrys]);
+
   //holt den Safe von der api und fügt ihn den entrys hinzu
   useEffect(() => {
     async function importData() {
-      const safe = await getSafe(authState, userEmail, userPassword);
+      const safe = await getSafe(authState);
       if (typeof safe !== "number") {
         setEntrys(safe);
       }
@@ -209,7 +175,7 @@ function Dashboard() {
             src={"./logout-black.svg"}
             className="Dashboard-Logout"
             alt="logo"
-            onClick={() => onLogoutClick()}
+            onClick={() => logout()}
           />
         </div>
 
