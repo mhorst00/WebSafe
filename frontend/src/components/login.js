@@ -17,11 +17,13 @@ function Login() {
   const { login } = useContext(AuthContext);
 
   const onClickLogin = (event) => {
+    setFailed(undefined);
     event.preventDefault();
     setRegister(false);
   };
 
   const onClickRegister = (event) => {
+    setFailed(undefined);
     event.preventDefault();
     setRegister(true);
   };
@@ -44,22 +46,33 @@ function Login() {
 
   const validateInput = () => {
     let matchEmail = /\S+@\S+\.\S+/;
+    let message = '';
 
-    if (!register) {
-      return matchEmail.test(email) && password.length > 6;
+    if(password.length < 8) {
+      message = 'Password must have at least 8 characters. '
     }
-    return (
-      matchEmail.test(email) &&
-      password.length > 6 &&
-      password === passwordConfirm
-    );
+
+    if(!matchEmail.test(email)) {
+      console.log('emaiol falsch');
+      message += 'Not a valid email. '; 
+    }
+
+    if(password !== passwordConfirm && register) {
+      message += 'Passwords are not equal.'; 
+    }
+
+    if(message.length > 1) {
+      console.log(message);
+      setFailed(message);
+      return true;
+    }
+    return false;
   };
 
   const onSubmit = async () => {
-    /*if(!validateInput()) {
-      setFailed('There was a problem with your E-Mail!');
+    if(validateInput()) {
       return;
-    }*/
+    }
 
     try {
       let response;
