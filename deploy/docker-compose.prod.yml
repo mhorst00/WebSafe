@@ -50,6 +50,8 @@ services:
   frontend:
     image: ghcr.io/mhorst00/websafe-frontend:latest
     container_name: "frontend"
+    environment:
+      - REACT_APP_DOMAIN=https://gruppe4.testsites.info
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`websafe.localhost`)"
