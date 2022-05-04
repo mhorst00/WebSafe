@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.model import Message, User, UserInDB, Token, UserNew, SafePayload
+from app.model import Message, User, UserInDB, Token, UserNew, UserResponse, SafePayload
 from app.db import Database
 from app.mail import MailSend
 from app.files import Filehandler
@@ -162,7 +162,7 @@ async def new_user(new_user: UserNew):
         )
 
 
-@app.get("/user/me", response_model=User, tags=["user"])
+@app.get("/user/me", response_model=UserResponse, tags=["user"])
 async def read_user_me(current_user: UserInDB = Depends(auth.get_current_user)):
     return current_user
 
@@ -214,9 +214,7 @@ async def post_safe(
     if x:
         return {"message": "Successfully updated Safe"}
     else:
-        logging.error(
-            f"Error while receiving safe {current_user.safe_id}. Size too big"
-        )
+        logging.error(f"Error while receiving safe {current_user.safe_id}. Size too big")
         return JSONResponse(
             status_code=500,
             content={"message": "Payload is larger than size limit, will not be saved"},

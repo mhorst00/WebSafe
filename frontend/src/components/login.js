@@ -1,229 +1,112 @@
 import { useState, useContext } from "react";
-import "./Login.css";
 import { AuthContext } from "../context/AuthContext";
+import { baseUrl, registerUser, loginUser } from "./api";
 import { encryptionModule } from "../encryption";
 
-const baseUrl = "https://gruppe4.testsites.info/api/v1";
+import "./Login.css";
 
-function isSafeImportable(payload) {
-  if (payload == "") {
-    return false;
-  }
-  if (payload.safe_payload == "") {
-    return false;
-  }
-  if (payload.safe_payload == "") {
-    return false;
-  }
-  if (payload.enc_data_key == "") {
-    return false;
-  }
-  if (payload.enc_vault_key == "") {
-    return false;
-  }
-  if (payload.data_iv == "") {
-    return false;
-  }
-  if (payload.vault_iv == "") {
-    return false;
-  }
-  return true;
-}
-
-function getRequest(method, url, token) {
-  let request = new XMLHttpRequest();
-  request.open(method, baseUrl + url);
-  request.setRequestHeader("Accept", "application/json");
-  if (token != null) {
-    request.setRequestHeader("Authorization", "Bearer " + token);
-  }
-  return request;
-}
-
-function registerUser(email, name, password) {
-  return new Promise(function (resolve, reject) {
-    let request = getRequest("POST", "/user/new");
-    request.setRequestHeader("Content-Type", "application/json");
-    request.onload = function () {
-      if (request.status === 200) {
-        resolve(request.status);
-      } else {
-        window.alert("Error with call:" + request.responseText);
-        console.log("Error with call:" + request.responseText);
-        reject(request.status);
-      }
-    };
-    request.onerror = function () {
-      window.alert("Error with call:" + request.responseText);
-      console.log("Error with call:" + request.responseText);
-      reject(request.status);
-    };
-    request.send(
-      JSON.stringify({
-        username: email,
-        full_name: name,
-        password: password,
-      })
-    );
-  });
-}
-
-function loginUser(email, password) {
-  return new Promise(function (resolve, reject) {
-    let request = getRequest("POST", "/token");
-    request.setRequestHeader(
-      "Content-Type",
-      "application/x-www-form-urlencoded"
-    );
-    request.onload = function () {
-      if (request.status == 200) {
-        resolve(JSON.parse(request.response).access_token);
-      } else {
-        window.alert("Error with call:" + request.responseText);
-        console.log("Error with call:" + request.responseText);
-        reject(request.status);
-      }
-    };
-    request.onerror = function () {
-      window.alert("Error with call:" + request.responseText);
-      console.log("Error with call:" + request.responseText);
-      reject(request.status);
-    };
-    request.send(
-      "grant_type=&username=" +
-        email +
-        "&password=" +
-        password +
-        "&scope=&client_id=&client_secret="
-    );
-  });
-}
-
-export async function getSafe(token, email, password) {
-  return new Promise(function (resolve, reject) {
-    let request = getRequest("GET", "/safe", token);
-    request.onload = function () {
-      if (request.status == 200) {
-        //sollte als JSON objekt übergeben
-        let safe = JSON.parse(request.responseText);
-        if (isSafeImportable(safe)) {
-          let decryptedSafe = encryptionModule.importSafe(safe);
-          resolve(decryptedSafe);
-        } else {
-          console.log(
-            "safe was not importable, trying to log in otherwise: ",
-            email,
-            password
-          );
-          encryptionModule.initialise(email, password);
-          request.send();
-        }
-      } else {
-        window.alert("Error with call:" + request.responseText);
-        console.log("Error with call:" + request.responseText);
-      }
-    };
-    request.onerror = function () {
-      window.alert("Error with call:" + request.responseText);
-      console.log("Error with call:" + request.responseText);
-      reject(request.status);
-    };
-    request.send();
-  });
-}
 
 function Login() {
   const [register, setRegister] = useState(false);
   const [failed, setFailed] = useState(undefined);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("a@b.com");
-  const [password, setPassword] = useState("test");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const { login } = useContext(AuthContext);
 
   const onClickLogin = (event) => {
+    setFailed(undefined);
     event.preventDefault();
     setRegister(false);
   };
 
   const onClickRegister = (event) => {
+    setFailed(undefined);
     event.preventDefault();
     setRegister(true);
   };
 
-  const onChangeName = (event) => {
+  const onInputName = (event) => {
     setName(event.target.value);
   };
 
-  const onChangeEmail = (event) => {
+  const onInputEmail = (event) => {
     setEmail(event.target.value);
   };
 
-  const onChangePassword = (event) => {
+  const onInputPassword = (event) => {
     setPassword(event.target.value);
   };
 
-  const onChangePasswordConfirm = (event) => {
+  const onInputPasswordConfirm = (event) => {
     setPasswordConfirm(event.target.value);
   };
 
   const validateInput = () => {
     let matchEmail = /\S+@\S+\.\S+/;
+    let message = '';
 
-    if (!register) {
-      return matchEmail.test(email) && password.length > 6;
+    if(password.length < 8) {
+      message = 'Password must have at least 8 characters. '
     }
-    return (
-      matchEmail.test(email) &&
-      password.length > 6 &&
-      password === passwordConfirm
-    );
+
+    if(!matchEmail.test(email)) {
+      console.log('emaiol falsch');
+      message += 'Not a valid email. '; 
+    }
+
+    if(password !== passwordConfirm && register) {
+      message += 'Passwords are not equal.'; 
+    }
+
+    if(message.length > 1) {
+      console.log(message);
+      setFailed(message);
+      return true;
+    }
+    return false;
   };
 
-  const onSubmit = () => {
-    /*
-    if(!validateInput()) {
-      setFailed('There was a problem with your E-Mail!');
+  const onSubmit = async () => {
+    /*if(validateInput()) {
       return;
-    }
-    */
+    }*/
 
     try {
+      let response;
+      console.log('Variablen: ' + email + ' ' + password);
+      await encryptionModule.initialise(email, password);
       if (register) {
         // User tries to register
-        registerUser(email, name, password).then((stat) => {
-          if (stat === 200) {
-            encryptionModule.initialise(email, password);
-            loginUser(email, password).then((token) => {
-              if (token.length == 3) {
-                console.log("tolle fehlerbehandlung kommt noch");
-              } else {
-                login(token);
-              }
-            });
-          } else {
-            console.log("tolle fehlerbehandlung kommt noch");
+        response = await registerUser(email, name, password);
+
+        if(response === 200) {
+          response = await loginUser(email, password);
+          if(response.length === 3) {
+            setFailed('Token response invalid! Error: ' + response);
+            return;
           }
-        });
+          login(response);
+        } 
       } else {
         // User tries to log in
-        loginUser(email, password).then(async (token) => {
-          if (token.length == 3) {
-            console.log("tolle fehlerbehandlung kommt noch");
-          } else {
-            await encryptionModule.initialise(email, password);
-            login(token, email, password);
-          }
-        });
+        response = await loginUser(email, password);
+        console.log('response sdjkhbcnnks   ' + response);
+        if(response.length === 3) {
+          console.log('error anmeldung');
+          setFailed('Token response invalid! Error: ' + response);
+          return;
+        }
+        login(response, email, password);
       }
     } catch (err) {
+      console.log('error anmeldung');
       setFailed("Wrong Password or E-Mail!");
     }
-    setEmail("");
-    setPassword("");
   };
-
+  
   return (
     <div className="Login-Container">
       <div className="Login-Field">
@@ -236,7 +119,8 @@ function Login() {
               <input
                 type="text"
                 placeholder="Your Name"
-                onChange={onChangeName}
+                onInput={onInputName}
+                onKeyDown={event => event.key === 'Enter' && onSubmit()}
               />
             </>
           )}
@@ -244,13 +128,15 @@ function Login() {
           <input
             type="email"
             placeholder="example@example.com"
-            onChange={onChangeEmail}
+            onInput={onInputEmail}
+            onKeyDown={event => event.key === 'Enter' && onSubmit()}
           />
           <label className="Login-Password">Password</label>
           <input
             type="password"
             placeholder="password"
-            onChange={onChangePassword}
+            onInput={onInputPassword}
+            onKeyDown={event => event.key === 'Enter' && onSubmit()}
           />
           {register && (
             <>
@@ -258,7 +144,8 @@ function Login() {
               <input
                 type="password"
                 placeholder="password"
-                onChange={onChangePasswordConfirm}
+                onInput={onInputPasswordConfirm}
+                onKeyDown={event => event.key === 'Enter' && onSubmit()}
               />
             </>
           )}
@@ -269,7 +156,7 @@ function Login() {
           {register ? (
             <p className="Login-Info-Text">
               You already have an Account?{" "}
-              <a href="https://gruppe4.testsites.info/" onClick={onClickLogin}>
+              <a href={baseUrl} onClick={onClickLogin}>
                 Login
               </a>
             </p>
@@ -277,7 +164,7 @@ function Login() {
             <p className="Login-Info-Text">
               You don't have an Account?{" "}
               <a
-                href="https://gruppe4.testsites.info/"
+                href={baseUrl}
                 onClick={onClickRegister}
               >
                 Register

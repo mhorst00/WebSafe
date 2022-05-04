@@ -17,6 +17,18 @@ class User(BaseModel):
         schema_extra = {"example": {"username": "boaty@mcboatface.com"}}
 
 
+class UserResponse(User):
+    full_name: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "username": "boaty@mcboatface.com",
+                "full_name": "Boaty McBoatface",
+            }
+        }
+
+
 class UserNew(User):
     full_name: str
     password: str

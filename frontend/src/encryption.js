@@ -10,10 +10,9 @@ export class encryptionModule {
 
   static async initialise(username, password) {
     if (typeof username !== "string" || typeof password !== "string") {
-      window.alert(
-        "Initialisation of encryptionModule failed because of type errors."
+      throw new TypeError(
+        "Initialisation of encryptionModule failed because of type errors in username or password."
       );
-      return;
     }
     this.#USERNAME = username;
     this.#PASSWORD = password;
@@ -32,8 +31,7 @@ export class encryptionModule {
       typeof safe.data_iv !== "string" ||
       typeof safe.vault_iv !== "string"
     ) {
-      window.alert("Type error while importing safe object.");
-      return;
+      throw new TypeError("Type error while importing safe object.");
     }
     const encImportVaultKey = base64DecToArr(safe.enc_vault_key);
     const encImportDataKey = base64DecToArr(safe.enc_data_key);
@@ -50,10 +48,11 @@ export class encryptionModule {
   }
 
   static async exportSafe(contentArray) {
-    console.log("export safe");
+    console.log("export safe: " + contentArray);
     if (!Array.isArray(contentArray)) {
-      window.alert("Type error in exportSafe: Passed object is not an array.");
-      return;
+      throw new TypeError(
+        "Type error in exportSafe: Passed object is not an array."
+      );
     }
     const contentEncrypted = await encryptSafe(
       contentArray,

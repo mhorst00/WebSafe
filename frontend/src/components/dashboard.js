@@ -1,51 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
-import { getSafe } from "./login";
+import { copyStringToClipboard, redirect } from "./helper";
+import { authorizedRequest, getSafe, getUserName, sendSafe, loginUser } from "./api";
+
 import "./Dashboard.css";
 
-const baseUrl = "https://gruppe4.testsites.info/api/v1";
-
-function copyStringToClipboard(str) {
-  document.activeElement.blur();
-  if (!str) return;
-  var el = document.createElement("textarea");
-  el.value = str;
-  el.setAttribute("readonly", "");
-  el.style = { position: "absolute", left: "-9999px" };
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand("copy");
-  document.body.removeChild(el);
-}
-
-function redirect(url) {
-  console.log("changing screen");
-  document.activeElement.blur();
-  if (!url) return;
-  var a = document.createElement("a");
-  a.setAttribute("readonly", "");
-  a.style = { position: "absolute", left: "-9999px" };
-  a.target = "_blank";
-  a.rel = "noreferrer";
-  a.href = url;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
-
-function getRequest(method, url, token) {
-  let request = new XMLHttpRequest();
-  request.open(method, baseUrl + url);
-  request.setRequestHeader("Accept", "application/json");
-  request.setRequestHeader("Content-Type", "application/json");
-  request.setRequestHeader("Authorization", "Bearer " + token);
-  return request;
-}
 
 function Dashboard() {
-  const { logout, authState, userEmail, userPassword } =
-    useContext(AuthContext);
+  const { logout, authState, userEmail, userPassword, login } = useContext(AuthContext);
 
   const [link, setLink] = useState("");
   const [email, setEmail] = useState("");
@@ -54,26 +17,16 @@ function Dashboard() {
   const [settings, setSettings] = useState(false);
   const [entrys, setEntrys] = useState([]);
 
-  const [reset, setReset] = useState("");
+  const [reset, setReset] = useState("E-Mail");
+  const [resetValue, setResetValue] = useState("");
 
-  //der logout vorgang
-  // entrys werden verschlüsselt und mit den restlichen daten wie IV's verpackt und an die api geschickt
-  const onLogoutClick = (event) => {
-    encryptionModule.exportSafe(entrys).then((exportPayload) => {
-      let request = getRequest("POST", "/safe", authState);
-      request.send(JSON.stringify(exportPayload));
-      request.onreadystatechange = function () {
-        if (request.readyState === 4) {
-          if (request.status == 200) {
-            logout();
-          } else {
-            window.alert("Error with call:" + request.responseText);
-            console.log("Error with call:" + request.responseText);
-          }
-        }
-      };
-    });
-  };
+  const [seconds, setSeconds] = useState(0);
+
+  const [ready, setReady] = useState(false); //disable preemptive post of save
+
+  const handleSelect = (event) => {
+    setReset(event.target.value);
+  }
 
   const onChangeLink = (event) => {
     setLink(event.target.value);
@@ -89,7 +42,7 @@ function Dashboard() {
 
   const onChangeReset = (event) => {
     console.log("onChangeReset");
-    setReset(event.target.value);
+    setResetValue(event.target.value);
   };
 
   const newEntry = () => {
@@ -107,34 +60,104 @@ function Dashboard() {
     ]);
   };
 
-  const changeAccount = () => {
-    console.log("Change: " + reset);
-  };
-  //Löscht den Account endgültig
-  const deleteAccount = () => {
-    let request = getRequest("DELETE", "/user/delete", authState);
-    request.send();
-    request.onreadystatechange = function () {
-      if (request.readyState === 4) {
-        if (request.status == 200) {
-          logout();
+  const changeAccount = async () => {
+    const userName = await getUserName(authState);
+    
+    await new Promise(async function (resolve, reject) {
+      let request = authorizedRequest("POST", "/user/change", authState);
+      request.onload = function () {
+        if (request.status === 200) {
+          resolve(request.status);
         } else {
-          window.alert("Error with call:" + request.responseText);
           console.log("Error with call:" + request.responseText);
+          reject(request.status);
         }
+      };
+      request.onerror = function () {
+        console.log("Error with call:" + request.responseText);
+        reject(request.status);
+      };
+
+      switch(reset) {
+        case 'E-Mail':
+            let matchEmail = /\S+@\S+\.\S+/;
+            if(!matchEmail.test(resetValue)) return;
+            await encryptionModule.initialise(resetValue, userPassword);
+            if(await sendSafe(entrys, authState)) {
+              request.send(JSON.stringify({
+              username: resetValue,
+              full_name: userName,
+              password: userPassword,
+            }));
+            }
+          break;
+        case 'Password':
+            if(resetValue.length < 8) return; 
+            await encryptionModule.initialise(userEmail, resetValue);
+            if(await sendSafe(entrys, authState)) {
+              request.send(JSON.stringify({
+              username: userEmail,
+              full_name: userName,
+              password: resetValue,
+            }));
+            }
+          break;
+        default:
+          break;
       }
-    };
+    });
+    logout();
   };
+
+  //Löscht den Account endgültig
+  const deleteAccount = async () => {
+    await new Promise(function (resolve, reject) {
+      let request = authorizedRequest("DELETE", "/user/delete", authState)
+      request.onload = function () {
+        if (request.status === 200) {
+          resolve(request.status);
+        } else {
+          console.log("Error with call:" + request.responseText);
+          reject(request.status);
+        }
+      };
+      request.onerror = function () {
+        console.log("Error with call:" + request.responseText);
+        reject(request.status);
+      };
+      request.send();
+    });
+    logout();
+  }
+
+  useEffect(() => {
+    let interval = null;
+    if(seconds < 10) {
+      interval = setInterval(() => {
+        setSeconds(seconds => seconds + 1);
+      }, 30000); 
+    } else {
+      clearInterval(interval);
+      loginUser(userEmail, userPassword).then(x => login(x, userEmail, userPassword));
+    }
+    
+    return () => clearInterval(interval);
+  }, [seconds]);
+
+  //Update Safe wenn sich entrys ändern
+  useEffect(() => {
+    if(ready) sendSafe(entrys, authState);
+  }, [entrys]);
 
   //holt den Safe von der api und fügt ihn den entrys hinzu
   useEffect(() => {
     async function importData() {
-      const safe = await getSafe(authState, userEmail, userPassword);
+      const safe = await getSafe(authState);
       if (typeof safe !== "number") {
         setEntrys(safe);
       }
     }
-    importData();
+    importData().then(() => setReady(true));
   }, []);
 
   return (
@@ -163,7 +186,7 @@ function Dashboard() {
             </div>
             <div className="Account-Changer">
               <div>
-                <select className="Select-Data">
+                <select className="Select-Data" onChange={handleSelect}>
                   <option>E-Mail</option>
                   <option>Password</option>
                 </select>
@@ -209,7 +232,7 @@ function Dashboard() {
             src={"./logout-black.svg"}
             className="Dashboard-Logout"
             alt="logo"
-            onClick={() => onLogoutClick()}
+            onClick={() => logout()}
           />
         </div>
 
@@ -310,7 +333,7 @@ function Dashboard() {
                   title="Copy this entry"
                   value={x.password}
                   spellcheck="false"
-                  onClick={() => copyStringToClipboard(x.passwordSafe)}
+                  onClick={() => copyStringToClipboard(x.password)}
                 />
               </div>
               <div className="free"></div>
