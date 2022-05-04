@@ -22,7 +22,7 @@ function Dashboard() {
 
   const [seconds, setSeconds] = useState(0);
 
-  let initialReady = false; //disable preemptive post of save
+  const [ready, setReady] = useState(false); //disable preemptive post of save
 
   const handleSelect = (event) => {
     setReset(event.target.value);
@@ -146,7 +146,7 @@ function Dashboard() {
 
   //Update Safe wenn sich entrys ändern
   useEffect(() => {
-    if(initialReady) sendSafe(entrys, authState);
+    if(ready) sendSafe(entrys, authState);
   }, [entrys]);
 
   //holt den Safe von der api und fügt ihn den entrys hinzu
@@ -155,10 +155,9 @@ function Dashboard() {
       const safe = await getSafe(authState);
       if (typeof safe !== "number") {
         setEntrys(safe);
-        initialReady = true;
       }
     }
-    importData();
+    importData().then(() => setReady(true));
   }, []);
 
   return (
