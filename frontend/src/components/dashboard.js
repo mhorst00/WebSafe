@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
 import { copyStringToClipboard, redirect } from "./helper";
-import { authorizedRequest, getSafe, getUserName, sendSafe, loginUser } from "./api";
 
+import { authorizedRequest, getSafe, getUserName, sendSafe, loginUser } from "./api";
 import "./Dashboard.css";
 
 
@@ -26,7 +26,7 @@ function Dashboard() {
 
   const handleSelect = (event) => {
     setReset(event.target.value);
-  }
+  };
 
   const onChangeLink = (event) => {
     setLink(event.target.value);
@@ -62,7 +62,7 @@ function Dashboard() {
 
   const changeAccount = async () => {
     const userName = await getUserName(authState);
-    
+
     await new Promise(async function (resolve, reject) {
       let request = authorizedRequest("POST", "/user/change", authState);
       request.onload = function () {
@@ -78,29 +78,33 @@ function Dashboard() {
         reject(request.status);
       };
 
-      switch(reset) {
-        case 'E-Mail':
-            let matchEmail = /\S+@\S+\.\S+/;
-            if(!matchEmail.test(resetValue)) return;
-            await encryptionModule.initialise(resetValue, userPassword);
-            if(await sendSafe(entrys, authState)) {
-              request.send(JSON.stringify({
-              username: resetValue,
-              full_name: userName,
-              password: userPassword,
-            }));
-            }
+      switch (reset) {
+        case "E-Mail":
+          let matchEmail = /\S+@\S+\.\S+/;
+          if (!matchEmail.test(resetValue)) return;
+          await encryptionModule.initialise(resetValue, userPassword);
+          if (await sendSafe(entrys, authState)) {
+            request.send(
+              JSON.stringify({
+                username: resetValue,
+                full_name: userName,
+                password: userPassword,
+              })
+            );
+          }
           break;
-        case 'Password':
-            if(resetValue.length < 8) return; 
-            await encryptionModule.initialise(userEmail, resetValue);
-            if(await sendSafe(entrys, authState)) {
-              request.send(JSON.stringify({
-              username: userEmail,
-              full_name: userName,
-              password: resetValue,
-            }));
-            }
+        case "Password":
+          if (resetValue.length < 8) return;
+          await encryptionModule.initialise(userEmail, resetValue);
+          if (await sendSafe(entrys, authState)) {
+            request.send(
+              JSON.stringify({
+                username: userEmail,
+                full_name: userName,
+                password: resetValue,
+              })
+            );
+          }
           break;
         default:
           break;
@@ -112,7 +116,7 @@ function Dashboard() {
   //Löscht den Account endgültig
   const deleteAccount = async () => {
     await new Promise(function (resolve, reject) {
-      let request = authorizedRequest("DELETE", "/user/delete", authState)
+      let request = authorizedRequest("DELETE", "/user/delete", authState);
       request.onload = function () {
         if (request.status === 200) {
           resolve(request.status);
@@ -128,7 +132,7 @@ function Dashboard() {
       request.send();
     });
     logout();
-  }
+  };
 
   useEffect(() => {
     let interval = null;
@@ -140,7 +144,6 @@ function Dashboard() {
       clearInterval(interval);
       loginUser(userEmail, userPassword).then(x => login(x, userEmail, userPassword));
     }
-    
     return () => clearInterval(interval);
   }, [seconds]);
 
@@ -158,7 +161,9 @@ function Dashboard() {
       }
       setReady(true);
     }
-    importData();
+    console.log(`Importing Data... (initReady: ${ready})`);
+    importData().then(() => setReady(true));
+    console.log(`Imported Data (initReady: ${ready})`);
   }, []);
 
   return (
