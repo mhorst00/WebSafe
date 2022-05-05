@@ -5,6 +5,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --silent
 RUN npm install react-scripts -g --silent
 COPY . ./
+ENV REACT_APP_DOMAIN=https://gruppe4.testsites.info
 RUN npm run build
 
 FROM nginx:stable-alpine
