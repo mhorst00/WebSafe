@@ -156,8 +156,9 @@ function Dashboard() {
       if (typeof safe !== "number") {
         setEntrys(safe);
       }
+      setReady(true);
     }
-    importData().then(() => setReady(true));
+    importData();
   }, []);
 
   return (
