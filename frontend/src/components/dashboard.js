@@ -2,19 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
 import { copyStringToClipboard, redirect } from "./helper";
-import {
-  authorizedRequest,
-  getSafe,
-  getUserName,
-  sendSafe,
-  loginUser,
-} from "./api";
 
+import { authorizedRequest, getSafe, getUserName, sendSafe, loginUser } from "./api";
 import "./Dashboard.css";
 
+
 function Dashboard() {
-  const { logout, authState, userEmail, userPassword, login } =
-    useContext(AuthContext);
+  const { logout, authState, userEmail, userPassword, login } = useContext(AuthContext);
 
   const [link, setLink] = useState("");
   const [email, setEmail] = useState("");
@@ -142,24 +136,20 @@ function Dashboard() {
 
   useEffect(() => {
     let interval = null;
-    if (seconds < 10) {
+    if(seconds < 10) {
       interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 1);
-      }, 30000);
+        setSeconds(seconds => seconds + 1);
+      }, 30000); 
     } else {
       clearInterval(interval);
-      loginUser(userEmail, userPassword).then((x) =>
-        login(x, userEmail, userPassword)
-      );
+      loginUser(userEmail, userPassword).then(x => login(x, userEmail, userPassword));
     }
-
     return () => clearInterval(interval);
   }, [seconds]);
 
   //Update Safe wenn sich entrys ändern
   useEffect(() => {
-    console.log(`Trying to send safe to API (initReady: ${ready})`);
-    if (ready) sendSafe(entrys, authState);
+    if(ready) sendSafe(entrys, authState);
   }, [entrys]);
 
   //holt den Safe von der api und fügt ihn den entrys hinzu
@@ -169,6 +159,7 @@ function Dashboard() {
       if (typeof safe !== "number") {
         setEntrys(safe);
       }
+      setReady(true);
     }
     console.log(`Importing Data... (initReady: ${ready})`);
     importData().then(() => setReady(true));
