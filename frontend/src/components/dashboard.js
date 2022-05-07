@@ -149,11 +149,12 @@ function Dashboard() {
 
   //Update Safe wenn sich entrys ändern
   useEffect(() => {
+    console.log(`Imported Data (initReady: ${ready})`);
     if(ready) sendSafe(entrys, authState);
   }, [entrys]);
 
   //holt den Safe von der api und fügt ihn den entrys hinzu
-  useEffect(() => {
+  useEffect(async () => {
     async function importData() {
       const safe = await getSafe(authState);
       if (typeof safe !== "number") {
@@ -162,7 +163,8 @@ function Dashboard() {
       setReady(true);
     }
     console.log(`Importing Data... (initReady: ${ready})`);
-    importData().then(() => setReady(true));
+    await importData();
+    setReady(true);
     console.log(`Imported Data (initReady: ${ready})`);
   }, []);
 
