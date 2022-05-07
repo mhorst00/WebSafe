@@ -142,6 +142,7 @@ function Dashboard() {
       }, 30000); 
     } else {
       clearInterval(interval);
+      console.log('Token: ' + userEmail + ' ' + userPassword);
       loginUser(userEmail, userPassword).then(x => login(x, userEmail, userPassword));
     }
     return () => clearInterval(interval);
@@ -154,19 +155,18 @@ function Dashboard() {
   }, [entrys]);
 
   //holt den Safe von der api und fügt ihn den entrys hinzu
-  useEffect(async () => {
-    async function importData() {
+  useEffect(() => {
+    const importData = async () => {
+      console.log('Hallo1      ' + authState);
       const safe = await getSafe(authState);
+      console.log('Bin danach:      ' + safe);
       if (typeof safe !== "number") {
         setEntrys(safe);
       }
       console.log('Hallo2');
+      setReady(true);
     }
-    console.log('Hallo1');
-    console.log(`Importing Data... (initReady: ${ready})`);
-    await importData();
-    console.log('Hallo3');
-    setReady(true);
+    importData();
   }, []);
 
   return (
