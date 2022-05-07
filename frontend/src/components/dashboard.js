@@ -160,12 +160,13 @@ function Dashboard() {
       if (typeof safe !== "number") {
         setEntrys(safe);
       }
-      setReady(true);
+      console.log('Hallo2');
     }
+    console.log('Hallo1');
     console.log(`Importing Data... (initReady: ${ready})`);
     await importData();
+    console.log('Hallo3');
     setReady(true);
-    console.log(`Imported Data (initReady: ${ready})`);
   }, []);
 
   return (
