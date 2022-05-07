@@ -5,7 +5,6 @@ import { encryptionModule } from "../encryption";
 
 import "./Login.css";
 
-
 function Login() {
   const [register, setRegister] = useState(false);
   const [failed, setFailed] = useState(undefined);
@@ -46,22 +45,21 @@ function Login() {
 
   const validateInput = () => {
     let matchEmail = /\S+@\S+\.\S+/;
-    let message = '';
+    let message = "";
 
-    if(password.length < 8) {
-      message = 'Password must have at least 8 characters. '
+    if (password.length < 8) {
+      message = "Password must have at least 8 characters. ";
     }
 
-    if(!matchEmail.test(email)) {
-      console.log('emaiol falsch');
-      message += 'Not a valid email. '; 
+    if (!matchEmail.test(email)) {
+      message += "Not a valid email. ";
     }
 
-    if(password !== passwordConfirm && register) {
-      message += 'Passwords are not equal.'; 
+    if (password !== passwordConfirm && register) {
+      message += "Passwords are not equal.";
     }
 
-    if(message.length > 1) {
+    if (message.length > 1) {
       console.log(message);
       setFailed(message);
       return true;
@@ -76,37 +74,35 @@ function Login() {
 
     try {
       let response;
-      console.log('Variablen: ' + email + ' ' + password);
       await encryptionModule.initialise(email, password);
       if (register) {
         // User tries to register
         response = await registerUser(email, name, password);
 
-        if(response === 200) {
+        if (response === 200) {
           response = await loginUser(email, password);
-          if(response.length === 3) {
-            setFailed('Token response invalid! Error: ' + response);
+          if (response.length === 3) {
+            setFailed("Token response invalid! Error: " + response);
             return;
           }
           login(response);
-        } 
+        }
       } else {
         // User tries to log in
         response = await loginUser(email, password);
-        console.log('response sdjkhbcnnks   ' + response);
-        if(response.length === 3) {
-          console.log('error anmeldung');
-          setFailed('Token response invalid! Error: ' + response);
+        if (response.length === 3) {
+          console.log("error anmeldung");
+          setFailed("Token response invalid! Error: " + response);
           return;
         }
         login(response, email, password);
       }
     } catch (err) {
-      console.log('error anmeldung');
+      console.log("error anmeldung");
       setFailed("Wrong Password or E-Mail!");
     }
   };
-  
+
   return (
     <div className="Login-Container">
       <div className="Login-Field">
@@ -120,7 +116,7 @@ function Login() {
                 type="text"
                 placeholder="Your Name"
                 onInput={onInputName}
-                onKeyDown={event => event.key === 'Enter' && onSubmit()}
+                onKeyDown={(event) => event.key === "Enter" && onSubmit()}
               />
             </>
           )}
@@ -129,14 +125,14 @@ function Login() {
             type="email"
             placeholder="example@example.com"
             onInput={onInputEmail}
-            onKeyDown={event => event.key === 'Enter' && onSubmit()}
+            onKeyDown={(event) => event.key === "Enter" && onSubmit()}
           />
           <label className="Login-Password">Password</label>
           <input
             type="password"
             placeholder="password"
             onInput={onInputPassword}
-            onKeyDown={event => event.key === 'Enter' && onSubmit()}
+            onKeyDown={(event) => event.key === "Enter" && onSubmit()}
           />
           {register && (
             <>
@@ -145,7 +141,7 @@ function Login() {
                 type="password"
                 placeholder="password"
                 onInput={onInputPasswordConfirm}
-                onKeyDown={event => event.key === 'Enter' && onSubmit()}
+                onKeyDown={(event) => event.key === "Enter" && onSubmit()}
               />
             </>
           )}
@@ -163,10 +159,7 @@ function Login() {
           ) : (
             <p className="Login-Info-Text">
               You don't have an Account?{" "}
-              <a
-                href={baseUrl}
-                onClick={onClickRegister}
-              >
+              <a href={baseUrl} onClick={onClickRegister}>
                 Register
               </a>
             </p>
