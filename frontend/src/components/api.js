@@ -14,7 +14,7 @@ export function authorizedRequest(method, url, token) {
   return request;
 }
 
-export function registerUser(email, name, password) {
+export function registerUser(email, name) {
   return new Promise(function (resolve, reject) {
     let request = authorizedRequest("POST", "/user/new");
     request.setRequestHeader("Content-Type", "application/json");
@@ -42,7 +42,7 @@ export function registerUser(email, name, password) {
   });
 }
 
-export function loginUser(email, password) {
+export function loginUser(email) {
   return new Promise(function (resolve, reject) {
     let request = authorizedRequest("POST", "/token");
     request.setRequestHeader(
@@ -64,7 +64,7 @@ export function loginUser(email, password) {
       "grant_type=&username=" +
         email +
         "&password=" +
-        encryptionModule.authHash +
+        encodeURIComponent(encryptionModule.authHash) +
         "&scope=&client_id=&client_secret="
     );
   });
@@ -105,6 +105,8 @@ export async function getSafe(token) {
         if (isSafeImportable(safe)) {
           let decryptedSafe = encryptionModule.importSafe(safe);
           resolve(decryptedSafe);
+        } else {
+          resolve([]);
         }
       }
     };
