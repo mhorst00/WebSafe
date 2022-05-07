@@ -149,9 +149,7 @@ function Dashboard() {
     } else {
       clearInterval(interval);
       console.log("Token: " + userEmail + " " + userPassword);
-      loginUser(userEmail, userPassword).then((x) =>
-        login(x, userEmail, userPassword)
-      );
+      loginUser(userEmail).then((x) => login(x, userEmail, userPassword));
     }
     return () => clearInterval(interval);
   }, [seconds]);

@@ -89,16 +89,14 @@ function Login() {
         }
       } else {
         // User tries to log in
-        response = await loginUser(email, password);
+        response = await loginUser(email);
         if (response.length === 3) {
-          console.log("error anmeldung");
           setFailed("Token response invalid! Error: " + response);
           return;
         }
         login(response, email, password);
       }
     } catch (err) {
-      console.log("error anmeldung");
       setFailed("Wrong Password or E-Mail!");
     }
   };

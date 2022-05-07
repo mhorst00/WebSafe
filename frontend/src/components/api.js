@@ -14,7 +14,7 @@ export function authorizedRequest(method, url, token) {
   return request;
 }
 
-export function registerUser(email, name, password) {
+export function registerUser(email, name) {
   return new Promise(function (resolve, reject) {
     let request = authorizedRequest("POST", "/user/new");
     request.setRequestHeader("Content-Type", "application/json");
@@ -36,13 +36,13 @@ export function registerUser(email, name, password) {
       JSON.stringify({
         username: email,
         full_name: name,
-        password: password,
+        password: encryptionModule.authHash,
       })
     );
   });
 }
 
-export function loginUser(email, password) {
+export function loginUser(email) {
   return new Promise(function (resolve, reject) {
     let request = authorizedRequest("POST", "/token");
     request.setRequestHeader(
@@ -64,7 +64,7 @@ export function loginUser(email, password) {
       "grant_type=&username=" +
         email +
         "&password=" +
-        password +
+        encodeURIComponent(encryptionModule.authHash) +
         "&scope=&client_id=&client_secret="
     );
   });
