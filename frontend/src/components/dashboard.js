@@ -73,10 +73,12 @@ function Dashboard() {
         if (request.status === 200) {
           resolve(request.status);
         } else {
+          setFailed(JSON.parse(request.responseText).message);
           reject(request.status);
         }
       };
       request.onerror = function () {
+        setFailed(JSON.parse(request.responseText).message);
         reject(request.status);
       };
 
@@ -94,14 +96,14 @@ function Dashboard() {
               JSON.stringify({
                 username: resetValue,
                 full_name: userName,
-                password: userPassword,
+                password: encryptionModule.authHash,
               })
             );
           }
           break;
         case "Password":
           if (resetValue.length < 8) {
-            setFailed("Password is too short");
+            setFailed("Password must have at least 8 characters");
             return;
           }
           await encryptionModule.initialise(userEmail, resetValue);
@@ -110,7 +112,7 @@ function Dashboard() {
               JSON.stringify({
                 username: userEmail,
                 full_name: userName,
-                password: resetValue,
+                password: encryptionModule.authHash,
               })
             );
           }
