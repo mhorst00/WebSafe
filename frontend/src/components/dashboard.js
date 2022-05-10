@@ -89,7 +89,7 @@ function Dashboard() {
             setFailed("E-Mail address is not valid");
             return;
           }
-          if (resetValue == userEmail) {
+          if (resetValue === userEmail) {
             setFailed("You cannot set the same email");
             return;
           }
@@ -109,7 +109,7 @@ function Dashboard() {
             setFailed("Password must have at least 8 characters");
             return;
           }
-          if (resetValue == userPassword) {
+          if (resetValue === userPassword) {
             setFailed("You cannot set the same password");
             return;
           }
