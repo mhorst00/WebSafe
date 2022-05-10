@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
-import { copyStringToClipboard, redirect } from "./helper";
+import { copyStringToClipboard, redirect, validateEmail822 } from "./helper";
 import {
   authorizedRequest,
   getSafe,
@@ -84,8 +84,7 @@ function Dashboard() {
 
       switch (reset) { //selection of what will be changed
         case "E-Mail":
-          let matchEmail = /\S+@\S+\.\S+/;
-          if (!matchEmail.test(resetValue)) {
+          if (!validateEmail822(email)) {
             setFailed("E-Mail address is not valid");
             return;
           }

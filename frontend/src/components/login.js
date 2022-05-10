@@ -3,7 +3,9 @@ import { AuthContext } from "../context/AuthContext";
 import { baseUrl, registerUser, loginUser, sendEmail } from "./api";
 import { encryptionModule } from "../encryption";
 
+
 import "./Login.css";
+import { validateEmail822 } from "./helper";
 
 function Login() {
   const { login } = useContext(AuthContext); //Enable the use of the AuthContext
@@ -53,14 +55,13 @@ function Login() {
   };
 
   const validateInput = () => { //Checking the input from the user
-    let matchEmail = /\S+@\S+\.\S+/;
     let message = "";
 
     if (password.length < 8 && register !== 'forgotten') {
       message = "Password must have at least 8 characters. ";
     }
 
-    if (!matchEmail.test(email)) {
+    if (!validateEmail822(email)) {
       message += "Not a valid email. ";
     }
 
