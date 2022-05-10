@@ -21,6 +21,9 @@ services:
       - "--certificatesresolvers.websafe.acme.email=maltehorst@gmail.com"
       - "--certificatesresolvers.websafe.acme.storage=/cert/acme.json"
       - "--certificatesresolvers.websafe.acme.httpchallenge.entrypoint=web"
+    labels:
+      - "traefik.http.routers.traefik.middlewares=traefik-compress"
+      - "traefik.http.middlewares.traefik-compress.compress=true"
     ports:
       - "80:80"
       - "443:443"
@@ -59,9 +62,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`gruppe4.testsites.info`)"
       - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.routers.frontend.middlewares=secHeaders@file"
+      - "traefik.http.routers.frontend.middlewares=secHeaders@file,frontend-compress"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=websafe"
+      - "traefik.http.middlewares.frontend-compress.compress=true"
 
   db:
     image: mongo

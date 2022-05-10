@@ -72,7 +72,7 @@ async def del_user(current_user: UserInDB = Depends(auth.get_current_user)):
         )
 
 
-@app.delete(
+@app.get(
     "/user/delete/verify/{del_string}",
     response_model=Message,
     responses={500: {"model": Message}, 400: {"model": Message}},
