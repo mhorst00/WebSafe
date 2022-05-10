@@ -1,8 +1,6 @@
-import logging
 import random
 import string
 import hashlib
-from tabnanny import check
 from pydantic import validate_arguments
 
 from app.model import SafePayload, User, UserInDB, UserInDBDel, UserNew
@@ -15,13 +13,13 @@ from app.files import Filehandler
 def add_user(user: UserNew):
     """Adds user to DB. Returns True on success, False if user already exists,
     None if user could not be added"""
-    query = User(username=user.username)
+    query = User(username=user.username.lower())
     if Database.find_user(query):
         return False
     hashed_password = get_password_hash(user.password)
-    safe_id = hashlib.sha1(user.username.encode()).hexdigest()
+    safe_id = hashlib.sha1(user.username.lower().encode()).hexdigest()
     user_dict = UserInDB(
-        username=user.username,
+        username=user.username.lower(),
         full_name=user.full_name,
         hashed_password=hashed_password,
         safe_id=safe_id,
@@ -63,7 +61,7 @@ def edit_user(data: UserNew, user: UserInDB):
         if not d:
             return False
         user_dict = UserInDB(
-            username=data.username,
+            username=data.username.lower(),
             full_name=data.full_name,
             hashed_password=hashed_password,
             safe_id=user.safe_id,
@@ -77,7 +75,7 @@ def edit_user(data: UserNew, user: UserInDB):
         if not d:
             return False
         user_dict = UserInDB(
-            username=data.username,
+            username=data.username.lower(),
             full_name=data.full_name,
             hashed_password=hashed_password,
             safe_id=user.safe_id,
