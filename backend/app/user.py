@@ -52,13 +52,14 @@ def delete_user(user: UserInDB):
 @validate_arguments
 def edit_user(data: UserNew, user: UserInDB):
     """Saves received data in given user in DB"""
+    hashed_password = get_password_hash(data.password)
     check = Database.find_by_value("username", data.username)
     if check:
-        return False
+        if check.hashed_password.__eq__(hashed_password):
+            return False
     d = Database.delete_user(user)
     if not d:
         return False
-    hashed_password = get_password_hash(data.password)
     user_dict = UserInDB(
         username=data.username,
         full_name=data.full_name,
