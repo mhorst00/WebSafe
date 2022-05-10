@@ -60,7 +60,7 @@ class MailSend:
         msg.set_content(
             f"""Hello {user.full_name}, \n
         your account creation has been successful. \n
-        Click this link to login to your new account: https://{URI}/login"""
+        Click this link to login to your new account: https://{URI}"""
         )
         try:
             MailSend.CLIENT.send_message(msg)

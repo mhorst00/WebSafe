@@ -12,6 +12,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [pfEmail, setPfEmail] = useState(false);
 
   const { login } = useContext(AuthContext);
 
@@ -105,7 +106,12 @@ function Login() {
     <div className="Login-Container">
       <div className="Login-Field">
         <h2>WebSafe</h2>
-        {failed ? <p className="Login-Failed-Text">{failed}</p> : <p></p>}
+        {failed ?
+            <p className="Login-Failed-Text">{failed} 
+            <p></p><a href={baseUrl} onClick={onClickRegister}>Password forgotten</a></p>
+            : 
+            <p></p>
+        }
         <div className="Login-Input">
           {register && (
             <>
