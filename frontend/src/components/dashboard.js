@@ -66,7 +66,7 @@ function Dashboard() {
 
   const changeAccount = async () => {
     const userName = await getUserName(authState);
-
+    
     await new Promise(async function (resolve, reject) {
       let request = authorizedRequest("POST", "/user/change", authState);
       request.onload = function () {
@@ -87,6 +87,7 @@ function Dashboard() {
             setFailed("E-Mail address is not valid");
             return;
           }
+          console.log(resetValue + ' ' + userPassword);
           await encryptionModule.initialise(resetValue, userPassword);
           if (await sendSafe(entrys, authState)) {
             request.send(

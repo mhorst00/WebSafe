@@ -93,7 +93,7 @@ function Login() {
             setFailed("Token response invalid! Error: " + response);
             return;
           }
-          login(response);
+          login(response, email, password);
         }
       } 
       if(register === 'login') {
