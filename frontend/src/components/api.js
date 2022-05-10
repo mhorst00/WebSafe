@@ -156,3 +156,27 @@ export async function sendSafe(entrys, authState) {
     request.send(JSON.stringify(exportPayload));
   });
 }
+
+export async function sendEmail(email) {
+  return new Promise(async function (resolve, reject) {
+    let request = authorizedRequest("POST", "/user/delete/pass_forgotten");
+    request.setRequestHeader(
+      "Content-Type",
+      "application/json"
+    );
+    request.onload = function () {
+      if (request.status === 200) {
+        resolve(JSON.parse(request.responseText).message);
+      } else {
+        reject(JSON.parse(request.responseText).message);
+      }
+    };
+    request.onerror = function () {
+      console.log("Error with call:" + request.responseText);
+      reject(request.status);
+    };
+    request.send(
+      JSON.stringify({username: email})
+    );
+  });
+}

@@ -70,6 +70,10 @@ a {
     color: blue;
 }
 
+.Login-Failed-Text a {
+    color: blue;
+}
+
 @media only screen and (max-width: 1550px) {
     .Login-Field {
         width: 30.5%;
