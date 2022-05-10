@@ -6,7 +6,7 @@ import Login from './components/login';
 import './App.css';
 
 function App() {
-  const {authState} = useContext(AuthContext);
+  const {authState} = useContext(AuthContext); //Enable the use of the AuthContext
 
   return (
     <div className='App'>

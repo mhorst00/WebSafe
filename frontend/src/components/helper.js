@@ -1,4 +1,4 @@
-export function copyStringToClipboard(str) {
+export function copyStringToClipboard(str) { //copies a passed string to the clipboard
     document.activeElement.blur();
     if (!str) return;
     var el = document.createElement("textarea");
@@ -11,7 +11,7 @@ export function copyStringToClipboard(str) {
     document.body.removeChild(el);
 }
 
-export function redirect(url) {
+export function redirect(url) { //So that the links can be loaded in a new tab
     document.activeElement.blur();
     if (!url) return;
     var a = document.createElement("a");

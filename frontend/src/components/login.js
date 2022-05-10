@@ -6,7 +6,7 @@ import { encryptionModule } from "../encryption";
 import "./Login.css";
 
 function Login() {
-  const { login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext); //Enable the use of the AuthContext
   
   const [register, setRegister] = useState('login');
   const [failed, setFailed] = useState(undefined);
@@ -52,7 +52,7 @@ function Login() {
     setPasswordConfirm(event.target.value);
   };
 
-  const validateInput = () => {
+  const validateInput = () => { //Checking the input from the user
     let matchEmail = /\S+@\S+\.\S+/;
     let message = "";
 
@@ -75,7 +75,7 @@ function Login() {
     return false;
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async () => { //Register, login and reset password in one function
     if (validateInput()) {
       return;
     }
@@ -84,7 +84,7 @@ function Login() {
       let response;
       await encryptionModule.initialise(email, password);
       if (register === 'register') {
-        // User tries to register
+        //User tries to register
         response = await registerUser(email, name, password);
 
         if (response === 200) {
@@ -97,7 +97,7 @@ function Login() {
         }
       } 
       if(register === 'login') {
-        // User tries to log in
+        //User tries to log in
         response = await loginUser(email);
         if (response.length === 3) {
           setFailed("Token response invalid! Error: " + response);
@@ -106,6 +106,7 @@ function Login() {
         login(response, email, password);
       }
       if(register === 'forgotten') {
+        //User tries to reset his Account
         response = await sendEmail(email);
         setFailed(response);
       }

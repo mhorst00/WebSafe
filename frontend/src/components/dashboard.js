@@ -15,7 +15,7 @@ import "./Dashboard.css";
 
 function Dashboard() {
   const { logout, authState, userEmail, userPassword, login } =
-    useContext(AuthContext);
+    useContext(AuthContext); //Enable the use of the AuthContext
 
   const [link, setLink] = useState("");
   const [email, setEmail] = useState("");
@@ -49,14 +49,14 @@ function Dashboard() {
     setResetValue(event.target.value);
   };
 
-  const newEntry = () => {
+  const newEntry = () => { //Insert new entry into array
     setEntrys([...entrys, { link, email, password }]);
     setLink("");
     setEmail("");
     setPassword("");
   };
 
-  const deleteEntry = (deleteIndex) => {
+  const deleteEntry = (deleteIndex) => { //Delete entry in array 
     const entrysCopy = entrys;
     setEntrys([
       ...entrysCopy.slice(0, deleteIndex),
@@ -64,7 +64,7 @@ function Dashboard() {
     ]);
   };
 
-  const changeAccount = async () => {
+  const changeAccount = async () => { //Change the email or password
     const userName = await getUserName(authState);
     
     await new Promise(async function (resolve, reject) {
@@ -82,14 +82,17 @@ function Dashboard() {
         reject(request.status);
       };
 
-      switch (reset) {
+      switch (reset) { //selection of what will be changed
         case "E-Mail":
           let matchEmail = /\S+@\S+\.\S+/;
           if (!matchEmail.test(resetValue)) {
             setFailed("E-Mail address is not valid");
             return;
           }
-          console.log(resetValue + ' ' + userPassword);
+          if (resetValue == userEmail) {
+            setFailed("You cannot set the same email");
+            return;
+          }
           await encryptionModule.initialise(resetValue, userPassword);
           if (await sendSafe(entrys, authState)) {
             request.send(
@@ -104,6 +107,10 @@ function Dashboard() {
         case "Password":
           if (resetValue.length < 8) {
             setFailed("Password must have at least 8 characters");
+            return;
+          }
+          if (resetValue == userPassword) {
+            setFailed("You cannot set the same password");
             return;
           }
           await encryptionModule.initialise(userEmail, resetValue);
@@ -125,8 +132,7 @@ function Dashboard() {
     logout();
   };
 
-  //Löscht den Account endgültig
-  const deleteAccount = async () => {
+  const deleteAccount = async () => { //Löscht den Account endgültig
     try {
       await deleteAccountRequest(authState);
       logout();
@@ -135,7 +141,7 @@ function Dashboard() {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { //The token is to be renewed every five minutes
     let interval = null;
     if (seconds < 10) {
       interval = setInterval(() => {
@@ -148,13 +154,13 @@ function Dashboard() {
     return () => clearInterval(interval);
   }, [seconds]);
 
-  //Update Safe wenn sich entrys ändern
-  useEffect(() => {
+  
+  useEffect(() => { //Update safe when entry change
     if (ready) sendSafe(entrys, authState);
   }, [entrys]);
 
-  //holt den Safe von der api und fügt ihn den entrys hinzu
-  useEffect(() => {
+  
+  useEffect(() => { //Fetches the safe from the api and adds it to the entries
     const importData = async () => {
       const safe = await getSafe(authState);
       if (typeof safe !== "number") {
@@ -287,7 +293,7 @@ function Dashboard() {
         </div>
       </div>
       <div className="Dashboard-Password">
-        {entrys.map((x, i) => {
+        {entrys.map((x, i) => { //A search for an identical or similar entry when the user enters three characters
           let aLink = "";
           if (x.link[0] === "w") {
             aLink = "https://";

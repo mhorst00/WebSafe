@@ -2,6 +2,8 @@ import { encryptionModule } from "../encryption";
 
 export const baseUrl = `${process.env.REACT_APP_DOMAIN}/api/v1`;
 
+
+//Help to implement the requests
 export function authorizedRequest(method, url, token) {
   let request = new XMLHttpRequest();
   request.open(method, baseUrl + url);
@@ -95,7 +97,7 @@ export async function getSafe(token) {
     let request = authorizedRequest("GET", "/safe", token);
     request.onload = function () {
       if (request.status === 200) {
-        //sollte als JSON objekt übergeben
+        //sollte als JSON objekt übergeben werden
         let safe = JSON.parse(request.responseText);
         if (isSafeImportable(safe)) {
           let decryptedSafe = encryptionModule.importSafe(safe);
