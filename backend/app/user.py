@@ -52,6 +52,9 @@ def delete_user(user: UserInDB):
 @validate_arguments
 def edit_user(data: UserNew, user: UserInDB):
     """Saves received data in given user in DB"""
+    check = Database.find_by_value("username", data.username)
+    if check:
+        return False
     d = Database.delete_user(user)
     if not d:
         return False
