@@ -1,5 +1,5 @@
 """
-This file is part of WebSafe and has been contributed by 
+This file is part of WebSafe and has been contributed by
 https://github.com/Blackcheckgamer.
 
 WebSafe is free software: you can redistribute it and/or modify
