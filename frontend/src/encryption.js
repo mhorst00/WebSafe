@@ -48,7 +48,6 @@ export class encryptionModule {
   }
 
   static async exportSafe(contentArray) {
-    console.log("export safe: " + contentArray);
     if (!Array.isArray(contentArray)) {
       throw new TypeError(
         "Type error in exportSafe: Passed object is not an array."

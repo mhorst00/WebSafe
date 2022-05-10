@@ -8,6 +8,7 @@ import {
   getUserName,
   sendSafe,
   loginUser,
+  deleteAccountRequest,
 } from "./api";
 
 import "./Dashboard.css";
@@ -27,7 +28,7 @@ function Dashboard() {
   const [seconds, setSeconds] = useState(0);
   const [ready, setReady] = useState(false); //disable preemptive post of save
 
-  
+
   const handleSelect = (event) => {
     setReset(event.target.value);
   };
@@ -45,7 +46,6 @@ function Dashboard() {
   };
 
   const onChangeReset = (event) => {
-    console.log("onChangeReset");
     setResetValue(event.target.value);
   };
 
@@ -73,12 +73,10 @@ function Dashboard() {
         if (request.status === 200) {
           resolve(request.status);
         } else {
-          console.log("Error with call:" + request.responseText);
           reject(request.status);
         }
       };
       request.onerror = function () {
-        console.log("Error with call:" + request.responseText);
         reject(request.status);
       };
 
@@ -126,23 +124,12 @@ function Dashboard() {
 
   //Löscht den Account endgültig
   const deleteAccount = async () => {
-    await new Promise(function (resolve, reject) {
-      let request = authorizedRequest("DELETE", "/user/delete", authState);
-      request.onload = function () {
-        if (request.status === 200) {
-          resolve(request.status);
-        } else {
-          console.log("Error with call:" + request.responseText);
-          reject(request.status);
-        }
-      };
-      request.onerror = function () {
-        console.log("Error with call:" + request.responseText);
-        reject(request.status);
-      };
-      request.send();
-    });
-    logout();
+    try {
+      await deleteAccountRequest(authState);
+      logout();
+    } catch (err) {
+      setFailed('Delete Account error: ' + err);
+    }
   };
 
   useEffect(() => {
@@ -153,7 +140,6 @@ function Dashboard() {
       }, 30000);
     } else {
       clearInterval(interval);
-      console.log("Token: " + userEmail + " " + userPassword);
       loginUser(userEmail).then((x) => login(x, userEmail, userPassword));
     }
     return () => clearInterval(interval);
@@ -161,7 +147,6 @@ function Dashboard() {
 
   //Update Safe wenn sich entrys ändern
   useEffect(() => {
-    console.log(`Imported Data (initReady: ${ready})`);
     if (ready) sendSafe(entrys, authState);
   }, [entrys]);
 

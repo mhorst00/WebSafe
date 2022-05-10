@@ -69,7 +69,6 @@ function Login() {
     }
 
     if (message.length > 1) {
-      console.log(message);
       setFailed(message);
       return true;
     }

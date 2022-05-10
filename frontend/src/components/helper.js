@@ -1,5 +1,4 @@
 export function copyStringToClipboard(str) {
-    console.log(str);
     document.activeElement.blur();
     if (!str) return;
     var el = document.createElement("textarea");
@@ -13,7 +12,6 @@ export function copyStringToClipboard(str) {
 }
 
 export function redirect(url) {
-    console.log("changing screen");
     document.activeElement.blur();
     if (!url) return;
     var a = document.createElement("a");

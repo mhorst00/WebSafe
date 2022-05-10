@@ -22,12 +22,10 @@ export function registerUser(email, name) {
       if (request.status === 200) {
         resolve(request.status);
       } else {
-        console.log("Error with call:" + request.responseText);
         reject(JSON.parse(request.responseText).message);
       }
     };
     request.onerror = function () {
-      console.log("Error with call:" + request.responseText);
       reject(JSON.parse(request.responseText).message);
     };
     request.send(
@@ -55,7 +53,6 @@ export function loginUser(email) {
       }
     };
     request.onerror = function () {
-      console.log("Error with call:" + request.responseText);
       reject(request.status);
     };
     request.send(
@@ -109,7 +106,6 @@ export async function getSafe(token) {
       }
     };
     request.onerror = function () {
-      console.log("Error with call:" + request.responseText);
       reject(request.status);
     };
     request.send();
@@ -123,12 +119,10 @@ export async function getUserName(authState) {
       if (request.status === 200) {
         resolve(JSON.parse(request.responseText).full_name);
       } else {
-        console.log("Error with call:" + request.responseText);
         reject(request.status);
       }
     };
     request.onerror = function () {
-      console.log("Error with call:" + request.responseText);
       reject(request.status);
     };
     request.send();
@@ -144,7 +138,6 @@ export async function sendSafe(entrys, authState) {
       if (request.status === 200) {
         resolve(true);
       } else {
-        console.log("Error with call:" + request.responseText);
         reject(false);
       }
     };
@@ -170,11 +163,27 @@ export async function sendEmail(email) {
       }
     };
     request.onerror = function () {
-      console.log("Error with call:" + request.responseText);
       reject(request.status);
     };
     request.send(
       JSON.stringify({username: email})
     );
+  });
+}
+
+export async function deleteAccountRequest(token) {
+  await new Promise(function (resolve, reject) {
+    let request = authorizedRequest("DELETE", "/user/delete", token);
+    request.onload = function () {
+      if (request.status === 200) {
+        resolve(request.status);
+      } else {
+        reject(request.status);
+      }
+    };
+    request.onerror = function () {
+      reject(request.status);
+    };
+    request.send();
   });
 }

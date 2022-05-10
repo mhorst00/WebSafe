@@ -1,8 +1,9 @@
-import Login from './components/login'
-import './App.css';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import Dashboard from './components/dashboard';
+import Login from './components/login';
+
+import './App.css';
 
 function App() {
   const {authState} = useContext(AuthContext);
