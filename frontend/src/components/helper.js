@@ -1,3 +1,5 @@
+import { decodeEmail } from "./encodeEmail";
+
 export function copyStringToClipboard(str) { //copies a passed string to the clipboard
     document.activeElement.blur();
     if (!str) return;
@@ -42,7 +44,7 @@ export function validateEmail822(email) { //Checks an email according to the rfc
 
     var reValidEmail = new RegExp(sValidEmail);
 
-    if(reValidEmail.test(email)) {
+    if(reValidEmail.test(decodeEmail(email))) {
         return true;
     }
 

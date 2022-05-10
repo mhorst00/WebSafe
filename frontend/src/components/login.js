@@ -2,10 +2,10 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { baseUrl, registerUser, loginUser, sendEmail } from "./api";
 import { encryptionModule } from "../encryption";
-
+import { validateEmail822 } from "./helper";
 
 import "./Login.css";
-import { validateEmail822 } from "./helper";
+
 
 function Login() {
   const { login } = useContext(AuthContext); //Enable the use of the AuthContext
