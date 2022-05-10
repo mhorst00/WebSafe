@@ -22,15 +22,13 @@ export function registerUser(email, name) {
       if (request.status === 200) {
         resolve(request.status);
       } else {
-        window.alert("Error with call:" + request.responseText);
         console.log("Error with call:" + request.responseText);
-        reject(request.status);
+        reject(JSON.parse(request.responseText).message);
       }
     };
     request.onerror = function () {
-      window.alert("Error with call:" + request.responseText);
       console.log("Error with call:" + request.responseText);
-      reject(request.status);
+      reject(JSON.parse(request.responseText).message);
     };
     request.send(
       JSON.stringify({

@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState(undefined);
   const [userPassword, setUserPassword] = useState(undefined);
   
+  
   const login = (token, email, password) => {
     setUserEmail(email);
     setUserPassword(password);

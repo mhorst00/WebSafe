@@ -6,6 +6,8 @@ import { encryptionModule } from "../encryption";
 import "./Login.css";
 
 function Login() {
+  const { login } = useContext(AuthContext);
+  
   const [register, setRegister] = useState('login');
   const [failed, setFailed] = useState(undefined);
   const [name, setName] = useState("");
@@ -13,9 +15,6 @@ function Login() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const [pfEmail, setPfEmail] = useState(false);
-
-  const { login } = useContext(AuthContext);
 
   const onClickLogin = (event) => {
     setPassword('');
@@ -57,7 +56,7 @@ function Login() {
     let matchEmail = /\S+@\S+\.\S+/;
     let message = "";
 
-    if (password.length < 8 && register != 'forgotten') {
+    if (password.length < 8 && register !== 'forgotten') {
       message = "Password must have at least 8 characters. ";
     }
 
@@ -65,7 +64,7 @@ function Login() {
       message += "Not a valid email. ";
     }
 
-    if (password !== passwordConfirm && register == 'register') {
+    if (password !== passwordConfirm && register === 'register') {
       message += "Passwords are not equal.";
     }
 
@@ -85,7 +84,7 @@ function Login() {
     try {
       let response;
       await encryptionModule.initialise(email, password);
-      if (register == 'register') {
+      if (register === 'register') {
         // User tries to register
         response = await registerUser(email, name, password);
 
@@ -98,7 +97,7 @@ function Login() {
           login(response);
         }
       } 
-      if(register == 'login') {
+      if(register === 'login') {
         // User tries to log in
         response = await loginUser(email);
         if (response.length === 3) {
@@ -107,11 +106,16 @@ function Login() {
         }
         login(response, email, password);
       }
-      if(register == 'forgotten') {
-        await sendEmail(email);
+      if(register === 'forgotten') {
+        response = await sendEmail(email);
+        setFailed(response);
       }
     } catch (err) {
-      if(register == 'forgotten') {
+      if(register === 'forgotten') {
+        setFailed(err);
+        return;
+      }
+      if(register === 'register') {
         setFailed(err);
         return;
       }
@@ -125,12 +129,12 @@ function Login() {
         <h2>WebSafe</h2>
         {failed ?
             <><p className="Login-Failed-Text">{failed}</p> 
-            {register == 'login' && <p className="Login-Failed-Text"><a href={baseUrl} onClick={onClickPasswordForgotten}>Password forgotten</a></p>}</>
+            {register === 'login' && <p className="Login-Failed-Text"><a href={baseUrl} onClick={onClickPasswordForgotten}>Password forgotten</a></p>}</>
             : 
             <p></p>
         }
         <div className="Login-Input">
-          {register == 'register' && (
+          {register === 'register' && (
             <>
               <label className="Login-Password">Name</label>
               <input
@@ -148,10 +152,11 @@ function Login() {
             onInput={onInputEmail}
             onKeyDown={(event) => event.key === "Enter" && onSubmit()}
           />
-          {register != 'forgotten' && (
+          {register !== 'forgotten' && (
             <>
               <label className="Login-Password">Password</label>
               <input
+                value={password}
                 type="password"
                 placeholder="password"
                 onInput={onInputPassword}
@@ -160,7 +165,7 @@ function Login() {
            </>
           )}
           
-          {register == 'register' && (
+          {register === 'register' && (
             <>
               <label className="Login-Password">Password confirm</label>
               <input
@@ -173,11 +178,11 @@ function Login() {
           )}
 
           <button className="Login-Button" onClick={onSubmit}>
-            {register == 'register' && 'Register'}
-            {register == 'login' && 'Login'}
-            {register == 'forgotten' && 'Send E-Mail'}
+            {register === 'register' && 'Register'}
+            {register === 'login' && 'Login'}
+            {register === 'forgotten' && 'Send E-Mail'}
           </button>
-          {register == 'register' && (
+          {register === 'register' && (
             <p className="Login-Info-Text">
               You already have an Account?{" "}
               <a href={baseUrl} onClick={onClickLogin}>
@@ -185,7 +190,7 @@ function Login() {
               </a>
             </p>
           )} 
-          {register == 'login' && (
+          {register === 'login' && (
             <p className="Login-Info-Text">
               You don't have an Account?{" "}
               <a href={baseUrl} onClick={onClickRegister}>
@@ -193,7 +198,7 @@ function Login() {
               </a>
             </p>
           )}
-          {register == 'forgotten' && (
+          {register === 'forgotten' && (
             <p className="Login-Info-Text">
               You can remember your account?{" "}
               <a href={baseUrl} onClick={onClickLogin}>

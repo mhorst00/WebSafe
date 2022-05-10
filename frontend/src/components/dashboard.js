@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { encryptionModule } from "../encryption";
 import { copyStringToClipboard, redirect } from "./helper";
-
 import {
   authorizedRequest,
   getSafe,
@@ -10,6 +9,7 @@ import {
   sendSafe,
   loginUser,
 } from "./api";
+
 import "./Dashboard.css";
 
 function Dashboard() {
@@ -19,18 +19,15 @@ function Dashboard() {
   const [link, setLink] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [settings, setSettings] = useState(false);
   const [entrys, setEntrys] = useState([]);
-
   const [reset, setReset] = useState("E-Mail");
   const [resetValue, setResetValue] = useState("");
   const [failed, setFailed] = useState(undefined);
-
   const [seconds, setSeconds] = useState(0);
-
   const [ready, setReady] = useState(false); //disable preemptive post of save
 
+  
   const handleSelect = (event) => {
     setReset(event.target.value);
   };
