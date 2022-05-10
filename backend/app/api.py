@@ -107,7 +107,7 @@ async def del_user_no_pass(current_user: User):
         )
         return JSONResponse(
             status_code=500,
-            content={"message": "User could not be found or mail could not be sent"},
+            content={"message": "User could not be found"},
         )
 
 
