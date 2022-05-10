@@ -68,9 +68,9 @@ function Login() {
   };
 
   const onSubmit = async () => {
-    /*if(validateInput()) {
+    if (validateInput()) {
       return;
-    }*/
+    }
 
     try {
       let response;

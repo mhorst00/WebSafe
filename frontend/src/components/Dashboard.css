@@ -330,6 +330,12 @@ a {
     font-size: 90%;
 }
 
+.Change-Failed-Text {
+    color: red;
+    font-size: 15px;
+    margin-left: 20px;
+}
+
 #copyElement {
     display: none;
 }

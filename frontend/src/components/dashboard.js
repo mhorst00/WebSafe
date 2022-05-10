@@ -25,6 +25,7 @@ function Dashboard() {
 
   const [reset, setReset] = useState("E-Mail");
   const [resetValue, setResetValue] = useState("");
+  const [failed, setFailed] = useState(undefined);
 
   const [seconds, setSeconds] = useState(0);
 
@@ -87,7 +88,10 @@ function Dashboard() {
       switch (reset) {
         case "E-Mail":
           let matchEmail = /\S+@\S+\.\S+/;
-          if (!matchEmail.test(resetValue)) return;
+          if (!matchEmail.test(resetValue)) {
+            setFailed("E-Mail address is not valid");
+            return;
+          }
           await encryptionModule.initialise(resetValue, userPassword);
           if (await sendSafe(entrys, authState)) {
             request.send(
@@ -100,7 +104,10 @@ function Dashboard() {
           }
           break;
         case "Password":
-          if (resetValue.length < 8) return;
+          if (resetValue.length < 8) {
+            setFailed("Password is too short");
+            return;
+          }
           await encryptionModule.initialise(userEmail, resetValue);
           if (await sendSafe(entrys, authState)) {
             request.send(
@@ -116,6 +123,7 @@ function Dashboard() {
           break;
       }
     });
+    setFailed(undefined);
     logout();
   };
 
@@ -187,7 +195,10 @@ function Dashboard() {
                 className="close-button"
                 aria-label="Close alert"
                 type="button"
-                onClick={() => setSettings(false)}
+                onClick={() => {
+                  setSettings(false);
+                  setFailed(undefined);
+                }}
                 data-close
               >
                 <span aria-hidden="true">&times;</span>
@@ -195,6 +206,11 @@ function Dashboard() {
             </div>
             <div className="margin-kante">
               <label>Change account details:</label>
+              {failed ? (
+                <p className="Change-Failed-Text">{failed}</p>
+              ) : (
+                <p></p>
+              )}
             </div>
             <div className="Account-Changer">
               <div>
