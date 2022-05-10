@@ -1,6 +1,8 @@
+import logging
 import random
 import string
 import hashlib
+from tabnanny import check
 from pydantic import validate_arguments
 
 from app.model import SafePayload, User, UserInDB, UserInDBDel, UserNew
@@ -53,22 +55,38 @@ def delete_user(user: UserInDB):
 def edit_user(data: UserNew, user: UserInDB):
     """Saves received data in given user in DB"""
     hashed_password = get_password_hash(data.password)
-    check = Database.find_by_value("username", data.username)
-    if check:
-        if check.hashed_password.__eq__(hashed_password):
+    """Search for existing user with email in db"""
+    checkusername = Database.find_by_value("username", data.username)
+    if checkusername is None:
+        """If user does not exist, edit data"""
+        d = Database.delete_user(user)
+        if not d:
             return False
-    d = Database.delete_user(user)
-    if not d:
+        user_dict = UserInDB(
+            username=data.username,
+            full_name=data.full_name,
+            hashed_password=hashed_password,
+            safe_id=user.safe_id,
+        )
+        Database.add_user(user_dict)
+        if Database.find_user(user_dict):
+            return True
+    elif user.safe_id == checkusername.safe_id:
+        """If user exists, only edit if id of user is identical"""
+        d = Database.delete_user(user)
+        if not d:
+            return False
+        user_dict = UserInDB(
+            username=data.username,
+            full_name=data.full_name,
+            hashed_password=hashed_password,
+            safe_id=user.safe_id,
+        )
+        Database.add_user(user_dict)
+        if Database.find_user(user_dict):
+            return True
+    else:
         return False
-    user_dict = UserInDB(
-        username=data.username,
-        full_name=data.full_name,
-        hashed_password=hashed_password,
-        safe_id=user.safe_id,
-    )
-    Database.add_user(user_dict)
-    if Database.find_user(user_dict):
-        return True
 
 
 @validate_arguments
