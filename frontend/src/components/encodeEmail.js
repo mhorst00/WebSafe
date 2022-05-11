@@ -1,6 +1,5 @@
+//Punnycode Funktion kopiert von https://stackoverflow.com/questions/183485/converting-punycode-with-dash-character-to-unicode
 var punycode = new function Punycode() {
-    // punycode.ToASCII ( domain )
-    // punycode.ToUnicode (domain)
     this.utf16 = {
         decode:function(input){
             var output = [], i=0, len=input.length,value,extra;

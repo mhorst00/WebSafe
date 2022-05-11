@@ -83,7 +83,7 @@ function Login() {
 
     try {
       let response;
-      await encryptionModule.initialise(email, password);
+      await encryptionModule.initialise(email, password); //Initialise with the data from the user
       if (register === 'register') {
         //User tries to register
         response = await registerUser(email, name, password);
@@ -111,7 +111,7 @@ function Login() {
         response = await sendEmail(email);
         setFailed(response);
       }
-    } catch (err) {
+    } catch (err) { //Error
       if(register === 'forgotten') {
         setFailed(err);
         return;
@@ -124,7 +124,7 @@ function Login() {
     }
   };
 
-  return (
+  return (//Dynamic representation
     <div className="Login-Container">
       <div className="Login-Field">
         <h2>WebSafe</h2>

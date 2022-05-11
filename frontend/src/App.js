@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className='App'>
-      {!authState ? (
+      {!authState ? ( //Based on the variable, the corresponding page is displayed
         <>
           <img src={'./private-cloud-closed.svg'} className="App-Logo-Login" alt="logo" />
           <Login/>

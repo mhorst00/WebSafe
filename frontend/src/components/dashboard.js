@@ -92,7 +92,7 @@ function Dashboard() {
             setFailed("You cannot set the same email");
             return;
           }
-          await encryptionModule.initialise(resetValue, userPassword);
+          await encryptionModule.initialise(resetValue, userPassword); //Initialise with the new data
           if (await sendSafe(entrys, authState)) {
             request.send(
               JSON.stringify({
@@ -112,7 +112,7 @@ function Dashboard() {
             setFailed("You cannot set the same password");
             return;
           }
-          await encryptionModule.initialise(userEmail, resetValue);
+          await encryptionModule.initialise(userEmail, resetValue); //Initialise with the new data
           if (await sendSafe(entrys, authState)) {
             request.send(
               JSON.stringify({
