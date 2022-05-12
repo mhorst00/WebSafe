@@ -63,6 +63,7 @@ class MailSend:
              https://{URI}/api/v1/user/delete/verify/{del_string}"""
         )
         try:
+            MailSend.initialise()
             MailSend.CLIENT.send_message(msg)
         except Exception as e:
             logging.error(e)
@@ -82,6 +83,7 @@ class MailSend:
         Click this link to login to your new account: https://{URI}"""
         )
         try:
+            MailSend.initialise()
             MailSend.CLIENT.send_message(msg)
         except Exception as e:
             logging.error(e)
