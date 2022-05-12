@@ -236,21 +236,3 @@ async def post_safe(
             status_code=500,
             content={"message": "Payload is larger than size limit, will not be saved"},
         )
-
-
-@app.delete(
-    "/safe",
-    response_model=Message,
-    responses={500: {"model": Message}},
-    tags=["safe"],
-)
-async def del_safe(current_user: UserInDB = Depends(auth.get_current_user)):
-    x = Filehandler.deleteFile(current_user.safe_id)
-    if x:
-        return {"message": "Successfully deleted safe"}
-    else:
-        logging.error(f"Error while deleting safe {current_user.safe_id}")
-        return JSONResponse(
-            status_code=500,
-            content={"message": "Error while deleting safe"},
-        )
