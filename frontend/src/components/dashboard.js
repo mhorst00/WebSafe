@@ -84,7 +84,7 @@ function Dashboard() {
 
       switch (reset) { //selection of what will be changed
         case "E-Mail":
-          if (!validateEmail822(email)) {
+          if (!validateEmail822(resetValue)) {
             setFailed("E-Mail address is not valid");
             return;
           }
