@@ -18,7 +18,7 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
-      - "--certificatesresolvers.websafe.acme.email=maltehorst@gmail.com"
+      - "--certificatesresolvers.websafe.acme.email=test@example.com"
       - "--certificatesresolvers.websafe.acme.storage=/cert/acme.json"
       - "--certificatesresolvers.websafe.acme.httpchallenge.entrypoint=web"
     labels:
